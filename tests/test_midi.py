@@ -5,6 +5,9 @@ import pygame
 pygame.mixer.init()
 gun_sound = pygame.mixer.Sound('samples/tonal-bass-gun_140bpm_D_minor.wav')
 
+screen = pygame.display.set_mode((800, 600))
+screen.fill((255, 255, 255))  # White background by default
+
 # List available MIDI input ports
 print("Available MIDI ports:")
 for port in mido.get_input_names():
@@ -23,5 +26,11 @@ with mido.open_input(port_name) as inport:
 
         print(msg)
 
-        if msg.type == 'note_on' and msg.velocity > 0:
-            gun_sound.play()  # Play sound on key press
+        if msg.type == 'note_on':
+            if msg.velocity > 0:  # Note pressed down
+                gun_sound.play()
+                screen.fill((0, 0, 0))
+            else:  # Note released
+                screen.fill((255, 255, 255))
+
+            pygame.display.flip()
