@@ -1,0 +1,944 @@
+note_on channel=0 note=60 velocity=31 time=0
+note_on channel=0 note=60 velocity=0 time=0
+note_on channel=0 note=60 velocity=31 time=0
+note_on channel=0 note=60 velocity=0 time=0
+note_on channel=0 note=60 velocity=38 time=0
+note_on channel=0 note=60 velocity=0 time=0
+control_change channel=0 control=21 value=51 time=0
+control_change channel=0 control=21 value=50 time=0
+control_change channel=0 control=21 value=49 time=0
+control_change channel=0 control=21 value=48 time=0
+control_change channel=0 control=21 value=47 time=0
+control_change channel=0 control=21 value=46 time=0
+control_change channel=0 control=21 value=45 time=0
+control_change channel=0 control=21 value=44 time=0
+control_change channel=0 control=21 value=43 time=0
+control_change channel=0 control=21 value=42 time=0
+control_change channel=0 control=21 value=41 time=0
+control_change channel=0 control=21 value=40 time=0
+control_change channel=0 control=21 value=39 time=0
+control_change channel=0 control=21 value=38 time=0
+control_change channel=0 control=21 value=37 time=0
+control_change channel=0 control=21 value=36 time=0
+control_change channel=0 control=21 value=35 time=0
+control_change channel=0 control=21 value=34 time=0
+control_change channel=0 control=21 value=33 time=0
+control_change channel=0 control=21 value=32 time=0
+control_change channel=0 control=21 value=31 time=0
+control_change channel=0 control=21 value=30 time=0
+control_change channel=0 control=21 value=29 time=0
+control_change channel=0 control=21 value=28 time=0
+control_change channel=0 control=21 value=27 time=0
+control_change channel=0 control=21 value=28 time=0
+control_change channel=0 control=21 value=29 time=0
+control_change channel=0 control=21 value=30 time=0
+control_change channel=0 control=21 value=31 time=0
+control_change channel=0 control=21 value=32 time=0
+control_change channel=0 control=21 value=33 time=0
+control_change channel=0 control=21 value=35 time=0
+control_change channel=0 control=21 value=36 time=0
+control_change channel=0 control=21 value=37 time=0
+control_change channel=0 control=21 value=38 time=0
+control_change channel=0 control=21 value=39 time=0
+control_change channel=0 control=21 value=40 time=0
+control_change channel=0 control=21 value=41 time=0
+control_change channel=0 control=21 value=42 time=0
+control_change channel=0 control=21 value=43 time=0
+control_change channel=0 control=21 value=44 time=0
+control_change channel=0 control=21 value=45 time=0
+control_change channel=0 control=21 value=46 time=0
+control_change channel=0 control=21 value=47 time=0
+control_change channel=0 control=21 value=48 time=0
+control_change channel=0 control=21 value=49 time=0
+control_change channel=0 control=21 value=50 time=0
+control_change channel=0 control=21 value=51 time=0
+control_change channel=0 control=21 value=52 time=0
+control_change channel=0 control=21 value=53 time=0
+control_change channel=0 control=21 value=54 time=0
+control_change channel=0 control=21 value=55 time=0
+control_change channel=0 control=21 value=56 time=0
+control_change channel=0 control=21 value=57 time=0
+control_change channel=0 control=21 value=58 time=0
+control_change channel=0 control=21 value=59 time=0
+control_change channel=0 control=21 value=60 time=0
+control_change channel=0 control=21 value=61 time=0
+control_change channel=0 control=21 value=62 time=0
+control_change channel=0 control=21 value=63 time=0
+control_change channel=0 control=21 value=64 time=0
+control_change channel=0 control=21 value=63 time=0
+control_change channel=0 control=21 value=62 time=0
+control_change channel=0 control=1 value=35 time=0
+control_change channel=0 control=1 value=34 time=0
+control_change channel=0 control=1 value=33 time=0
+control_change channel=0 control=1 value=34 time=0
+control_change channel=0 control=1 value=33 time=0
+control_change channel=0 control=1 value=32 time=0
+control_change channel=0 control=1 value=31 time=0
+control_change channel=0 control=1 value=30 time=0
+control_change channel=0 control=1 value=29 time=0
+control_change channel=0 control=1 value=28 time=0
+control_change channel=0 control=1 value=27 time=0
+control_change channel=0 control=1 value=26 time=0
+control_change channel=0 control=1 value=25 time=0
+control_change channel=0 control=1 value=24 time=0
+control_change channel=0 control=1 value=25 time=0
+control_change channel=0 control=1 value=24 time=0
+control_change channel=0 control=1 value=23 time=0
+control_change channel=0 control=1 value=24 time=0
+control_change channel=0 control=1 value=23 time=0
+control_change channel=0 control=1 value=22 time=0
+control_change channel=0 control=1 value=21 time=0
+control_change channel=0 control=1 value=22 time=0
+control_change channel=0 control=1 value=21 time=0
+control_change channel=0 control=1 value=22 time=0
+control_change channel=0 control=1 value=21 time=0
+control_change channel=0 control=1 value=22 time=0
+control_change channel=0 control=1 value=21 time=0
+control_change channel=0 control=1 value=22 time=0
+control_change channel=0 control=1 value=21 time=0
+control_change channel=0 control=1 value=22 time=0
+control_change channel=0 control=1 value=21 time=0
+control_change channel=0 control=1 value=22 time=0
+control_change channel=0 control=1 value=21 time=0
+control_change channel=0 control=1 value=22 time=0
+control_change channel=0 control=1 value=23 time=0
+control_change channel=0 control=1 value=24 time=0
+control_change channel=0 control=1 value=25 time=0
+control_change channel=0 control=1 value=26 time=0
+control_change channel=0 control=1 value=27 time=0
+control_change channel=0 control=1 value=29 time=0
+control_change channel=0 control=1 value=30 time=0
+control_change channel=0 control=1 value=31 time=0
+control_change channel=0 control=1 value=33 time=0
+control_change channel=0 control=1 value=34 time=0
+control_change channel=0 control=1 value=35 time=0
+control_change channel=0 control=1 value=37 time=0
+control_change channel=0 control=1 value=38 time=0
+control_change channel=0 control=1 value=37 time=0
+control_change channel=0 control=1 value=38 time=0
+control_change channel=0 control=1 value=37 time=0
+control_change channel=0 control=1 value=36 time=0
+control_change channel=0 control=1 value=37 time=0
+control_change channel=0 control=1 value=36 time=0
+control_change channel=0 control=1 value=35 time=0
+control_change channel=0 control=1 value=34 time=0
+control_change channel=0 control=1 value=35 time=0
+control_change channel=0 control=1 value=34 time=0
+control_change channel=0 control=1 value=33 time=0
+control_change channel=0 control=1 value=32 time=0
+control_change channel=0 control=1 value=31 time=0
+control_change channel=0 control=1 value=30 time=0
+control_change channel=0 control=1 value=29 time=0
+control_change channel=0 control=1 value=28 time=0
+control_change channel=0 control=1 value=27 time=0
+control_change channel=0 control=1 value=26 time=0
+control_change channel=0 control=1 value=25 time=0
+control_change channel=0 control=1 value=23 time=0
+control_change channel=0 control=1 value=21 time=0
+control_change channel=0 control=1 value=19 time=0
+control_change channel=0 control=1 value=17 time=0
+control_change channel=0 control=1 value=15 time=0
+control_change channel=0 control=1 value=13 time=0
+control_change channel=0 control=1 value=9 time=0
+control_change channel=0 control=1 value=6 time=0
+control_change channel=0 control=1 value=3 time=0
+control_change channel=0 control=21 value=63 time=0
+control_change channel=0 control=21 value=64 time=0
+control_change channel=0 control=21 value=65 time=0
+control_change channel=0 control=21 value=66 time=0
+control_change channel=0 control=21 value=67 time=0
+control_change channel=0 control=21 value=68 time=0
+control_change channel=0 control=21 value=69 time=0
+control_change channel=0 control=21 value=70 time=0
+control_change channel=0 control=21 value=71 time=0
+control_change channel=0 control=21 value=72 time=0
+control_change channel=0 control=21 value=73 time=0
+control_change channel=0 control=21 value=74 time=0
+control_change channel=0 control=21 value=75 time=0
+control_change channel=0 control=21 value=76 time=0
+control_change channel=0 control=21 value=77 time=0
+control_change channel=0 control=21 value=76 time=0
+control_change channel=0 control=21 value=75 time=0
+control_change channel=0 control=21 value=74 time=0
+control_change channel=0 control=21 value=73 time=0
+control_change channel=0 control=21 value=72 time=0
+control_change channel=0 control=21 value=71 time=0
+control_change channel=0 control=21 value=69 time=0
+control_change channel=0 control=21 value=68 time=0
+control_change channel=0 control=21 value=67 time=0
+control_change channel=0 control=21 value=66 time=0
+control_change channel=0 control=21 value=65 time=0
+control_change channel=0 control=21 value=64 time=0
+control_change channel=0 control=21 value=63 time=0
+control_change channel=0 control=21 value=62 time=0
+control_change channel=0 control=21 value=61 time=0
+control_change channel=0 control=21 value=62 time=0
+note_on channel=0 note=59 velocity=98 time=0
+note_on channel=0 note=59 velocity=0 time=0
+note_on channel=0 note=59 velocity=124 time=0
+note_on channel=0 note=59 velocity=0 time=0
+start time=0
+stop time=0
+control_change channel=15 control=117 value=127 time=0
+control_change channel=15 control=117 value=0 time=0
+control_change channel=15 control=117 value=127 time=0
+control_change channel=15 control=117 value=0 time=0
+control_change channel=15 control=117 value=127 time=0
+control_change channel=15 control=117 value=0 time=0
+control_change channel=15 control=117 value=127 time=0
+control_change channel=15 control=117 value=0 time=0
+control_change channel=15 control=117 value=127 time=0
+control_change channel=15 control=117 value=0 time=0
+control_change channel=15 control=117 value=127 time=0
+control_change channel=15 control=117 value=0 time=0
+control_change channel=15 control=117 value=127 time=0
+control_change channel=15 control=117 value=0 time=0
+control_change channel=15 control=117 value=127 time=0
+control_change channel=15 control=117 value=0 time=0
+control_change channel=15 control=117 value=127 time=0
+control_change channel=15 control=117 value=0 time=0
+control_change channel=15 control=117 value=127 time=0
+control_change channel=15 control=117 value=0 time=0
+control_change channel=15 control=117 value=127 time=0
+control_change channel=15 control=117 value=0 time=0
+control_change channel=0 control=21 value=63 time=0
+control_change channel=0 control=21 value=64 time=0
+control_change channel=0 control=21 value=65 time=0
+control_change channel=0 control=21 value=66 time=0
+control_change channel=0 control=21 value=67 time=0
+control_change channel=0 control=21 value=68 time=0
+control_change channel=0 control=21 value=69 time=0
+control_change channel=0 control=21 value=70 time=0
+control_change channel=0 control=21 value=71 time=0
+control_change channel=0 control=21 value=72 time=0
+control_change channel=0 control=21 value=73 time=0
+control_change channel=0 control=21 value=72 time=0
+control_change channel=0 control=22 value=82 time=0
+control_change channel=0 control=22 value=81 time=0
+control_change channel=0 control=22 value=80 time=0
+control_change channel=0 control=22 value=79 time=0
+control_change channel=0 control=22 value=78 time=0
+control_change channel=0 control=22 value=77 time=0
+control_change channel=0 control=22 value=76 time=0
+control_change channel=0 control=22 value=75 time=0
+control_change channel=0 control=22 value=74 time=0
+control_change channel=0 control=22 value=73 time=0
+control_change channel=0 control=22 value=72 time=0
+control_change channel=0 control=22 value=71 time=0
+control_change channel=0 control=22 value=70 time=0
+control_change channel=0 control=22 value=69 time=0
+control_change channel=0 control=23 value=89 time=0
+control_change channel=0 control=23 value=90 time=0
+control_change channel=0 control=23 value=91 time=0
+control_change channel=0 control=23 value=92 time=0
+control_change channel=0 control=23 value=93 time=0
+control_change channel=0 control=23 value=94 time=0
+control_change channel=0 control=24 value=75 time=0
+control_change channel=0 control=24 value=74 time=0
+control_change channel=0 control=24 value=73 time=0
+control_change channel=0 control=24 value=72 time=0
+control_change channel=0 control=24 value=71 time=0
+control_change channel=0 control=24 value=70 time=0
+control_change channel=0 control=25 value=110 time=0
+control_change channel=0 control=25 value=111 time=0
+control_change channel=0 control=25 value=112 time=0
+control_change channel=0 control=25 value=113 time=0
+control_change channel=0 control=25 value=114 time=0
+control_change channel=0 control=25 value=115 time=0
+control_change channel=0 control=25 value=116 time=0
+control_change channel=0 control=25 value=117 time=0
+control_change channel=0 control=25 value=118 time=0
+control_change channel=0 control=25 value=119 time=0
+control_change channel=0 control=26 value=122 time=0
+control_change channel=0 control=26 value=121 time=0
+control_change channel=0 control=26 value=120 time=0
+control_change channel=0 control=26 value=119 time=0
+control_change channel=0 control=26 value=118 time=0
+control_change channel=0 control=26 value=117 time=0
+control_change channel=0 control=26 value=116 time=0
+control_change channel=0 control=26 value=115 time=0
+control_change channel=0 control=26 value=114 time=0
+control_change channel=0 control=26 value=113 time=0
+control_change channel=0 control=26 value=114 time=0
+note_on channel=0 note=62 velocity=122 time=0
+note_on channel=0 note=62 velocity=0 time=0
+note_on channel=0 note=62 velocity=114 time=0
+note_on channel=0 note=62 velocity=0 time=0
+note_on channel=0 note=62 velocity=125 time=0
+note_on channel=0 note=62 velocity=0 time=0
+note_on channel=0 note=62 velocity=125 time=0
+note_on channel=0 note=62 velocity=0 time=0
+control_change channel=0 control=1 value=9 time=0
+control_change channel=0 control=1 value=12 time=0
+control_change channel=0 control=1 value=14 time=0
+control_change channel=0 control=1 value=16 time=0
+control_change channel=0 control=1 value=17 time=0
+control_change channel=0 control=1 value=16 time=0
+control_change channel=0 control=1 value=17 time=0
+control_change channel=0 control=1 value=16 time=0
+control_change channel=0 control=1 value=15 time=0
+control_change channel=0 control=1 value=16 time=0
+control_change channel=0 control=1 value=15 time=0
+control_change channel=0 control=1 value=14 time=0
+control_change channel=0 control=1 value=13 time=0
+control_change channel=0 control=1 value=12 time=0
+control_change channel=0 control=1 value=11 time=0
+control_change channel=0 control=1 value=10 time=0
+control_change channel=0 control=1 value=9 time=0
+control_change channel=0 control=1 value=8 time=0
+control_change channel=0 control=1 value=7 time=0
+control_change channel=0 control=1 value=6 time=0
+control_change channel=0 control=1 value=5 time=0
+control_change channel=0 control=1 value=4 time=0
+control_change channel=0 control=1 value=3 time=0
+control_change channel=0 control=1 value=2 time=0
+control_change channel=0 control=1 value=3 time=0
+control_change channel=0 control=1 value=2 time=0
+control_change channel=0 control=1 value=3 time=0
+control_change channel=0 control=1 value=2 time=0
+control_change channel=0 control=1 value=3 time=0
+control_change channel=0 control=1 value=2 time=0
+control_change channel=0 control=1 value=1 time=0
+control_change channel=0 control=1 value=0 time=0
+control_change channel=0 control=1 value=1 time=0
+control_change channel=0 control=1 value=2 time=0
+control_change channel=0 control=1 value=3 time=0
+control_change channel=0 control=1 value=4 time=0
+control_change channel=0 control=1 value=5 time=0
+control_change channel=0 control=1 value=7 time=0
+control_change channel=0 control=1 value=8 time=0
+control_change channel=0 control=1 value=10 time=0
+control_change channel=0 control=1 value=11 time=0
+control_change channel=0 control=1 value=13 time=0
+control_change channel=0 control=1 value=14 time=0
+control_change channel=0 control=1 value=15 time=0
+control_change channel=0 control=1 value=16 time=0
+control_change channel=0 control=1 value=18 time=0
+control_change channel=0 control=1 value=20 time=0
+control_change channel=0 control=1 value=19 time=0
+control_change channel=0 control=1 value=21 time=0
+control_change channel=0 control=1 value=22 time=0
+control_change channel=0 control=1 value=24 time=0
+control_change channel=0 control=1 value=25 time=0
+control_change channel=0 control=1 value=26 time=0
+control_change channel=0 control=1 value=27 time=0
+control_change channel=0 control=1 value=26 time=0
+control_change channel=0 control=1 value=27 time=0
+control_change channel=0 control=1 value=26 time=0
+control_change channel=0 control=1 value=25 time=0
+control_change channel=0 control=1 value=21 time=0
+control_change channel=0 control=1 value=17 time=0
+control_change channel=0 control=1 value=18 time=0
+control_change channel=0 control=1 value=17 time=0
+control_change channel=0 control=1 value=16 time=0
+control_change channel=0 control=1 value=15 time=0
+control_change channel=0 control=1 value=14 time=0
+control_change channel=0 control=1 value=13 time=0
+control_change channel=0 control=1 value=12 time=0
+control_change channel=0 control=1 value=11 time=0
+control_change channel=0 control=1 value=10 time=0
+control_change channel=0 control=1 value=9 time=0
+control_change channel=0 control=1 value=8 time=0
+control_change channel=0 control=1 value=7 time=0
+control_change channel=0 control=1 value=6 time=0
+control_change channel=0 control=1 value=5 time=0
+control_change channel=0 control=1 value=3 time=0
+control_change channel=0 control=1 value=4 time=0
+control_change channel=0 control=1 value=2 time=0
+control_change channel=0 control=1 value=1 time=0
+control_change channel=0 control=1 value=0 time=0
+control_change channel=0 control=1 value=1 time=0
+control_change channel=0 control=1 value=0 time=0
+control_change channel=0 control=1 value=1 time=0
+control_change channel=0 control=1 value=0 time=0
+control_change channel=0 control=1 value=1 time=0
+control_change channel=0 control=1 value=0 time=0
+control_change channel=0 control=1 value=1 time=0
+control_change channel=0 control=1 value=0 time=0
+control_change channel=0 control=1 value=1 time=0
+control_change channel=0 control=1 value=0 time=0
+control_change channel=0 control=1 value=1 time=0
+control_change channel=0 control=1 value=0 time=0
+control_change channel=0 control=1 value=1 time=0
+control_change channel=0 control=1 value=0 time=0
+control_change channel=0 control=1 value=1 time=0
+control_change channel=0 control=1 value=0 time=0
+control_change channel=0 control=1 value=1 time=0
+control_change channel=0 control=1 value=0 time=0
+control_change channel=0 control=1 value=1 time=0
+control_change channel=0 control=1 value=0 time=0
+control_change channel=0 control=1 value=1 time=0
+control_change channel=0 control=1 value=0 time=0
+control_change channel=0 control=1 value=1 time=0
+control_change channel=0 control=1 value=0 time=0
+control_change channel=0 control=1 value=1 time=0
+control_change channel=0 control=1 value=0 time=0
+control_change channel=0 control=1 value=1 time=0
+control_change channel=0 control=1 value=0 time=0
+control_change channel=0 control=1 value=1 time=0
+control_change channel=0 control=1 value=0 time=0
+control_change channel=0 control=1 value=1 time=0
+control_change channel=0 control=1 value=0 time=0
+control_change channel=0 control=1 value=1 time=0
+control_change channel=0 control=1 value=0 time=0
+control_change channel=0 control=1 value=1 time=0
+control_change channel=0 control=1 value=0 time=0
+control_change channel=0 control=1 value=1 time=0
+control_change channel=0 control=1 value=0 time=0
+control_change channel=0 control=1 value=1 time=0
+control_change channel=0 control=1 value=0 time=0
+control_change channel=0 control=1 value=1 time=0
+control_change channel=0 control=1 value=0 time=0
+control_change channel=0 control=1 value=1 time=0
+control_change channel=0 control=1 value=0 time=0
+control_change channel=0 control=1 value=1 time=0
+control_change channel=0 control=1 value=0 time=0
+control_change channel=0 control=1 value=1 time=0
+control_change channel=0 control=1 value=0 time=0
+control_change channel=0 control=1 value=1 time=0
+control_change channel=0 control=1 value=2 time=0
+control_change channel=0 control=1 value=4 time=0
+control_change channel=0 control=1 value=5 time=0
+control_change channel=0 control=1 value=4 time=0
+control_change channel=0 control=1 value=5 time=0
+control_change channel=0 control=1 value=4 time=0
+control_change channel=0 control=1 value=5 time=0
+control_change channel=0 control=1 value=6 time=0
+control_change channel=0 control=1 value=5 time=0
+control_change channel=0 control=1 value=6 time=0
+control_change channel=0 control=1 value=5 time=0
+control_change channel=0 control=1 value=6 time=0
+control_change channel=0 control=1 value=7 time=0
+control_change channel=0 control=1 value=8 time=0
+control_change channel=0 control=1 value=7 time=0
+control_change channel=0 control=1 value=6 time=0
+control_change channel=0 control=1 value=7 time=0
+control_change channel=0 control=1 value=6 time=0
+control_change channel=0 control=1 value=7 time=0
+control_change channel=0 control=1 value=6 time=0
+control_change channel=0 control=1 value=7 time=0
+control_change channel=0 control=1 value=6 time=0
+control_change channel=0 control=1 value=7 time=0
+control_change channel=0 control=1 value=8 time=0
+control_change channel=0 control=1 value=7 time=0
+control_change channel=0 control=1 value=8 time=0
+control_change channel=0 control=1 value=7 time=0
+control_change channel=0 control=1 value=8 time=0
+control_change channel=0 control=1 value=7 time=0
+control_change channel=0 control=1 value=8 time=0
+control_change channel=0 control=1 value=7 time=0
+control_change channel=0 control=1 value=8 time=0
+control_change channel=0 control=1 value=9 time=0
+control_change channel=0 control=1 value=8 time=0
+control_change channel=0 control=1 value=9 time=0
+control_change channel=0 control=1 value=8 time=0
+control_change channel=0 control=1 value=7 time=0
+control_change channel=0 control=1 value=8 time=0
+control_change channel=0 control=1 value=9 time=0
+control_change channel=0 control=1 value=7 time=0
+control_change channel=0 control=1 value=8 time=0
+control_change channel=0 control=1 value=9 time=0
+control_change channel=0 control=1 value=8 time=0
+control_change channel=0 control=1 value=7 time=0
+control_change channel=0 control=1 value=8 time=0
+control_change channel=0 control=1 value=7 time=0
+control_change channel=0 control=1 value=8 time=0
+control_change channel=0 control=1 value=7 time=0
+control_change channel=0 control=1 value=8 time=0
+control_change channel=0 control=1 value=7 time=0
+control_change channel=0 control=1 value=8 time=0
+control_change channel=0 control=1 value=7 time=0
+control_change channel=0 control=1 value=8 time=0
+control_change channel=0 control=1 value=9 time=0
+control_change channel=0 control=1 value=8 time=0
+control_change channel=0 control=1 value=7 time=0
+control_change channel=0 control=1 value=8 time=0
+control_change channel=0 control=1 value=7 time=0
+control_change channel=0 control=1 value=9 time=0
+control_change channel=0 control=1 value=7 time=0
+control_change channel=0 control=1 value=8 time=0
+control_change channel=0 control=1 value=7 time=0
+control_change channel=0 control=1 value=8 time=0
+control_change channel=0 control=1 value=7 time=0
+control_change channel=0 control=1 value=8 time=0
+control_change channel=0 control=1 value=7 time=0
+control_change channel=0 control=1 value=8 time=0
+control_change channel=0 control=1 value=7 time=0
+control_change channel=0 control=1 value=8 time=0
+control_change channel=0 control=1 value=7 time=0
+control_change channel=0 control=1 value=8 time=0
+control_change channel=0 control=1 value=7 time=0
+control_change channel=0 control=1 value=8 time=0
+control_change channel=0 control=1 value=7 time=0
+control_change channel=0 control=1 value=8 time=0
+control_change channel=0 control=1 value=7 time=0
+control_change channel=0 control=1 value=8 time=0
+control_change channel=0 control=1 value=7 time=0
+control_change channel=0 control=1 value=8 time=0
+control_change channel=0 control=1 value=7 time=0
+control_change channel=0 control=1 value=8 time=0
+control_change channel=0 control=1 value=7 time=0
+control_change channel=0 control=1 value=8 time=0
+control_change channel=0 control=1 value=7 time=0
+control_change channel=0 control=1 value=8 time=0
+control_change channel=0 control=1 value=7 time=0
+control_change channel=0 control=1 value=8 time=0
+control_change channel=0 control=1 value=7 time=0
+control_change channel=0 control=1 value=8 time=0
+control_change channel=0 control=1 value=7 time=0
+control_change channel=0 control=1 value=8 time=0
+control_change channel=0 control=1 value=7 time=0
+control_change channel=0 control=1 value=8 time=0
+control_change channel=0 control=1 value=7 time=0
+control_change channel=0 control=1 value=8 time=0
+control_change channel=0 control=1 value=7 time=0
+control_change channel=0 control=1 value=8 time=0
+control_change channel=0 control=1 value=7 time=0
+control_change channel=0 control=1 value=8 time=0
+control_change channel=0 control=1 value=7 time=0
+control_change channel=0 control=1 value=8 time=0
+control_change channel=0 control=1 value=7 time=0
+control_change channel=0 control=1 value=8 time=0
+control_change channel=0 control=1 value=7 time=0
+control_change channel=0 control=1 value=8 time=0
+control_change channel=0 control=1 value=7 time=0
+control_change channel=0 control=1 value=8 time=0
+control_change channel=0 control=1 value=7 time=0
+control_change channel=0 control=1 value=8 time=0
+control_change channel=0 control=1 value=7 time=0
+control_change channel=0 control=1 value=8 time=0
+control_change channel=0 control=1 value=7 time=0
+control_change channel=0 control=1 value=8 time=0
+control_change channel=0 control=1 value=7 time=0
+control_change channel=0 control=1 value=8 time=0
+control_change channel=0 control=1 value=7 time=0
+control_change channel=0 control=1 value=8 time=0
+control_change channel=0 control=1 value=7 time=0
+control_change channel=0 control=1 value=8 time=0
+control_change channel=0 control=1 value=7 time=0
+control_change channel=0 control=1 value=8 time=0
+control_change channel=0 control=1 value=7 time=0
+control_change channel=0 control=1 value=8 time=0
+control_change channel=0 control=1 value=7 time=0
+control_change channel=0 control=1 value=8 time=0
+control_change channel=0 control=1 value=7 time=0
+control_change channel=0 control=1 value=8 time=0
+control_change channel=0 control=1 value=7 time=0
+control_change channel=0 control=1 value=8 time=0
+control_change channel=0 control=1 value=7 time=0
+control_change channel=0 control=1 value=8 time=0
+control_change channel=0 control=1 value=7 time=0
+control_change channel=0 control=1 value=8 time=0
+control_change channel=0 control=1 value=7 time=0
+control_change channel=0 control=1 value=8 time=0
+control_change channel=0 control=1 value=7 time=0
+control_change channel=0 control=1 value=6 time=0
+control_change channel=0 control=1 value=5 time=0
+control_change channel=0 control=1 value=6 time=0
+control_change channel=0 control=1 value=5 time=0
+control_change channel=0 control=1 value=4 time=0
+control_change channel=0 control=1 value=5 time=0
+control_change channel=0 control=1 value=4 time=0
+control_change channel=0 control=1 value=3 time=0
+control_change channel=0 control=1 value=4 time=0
+control_change channel=0 control=1 value=2 time=0
+control_change channel=0 control=1 value=3 time=0
+control_change channel=0 control=1 value=2 time=0
+control_change channel=0 control=1 value=1 time=0
+control_change channel=0 control=1 value=0 time=0
+pitchwheel channel=0 pitch=-8192 time=0
+pitchwheel channel=0 pitch=-8139 time=0
+pitchwheel channel=0 pitch=-8192 time=0
+pitchwheel channel=0 pitch=-8139 time=0
+pitchwheel channel=0 pitch=-7995 time=0
+pitchwheel channel=0 pitch=-7905 time=0
+pitchwheel channel=0 pitch=-7797 time=0
+pitchwheel channel=0 pitch=-7707 time=0
+pitchwheel channel=0 pitch=-7474 time=0
+pitchwheel channel=0 pitch=-7438 time=0
+pitchwheel channel=0 pitch=-7312 time=0
+pitchwheel channel=0 pitch=-7240 time=0
+pitchwheel channel=0 pitch=-7061 time=0
+pitchwheel channel=0 pitch=-6917 time=0
+pitchwheel channel=0 pitch=-6755 time=0
+pitchwheel channel=0 pitch=-6576 time=0
+pitchwheel channel=0 pitch=-6522 time=0
+pitchwheel channel=0 pitch=-6468 time=0
+pitchwheel channel=0 pitch=-6342 time=0
+pitchwheel channel=0 pitch=-6252 time=0
+pitchwheel channel=0 pitch=-6144 time=0
+pitchwheel channel=0 pitch=-5983 time=0
+pitchwheel channel=0 pitch=-5911 time=0
+pitchwheel channel=0 pitch=-5821 time=0
+pitchwheel channel=0 pitch=-5767 time=0
+pitchwheel channel=0 pitch=-4420 time=0
+pitchwheel channel=0 pitch=-4258 time=0
+pitchwheel channel=0 pitch=-4204 time=0
+pitchwheel channel=0 pitch=-4025 time=0
+pitchwheel channel=0 pitch=-3881 time=0
+pitchwheel channel=0 pitch=-3827 time=0
+pitchwheel channel=0 pitch=-3719 time=0
+pitchwheel channel=0 pitch=-3535 time=0
+pitchwheel channel=0 pitch=-3481 time=0
+pitchwheel channel=0 pitch=-3409 time=0
+pitchwheel channel=0 pitch=-3337 time=0
+pitchwheel channel=0 pitch=-3284 time=0
+pitchwheel channel=0 pitch=-3212 time=0
+pitchwheel channel=0 pitch=-3122 time=0
+pitchwheel channel=0 pitch=-3050 time=0
+pitchwheel channel=0 pitch=-2960 time=0
+pitchwheel channel=0 pitch=-2924 time=0
+pitchwheel channel=0 pitch=-2852 time=0
+pitchwheel channel=0 pitch=-2924 time=0
+pitchwheel channel=0 pitch=-2852 time=0
+pitchwheel channel=0 pitch=-2781 time=0
+pitchwheel channel=0 pitch=-2834 time=0
+pitchwheel channel=0 pitch=-2781 time=0
+pitchwheel channel=0 pitch=-2834 time=0
+pitchwheel channel=0 pitch=-2960 time=0
+pitchwheel channel=0 pitch=-3032 time=0
+pitchwheel channel=0 pitch=-3176 time=0
+pitchwheel channel=0 pitch=-3212 time=0
+pitchwheel channel=0 pitch=-3284 time=0
+pitchwheel channel=0 pitch=-3409 time=0
+pitchwheel channel=0 pitch=-3499 time=0
+pitchwheel channel=0 pitch=-3647 time=0
+pitchwheel channel=0 pitch=-3773 time=0
+pitchwheel channel=0 pitch=-3881 time=0
+pitchwheel channel=0 pitch=-4025 time=0
+pitchwheel channel=0 pitch=-4150 time=0
+pitchwheel channel=0 pitch=-4294 time=0
+pitchwheel channel=0 pitch=-4420 time=0
+pitchwheel channel=0 pitch=-4617 time=0
+pitchwheel channel=0 pitch=-5138 time=0
+pitchwheel channel=0 pitch=-5534 time=0
+pitchwheel channel=0 pitch=-5695 time=0
+pitchwheel channel=0 pitch=-5767 time=0
+pitchwheel channel=0 pitch=-5857 time=0
+pitchwheel channel=0 pitch=-6019 time=0
+pitchwheel channel=0 pitch=-6091 time=0
+pitchwheel channel=0 pitch=-6234 time=0
+pitchwheel channel=0 pitch=-6396 time=0
+pitchwheel channel=0 pitch=-6450 time=0
+pitchwheel channel=0 pitch=-6755 time=0
+pitchwheel channel=0 pitch=-6917 time=0
+pitchwheel channel=0 pitch=-7061 time=0
+pitchwheel channel=0 pitch=-7204 time=0
+pitchwheel channel=0 pitch=-7384 time=0
+pitchwheel channel=0 pitch=-7492 time=0
+pitchwheel channel=0 pitch=-7564 time=0
+pitchwheel channel=0 pitch=-7636 time=0
+pitchwheel channel=0 pitch=-7725 time=0
+pitchwheel channel=0 pitch=-7618 time=0
+pitchwheel channel=0 pitch=-7528 time=0
+pitchwheel channel=0 pitch=-7564 time=0
+pitchwheel channel=0 pitch=-7438 time=0
+pitchwheel channel=0 pitch=-7348 time=0
+pitchwheel channel=0 pitch=-7115 time=0
+pitchwheel channel=0 pitch=-7025 time=0
+pitchwheel channel=0 pitch=-6917 time=0
+pitchwheel channel=0 pitch=-6755 time=0
+pitchwheel channel=0 pitch=-6522 time=0
+pitchwheel channel=0 pitch=-6396 time=0
+pitchwheel channel=0 pitch=-6252 time=0
+pitchwheel channel=0 pitch=-6127 time=0
+pitchwheel channel=0 pitch=-6037 time=0
+pitchwheel channel=0 pitch=-5965 time=0
+pitchwheel channel=0 pitch=-5641 time=0
+pitchwheel channel=0 pitch=-5588 time=0
+pitchwheel channel=0 pitch=-5480 time=0
+pitchwheel channel=0 pitch=-4743 time=0
+pitchwheel channel=0 pitch=-4420 time=0
+pitchwheel channel=0 pitch=-4366 time=0
+pitchwheel channel=0 pitch=-4150 time=0
+pitchwheel channel=0 pitch=-3971 time=0
+pitchwheel channel=0 pitch=-3827 time=0
+pitchwheel channel=0 pitch=-3647 time=0
+pitchwheel channel=0 pitch=-3409 time=0
+pitchwheel channel=0 pitch=-3337 time=0
+pitchwheel channel=0 pitch=-3158 time=0
+pitchwheel channel=0 pitch=-2996 time=0
+pitchwheel channel=0 pitch=-2906 time=0
+pitchwheel channel=0 pitch=-2834 time=0
+pitchwheel channel=0 pitch=-2062 time=0
+pitchwheel channel=0 pitch=-1397 time=0
+pitchwheel channel=0 pitch=-1272 time=0
+pitchwheel channel=0 pitch=-1146 time=0
+pitchwheel channel=0 pitch=-1020 time=0
+pitchwheel channel=0 pitch=-948 time=0
+pitchwheel channel=0 pitch=-876 time=0
+pitchwheel channel=0 pitch=-768 time=0
+pitchwheel channel=0 pitch=-643 time=0
+pitchwheel channel=0 pitch=-589 time=0
+pitchwheel channel=0 pitch=-643 time=0
+pitchwheel channel=0 pitch=-589 time=0
+pitchwheel channel=0 pitch=-643 time=0
+pitchwheel channel=0 pitch=-499 time=0
+pitchwheel channel=0 pitch=-643 time=0
+pitchwheel channel=0 pitch=-589 time=0
+pitchwheel channel=0 pitch=-499 time=0
+pitchwheel channel=0 pitch=-589 time=0
+pitchwheel channel=0 pitch=-463 time=0
+pitchwheel channel=0 pitch=-661 time=0
+pitchwheel channel=0 pitch=-751 time=0
+pitchwheel channel=0 pitch=-1002 time=0
+pitchwheel channel=0 pitch=-822 time=0
+pitchwheel channel=0 pitch=0 time=0
+pitchwheel channel=0 pitch=-2062 time=0
+pitchwheel channel=0 pitch=-2727 time=0
+pitchwheel channel=0 pitch=-2062 time=0
+pitchwheel channel=0 pitch=-1469 time=0
+pitchwheel channel=0 pitch=-2062 time=0
+pitchwheel channel=0 pitch=-1451 time=0
+pitchwheel channel=0 pitch=-2062 time=0
+pitchwheel channel=0 pitch=-2655 time=0
+pitchwheel channel=0 pitch=-2727 time=0
+pitchwheel channel=0 pitch=-2781 time=0
+pitchwheel channel=0 pitch=-2852 time=0
+pitchwheel channel=0 pitch=-2960 time=0
+pitchwheel channel=0 pitch=-3050 time=0
+pitchwheel channel=0 pitch=-3122 time=0
+pitchwheel channel=0 pitch=-3212 time=0
+pitchwheel channel=0 pitch=-3284 time=0
+pitchwheel channel=0 pitch=-3409 time=0
+pitchwheel channel=0 pitch=-3499 time=0
+pitchwheel channel=0 pitch=-3719 time=0
+pitchwheel channel=0 pitch=-3827 time=0
+pitchwheel channel=0 pitch=-3971 time=0
+pitchwheel channel=0 pitch=-4096 time=0
+pitchwheel channel=0 pitch=-4150 time=0
+pitchwheel channel=0 pitch=-4240 time=0
+pitchwheel channel=0 pitch=-4312 time=0
+pitchwheel channel=0 pitch=-4510 time=0
+pitchwheel channel=0 pitch=-5138 time=0
+pitchwheel channel=0 pitch=-5749 time=0
+pitchwheel channel=0 pitch=-5821 time=0
+pitchwheel channel=0 pitch=-5911 time=0
+pitchwheel channel=0 pitch=-6019 time=0
+pitchwheel channel=0 pitch=-6180 time=0
+pitchwheel channel=0 pitch=-6396 time=0
+pitchwheel channel=0 pitch=-6450 time=0
+pitchwheel channel=0 pitch=-6522 time=0
+pitchwheel channel=0 pitch=-6576 time=0
+pitchwheel channel=0 pitch=-6755 time=0
+pitchwheel channel=0 pitch=-6917 time=0
+pitchwheel channel=0 pitch=-7061 time=0
+pitchwheel channel=0 pitch=-7115 time=0
+pitchwheel channel=0 pitch=-7258 time=0
+pitchwheel channel=0 pitch=-7384 time=0
+pitchwheel channel=0 pitch=-7564 time=0
+pitchwheel channel=0 pitch=-7618 time=0
+pitchwheel channel=0 pitch=-7725 time=0
+pitchwheel channel=0 pitch=-7815 time=0
+pitchwheel channel=0 pitch=-7941 time=0
+pitchwheel channel=0 pitch=-8031 time=0
+pitchwheel channel=0 pitch=-8085 time=0
+pitchwheel channel=0 pitch=-8121 time=0
+pitchwheel channel=0 pitch=-8192 time=0
+pitchwheel channel=0 pitch=0 time=0
+pitchwheel channel=0 pitch=-7905 time=0
+pitchwheel channel=0 pitch=-7797 time=0
+pitchwheel channel=0 pitch=-7564 time=0
+pitchwheel channel=0 pitch=-7402 time=0
+pitchwheel channel=0 pitch=-7240 time=0
+pitchwheel channel=0 pitch=-7061 time=0
+pitchwheel channel=0 pitch=-7204 time=0
+pitchwheel channel=0 pitch=-6917 time=0
+pitchwheel channel=0 pitch=-6576 time=0
+pitchwheel channel=0 pitch=-6468 time=0
+pitchwheel channel=0 pitch=-6252 time=0
+pitchwheel channel=0 pitch=-6180 time=0
+pitchwheel channel=0 pitch=-6091 time=0
+pitchwheel channel=0 pitch=-6019 time=0
+pitchwheel channel=0 pitch=-5929 time=0
+pitchwheel channel=0 pitch=-5695 time=0
+pitchwheel channel=0 pitch=-5641 time=0
+pitchwheel channel=0 pitch=-4635 time=0
+pitchwheel channel=0 pitch=-4528 time=0
+pitchwheel channel=0 pitch=-4474 time=0
+pitchwheel channel=0 pitch=-4348 time=0
+pitchwheel channel=0 pitch=-4204 time=0
+pitchwheel channel=0 pitch=-4132 time=0
+pitchwheel channel=0 pitch=-3917 time=0
+pitchwheel channel=0 pitch=-3827 time=0
+pitchwheel channel=0 pitch=-3755 time=0
+pitchwheel channel=0 pitch=-3499 time=0
+pitchwheel channel=0 pitch=-3409 time=0
+pitchwheel channel=0 pitch=-3337 time=0
+pitchwheel channel=0 pitch=-3212 time=0
+pitchwheel channel=0 pitch=-3122 time=0
+pitchwheel channel=0 pitch=-2978 time=0
+pitchwheel channel=0 pitch=-2924 time=0
+pitchwheel channel=0 pitch=-2062 time=0
+pitchwheel channel=0 pitch=-1289 time=0
+pitchwheel channel=0 pitch=-1200 time=0
+pitchwheel channel=0 pitch=-1002 time=0
+pitchwheel channel=0 pitch=-912 time=0
+pitchwheel channel=0 pitch=-768 time=0
+pitchwheel channel=0 pitch=-661 time=0
+pitchwheel channel=0 pitch=-499 time=0
+pitchwheel channel=0 pitch=-355 time=0
+pitchwheel channel=0 pitch=-265 time=0
+pitchwheel channel=0 pitch=-104 time=0
+pitchwheel channel=0 pitch=-14 time=0
+pitchwheel channel=0 pitch=0 time=0
+pitchwheel channel=0 pitch=170 time=0
+pitchwheel channel=0 pitch=386 time=0
+pitchwheel channel=0 pitch=476 time=0
+pitchwheel channel=0 pitch=853 time=0
+pitchwheel channel=0 pitch=997 time=0
+pitchwheel channel=0 pitch=1069 time=0
+pitchwheel channel=0 pitch=1249 time=0
+pitchwheel channel=0 pitch=1303 time=0
+pitchwheel channel=0 pitch=1393 time=0
+pitchwheel channel=0 pitch=2076 time=0
+pitchwheel channel=0 pitch=2866 time=0
+pitchwheel channel=0 pitch=2956 time=0
+pitchwheel channel=0 pitch=2992 time=0
+pitchwheel channel=0 pitch=3082 time=0
+pitchwheel channel=0 pitch=2956 time=0
+pitchwheel channel=0 pitch=3010 time=0
+pitchwheel channel=0 pitch=2849 time=0
+pitchwheel channel=0 pitch=2669 time=0
+pitchwheel channel=0 pitch=2759 time=0
+pitchwheel channel=0 pitch=2363 time=0
+pitchwheel channel=0 pitch=2076 time=0
+pitchwheel channel=0 pitch=0 time=0
+pitchwheel channel=0 pitch=-8192 time=0
+pitchwheel channel=0 pitch=-8049 time=0
+pitchwheel channel=0 pitch=-7618 time=0
+pitchwheel channel=0 pitch=-7312 time=0
+pitchwheel channel=0 pitch=-7025 time=0
+pitchwheel channel=0 pitch=-6630 time=0
+pitchwheel channel=0 pitch=-6450 time=0
+pitchwheel channel=0 pitch=-6198 time=0
+pitchwheel channel=0 pitch=-6127 time=0
+pitchwheel channel=0 pitch=-5875 time=0
+pitchwheel channel=0 pitch=-5767 time=0
+pitchwheel channel=0 pitch=-5138 time=0
+pitchwheel channel=0 pitch=-4564 time=0
+pitchwheel channel=0 pitch=-4366 time=0
+pitchwheel channel=0 pitch=-4096 time=0
+pitchwheel channel=0 pitch=-3935 time=0
+pitchwheel channel=0 pitch=-3827 time=0
+pitchwheel channel=0 pitch=-3647 time=0
+pitchwheel channel=0 pitch=-3481 time=0
+pitchwheel channel=0 pitch=-3337 time=0
+pitchwheel channel=0 pitch=-3212 time=0
+pitchwheel channel=0 pitch=-3104 time=0
+pitchwheel channel=0 pitch=-2996 time=0
+pitchwheel channel=0 pitch=-2781 time=0
+pitchwheel channel=0 pitch=-2062 time=0
+pitchwheel channel=0 pitch=-1200 time=0
+pitchwheel channel=0 pitch=-1020 time=0
+pitchwheel channel=0 pitch=-894 time=0
+pitchwheel channel=0 pitch=-822 time=0
+pitchwheel channel=0 pitch=-589 time=0
+pitchwheel channel=0 pitch=-463 time=0
+pitchwheel channel=0 pitch=-319 time=0
+pitchwheel channel=0 pitch=-230 time=0
+pitchwheel channel=0 pitch=-176 time=0
+pitchwheel channel=0 pitch=0 time=0
+pitchwheel channel=0 pitch=116 time=0
+pitchwheel channel=0 pitch=170 time=0
+pitchwheel channel=0 pitch=332 time=0
+pitchwheel channel=0 pitch=422 time=0
+pitchwheel channel=0 pitch=710 time=0
+pitchwheel channel=0 pitch=781 time=0
+pitchwheel channel=0 pitch=853 time=0
+pitchwheel channel=0 pitch=961 time=0
+pitchwheel channel=0 pitch=1051 time=0
+pitchwheel channel=0 pitch=1141 time=0
+pitchwheel channel=0 pitch=1213 time=0
+pitchwheel channel=0 pitch=1357 time=0
+pitchwheel channel=0 pitch=1446 time=0
+pitchwheel channel=0 pitch=2076 time=0
+pitchwheel channel=0 pitch=2723 time=0
+pitchwheel channel=0 pitch=2938 time=0
+pitchwheel channel=0 pitch=3136 time=0
+pitchwheel channel=0 pitch=3226 time=0
+pitchwheel channel=0 pitch=3298 time=0
+pitchwheel channel=0 pitch=3442 time=0
+pitchwheel channel=0 pitch=3514 time=0
+pitchwheel channel=0 pitch=3698 time=0
+pitchwheel channel=0 pitch=3824 time=0
+pitchwheel channel=0 pitch=3931 time=0
+pitchwheel channel=0 pitch=4003 time=0
+pitchwheel channel=0 pitch=4075 time=0
+pitchwheel channel=0 pitch=4183 time=0
+pitchwheel channel=0 pitch=4273 time=0
+pitchwheel channel=0 pitch=4417 time=0
+pitchwheel channel=0 pitch=5136 time=0
+pitchwheel channel=0 pitch=5981 time=0
+pitchwheel channel=0 pitch=6088 time=0
+pitchwheel channel=0 pitch=6160 time=0
+pitchwheel channel=0 pitch=6322 time=0
+pitchwheel channel=0 pitch=6394 time=0
+pitchwheel channel=0 pitch=6448 time=0
+pitchwheel channel=0 pitch=6520 time=0
+pitchwheel channel=0 pitch=6610 time=0
+pitchwheel channel=0 pitch=6700 time=0
+pitchwheel channel=0 pitch=6771 time=0
+pitchwheel channel=0 pitch=6700 time=0
+pitchwheel channel=0 pitch=6754 time=0
+pitchwheel channel=0 pitch=6825 time=0
+pitchwheel channel=0 pitch=7023 time=0
+pitchwheel channel=0 pitch=6969 time=0
+pitchwheel channel=0 pitch=7095 time=0
+pitchwheel channel=0 pitch=7203 time=0
+pitchwheel channel=0 pitch=7347 time=0
+pitchwheel channel=0 pitch=7401 time=0
+pitchwheel channel=0 pitch=7473 time=0
+pitchwheel channel=0 pitch=7293 time=0
+pitchwheel channel=0 pitch=7077 time=0
+pitchwheel channel=0 pitch=7203 time=0
+pitchwheel channel=0 pitch=0 time=0
+control_change channel=0 control=1 value=112 time=0
+control_change channel=0 control=1 value=113 time=0
+control_change channel=0 control=1 value=114 time=0
+control_change channel=0 control=1 value=113 time=0
+control_change channel=0 control=1 value=106 time=0
+control_change channel=0 control=1 value=100 time=0
+control_change channel=0 control=1 value=99 time=0
+control_change channel=0 control=1 value=98 time=0
+control_change channel=0 control=1 value=97 time=0
+control_change channel=0 control=1 value=95 time=0
+control_change channel=0 control=1 value=94 time=0
+control_change channel=0 control=1 value=93 time=0
+control_change channel=0 control=1 value=92 time=0
+control_change channel=0 control=1 value=85 time=0
+control_change channel=0 control=1 value=78 time=0
+control_change channel=0 control=1 value=77 time=0
+control_change channel=0 control=1 value=76 time=0
+control_change channel=0 control=1 value=74 time=0
+control_change channel=0 control=1 value=73 time=0
+control_change channel=0 control=1 value=72 time=0
+control_change channel=0 control=1 value=70 time=0
+control_change channel=0 control=1 value=63 time=0
+control_change channel=0 control=1 value=58 time=0
+control_change channel=0 control=1 value=57 time=0
+control_change channel=0 control=1 value=56 time=0
+control_change channel=0 control=1 value=54 time=0
+control_change channel=0 control=1 value=52 time=0
+control_change channel=0 control=1 value=51 time=0
+control_change channel=0 control=1 value=49 time=0
+control_change channel=0 control=1 value=35 time=0
+control_change channel=0 control=1 value=33 time=0
+control_change channel=0 control=1 value=31 time=0
+control_change channel=0 control=1 value=30 time=0
+control_change channel=0 control=1 value=29 time=0
+control_change channel=0 control=1 value=27 time=0
+control_change channel=0 control=1 value=21 time=0
+control_change channel=0 control=1 value=15 time=0
+control_change channel=0 control=1 value=14 time=0
+control_change channel=0 control=1 value=13 time=0
+control_change channel=0 control=1 value=12 time=0
+control_change channel=0 control=1 value=11 time=0
+control_change channel=0 control=1 value=9 time=0
+control_change channel=0 control=1 value=8 time=0
+control_change channel=0 control=1 value=6 time=0
+control_change channel=0 control=1 value=5 time=0
+control_change channel=0 control=1 value=4 time=0
+control_change channel=0 control=1 value=3 time=0
+control_change channel=0 control=1 value=1 time=0
+control_change channel=0 control=1 value=0 time=0
