@@ -1,8 +1,8 @@
 import GunSelector from '@/components/GunSelector';
 import ChordSelector from '@/components/ChordSelector';
-import SubBassSection from '@/components/SubBassSection';
+import SubBassPanel from '@/components/SubBassPanel';
 import EffectsPanel from '@/components/EffectsPanel';
-import TriggerSection from '@/components/TriggerSection';
+import TriggerPanel from '@/components/TriggerPanel';
 
 export default function Home() {
   return (
@@ -15,7 +15,7 @@ export default function Home() {
           <div className="space-y-6">
             <GunSelector />
             <ChordSelector />
-            <SubBassSection />
+            <SubBassPanel />
           </div>
 
           {/* RIGHT PANEL - Effects & Trigger */}
@@ -23,7 +23,7 @@ export default function Home() {
             <div className="border-2 border-gray-300 rounded-lg p-6 bg-white shadow-sm">
               <EffectsPanel />
             </div>
-            <TriggerSection />
+            <TriggerPanel />
           </div>
         </div>
       </div>
