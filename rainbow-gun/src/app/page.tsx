@@ -20,9 +20,7 @@ export default function Home() {
 
           {/* RIGHT PANEL - Effects & Trigger */}
           <div className="space-y-6">
-            <div className="border-2 border-gray-300 rounded-lg p-6 bg-white shadow-sm">
-              <EffectsPanel />
-            </div>
+            <EffectsPanel />
             <TriggerPanel />
           </div>
         </div>

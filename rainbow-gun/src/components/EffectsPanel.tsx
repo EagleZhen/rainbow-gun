@@ -2,7 +2,7 @@ import Knob from './Knob';
 
 export default function EffectsPanel() {
   return (
-    <div className="space-y-6">
+    <div className="border border-gray-300 rounded p-6 bg-white space-y-6">
       <div className="grid grid-cols-3 gap-6 justify-items-center">
         <Knob label="Master" value={0.8} subtitle="volume" />
         <Knob label="Pitch" value={0.5} subtitle="root note" />
