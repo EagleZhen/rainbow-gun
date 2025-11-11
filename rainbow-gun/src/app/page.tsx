@@ -70,13 +70,25 @@ export default function Home() {
           <div className="space-y-6">
             <GunSelector />
             <ChordSelector />
-            <SubBassPanel />
+            <SubBassPanel
+              knobValues={knobValues}
+              selectedKnob={selectedKnob}
+              onKnobSelect={handleKnobSelect}
+            />
           </div>
 
           {/* RIGHT PANEL - Effects & Trigger */}
           <div className="space-y-6">
-            <EffectsPanel />
-            <TriggerPanel />
+            <EffectsPanel
+              knobValues={knobValues}
+              selectedKnob={selectedKnob}
+              onKnobSelect={handleKnobSelect}
+            />
+            <TriggerPanel
+              knobValues={knobValues}
+              selectedKnob={selectedKnob}
+              onKnobSelect={handleKnobSelect}
+            />
           </div>
         </div>
       </div>
