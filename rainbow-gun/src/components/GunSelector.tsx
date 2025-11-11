@@ -5,7 +5,7 @@ import { guns } from '@/data/guns';
 import SelectableGridItem from './SelectableGridItem';
 
 export default function GunSelector() {
-  const [selectedGunId, setSelectedGunId] = useState<string>('');
+  const [selectedGunIds, setSelectedGunIds] = useState<Set<string>>(new Set());
   const audioRefMap = useRef<Record<string, HTMLAudioElement | null>>({});
 
   const playGunSound = (gunId: string) => {
@@ -18,7 +18,11 @@ export default function GunSelector() {
     audio.addEventListener('ended', () => {
       // Only deselect if this is still the current audio for this gun
       if (audioRefMap.current[gunId] === audio) {
-        setSelectedGunId('');
+        setSelectedGunIds(prev => {
+          const next = new Set(prev);
+          next.delete(gunId);
+          return next;
+        });
       }
     });
 
@@ -28,7 +32,7 @@ export default function GunSelector() {
   };
 
   const handleSelectGun = (gunId: string) => {
-    setSelectedGunId(gunId);
+    setSelectedGunIds(prev => new Set(prev).add(gunId));
     playGunSound(gunId);
   };
 
@@ -38,7 +42,7 @@ export default function GunSelector() {
       if (isNaN(keyNum) || keyNum < 1 || keyNum > guns.length) return;
 
       const gun = guns[keyNum - 1];
-      setSelectedGunId(gun.id);
+      setSelectedGunIds(prev => new Set(prev).add(gun.id));
       playGunSound(gun.id);
     };
 
@@ -58,7 +62,7 @@ export default function GunSelector() {
             id={gun.id}
             label={gun.name}
             imageUrl={gun.imageUrl}
-            isSelected={selectedGunId === gun.id}
+            isSelected={selectedGunIds.has(gun.id)}
             onClick={handleSelectGun}
           />
         ))}
