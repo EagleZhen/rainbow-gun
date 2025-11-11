@@ -21,6 +21,7 @@ export default function Knob({
   subtitle,
   rainbow = false
 }: KnobProps) {
+  // Maps value to rotation: 270° range from -135° (left) to +135° (right)
   const rotation = (value - min) / (max - min) * 270 - 135;
 
   return (
