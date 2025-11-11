@@ -8,19 +8,17 @@ export default function TriggerPanel({
 }: PanelProps) {
   return (
     <div className="border border-gray-300 rounded p-6 bg-white">
-      <div className="text-xs font-semibold mb-3 text-center">TRIGGER</div>
-      <div className="flex flex-col items-center gap-6">
-        <div className="w-32 h-32 border border-gray-300 rounded" />
-        <div className="flex flex-col items-center gap-2">
-          <Knob
-            id="fireRate"
-            label="Fire Rate"
-            value={knobValues.fireRate}
-            subtitle="Single ← → Burst"
-            isSelected={selectedKnob === 'fireRate'}
-            onSelect={onKnobSelect}
-          />
-        </div>
+      <div className="text-xs font-semibold mb-3">TRIGGER</div>
+      <div className="flex items-center gap-6">
+        <div className="w-36 h-36 border border-gray-300 rounded shrink-0" />
+        <Knob
+          id="fireRate"
+          label="Fire Rate"
+          value={knobValues.fireRate}
+          subtitle="Single ← → Burst"
+          isSelected={selectedKnob === 'fireRate'}
+          onSelect={onKnobSelect}
+        />
       </div>
     </div>
   );
