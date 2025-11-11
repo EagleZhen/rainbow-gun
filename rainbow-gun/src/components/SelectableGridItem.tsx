@@ -9,7 +9,14 @@ interface SelectableGridItemProps {
   imageUrl: string;
   isSelected: boolean;
   onClick: (id: string) => void;
+  size?: 'sm' | 'md' | 'lg';
 }
+
+const sizeClasses = {
+  sm: 'w-10 h-10',
+  md: 'w-14 h-14',
+  lg: 'w-18 h-18',
+};
 
 export default function SelectableGridItem({
   id,
@@ -17,6 +24,7 @@ export default function SelectableGridItem({
   imageUrl,
   isSelected,
   onClick,
+  size = 'md',
 }: SelectableGridItemProps) {
   const [imageError, setImageError] = useState(false);
 
@@ -30,7 +38,7 @@ export default function SelectableGridItem({
       }`}
       title={label}
     >
-      <div className="relative w-12 h-12">
+      <div className={`relative ${sizeClasses[size]}`}>
         {!imageError ? (
           <Image
             src={imageUrl}
