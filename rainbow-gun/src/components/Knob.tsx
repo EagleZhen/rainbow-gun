@@ -1,19 +1,41 @@
 interface KnobProps {
+  id: string;
   label: string;
-  value?: number;
+  value: number;
   min?: number;
   max?: number;
-  onChange?: (value: number) => void;
+  isSelected?: boolean;
+  onSelect?: (id: string) => void;
   subtitle?: string;
   rainbow?: boolean;
 }
 
-export default function Knob({ label, value = 0.5, min = 0, max = 1, subtitle, rainbow = false }: KnobProps) {
+export default function Knob({
+  id,
+  label,
+  value,
+  min = 0,
+  max = 1,
+  isSelected = false,
+  onSelect,
+  subtitle,
+  rainbow = false
+}: KnobProps) {
   const rotation = (value - min) / (max - min) * 270 - 135;
 
   return (
-    <div className="flex flex-col items-center gap-1">
-      <div className={`relative w-12 h-12 rounded-full border-2 border-gray-400 ${rainbow ? 'bg-gradient-to-r from-red-400 via-yellow-400 via-green-400 via-blue-400 to-purple-400' : 'bg-white'}`}>
+    <div
+      className="flex flex-col items-center gap-1 cursor-pointer"
+      onClick={() => onSelect?.(id)}
+    >
+      {/* Knob circle */}
+      <div
+        className={`relative w-12 h-12 rounded-full border-2 transition-all ${
+          isSelected
+            ? 'border-blue-500 shadow-lg shadow-blue-300'
+            : 'border-gray-300'
+        } ${rainbow ? 'bg-gradient-to-r from-red-400 via-yellow-400 via-green-400 via-blue-400 to-purple-400' : 'bg-white'}`}
+      >
         {!rainbow && (
           <div
             className="absolute w-0.5 h-4 bg-black rounded-full left-1/2 top-2"
@@ -24,7 +46,16 @@ export default function Knob({ label, value = 0.5, min = 0, max = 1, subtitle, r
           />
         )}
       </div>
+
+      {/* Label */}
       <span className="text-xs font-medium uppercase">{label}</span>
+
+      {/* Value display */}
+      <span className="text-[10px] font-mono tabular-nums">
+        {value.toFixed(2)}
+      </span>
+
+      {/* Subtitle */}
       {subtitle && <span className="text-[10px]">({subtitle})</span>}
     </div>
   );
