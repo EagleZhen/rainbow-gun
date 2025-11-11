@@ -15,16 +15,20 @@ export default function GunSelector() {
     const audio = new Audio(gun.soundUrl);
     audioRefMap.current[gunId] = audio;
 
-    audio.addEventListener('ended', () => {
-      // Only deselect if this is still the current audio for this gun
-      if (audioRefMap.current[gunId] === audio) {
-        setSelectedGunIds(prev => {
-          const next = new Set(prev);
-          next.delete(gunId);
-          return next;
-        });
-      }
-    });
+    audio.addEventListener(
+      'ended',
+      () => {
+        // Only deselect if this is still the current audio for this gun
+        if (audioRefMap.current[gunId] === audio) {
+          setSelectedGunIds(prev => {
+            const next = new Set(prev);
+            next.delete(gunId);
+            return next;
+          });
+        }
+      },
+      { once: true }
+    );
 
     audio.play().catch(() => {
       // Silently fail if audio can't play
