@@ -5,13 +5,16 @@ import { guns } from '@/data/guns';
 import SelectableGridItem from './SelectableGridItem';
 
 export default function GunSelector() {
-  const [selectedGunId, setSelectedGunId] = useState<string>('scout');
+  const [selectedGunId, setSelectedGunId] = useState<string>('');
 
   const playGunSound = (gunId: string) => {
     const gun = guns.find(g => g.id === gunId);
     if (!gun) return;
 
     const audio = new Audio(gun.soundUrl);
+    audio.addEventListener('ended', () => {
+      setSelectedGunId('');
+    });
     audio.play().catch(() => {
       // Silently fail if audio can't play
     });
