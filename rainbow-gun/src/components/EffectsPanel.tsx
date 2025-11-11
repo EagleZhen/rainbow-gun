@@ -1,25 +1,99 @@
 import Knob from './Knob';
+import type { PanelProps } from '@/types/panel';
 
-export default function EffectsPanel() {
+export default function EffectsPanel({
+  knobValues,
+  selectedKnob,
+  onKnobSelect
+}: PanelProps) {
   return (
     <div className="border border-gray-300 rounded p-6 bg-white space-y-6">
       <div className="grid grid-cols-3 gap-6 justify-items-center">
-        <Knob label="Master" value={0.8} subtitle="volume" />
-        <Knob label="Pitch" value={0.5} subtitle="root note" />
-        <Knob label="Reverb" value={0.3} />
+        <Knob
+          id="master"
+          label="Master"
+          value={knobValues.master}
+          subtitle="volume"
+          isSelected={selectedKnob === 'master'}
+          onSelect={onKnobSelect}
+        />
+        <Knob
+          id="pitch"
+          label="Pitch"
+          value={knobValues.pitch}
+          subtitle="root note"
+          isSelected={selectedKnob === 'pitch'}
+          onSelect={onKnobSelect}
+        />
+        <Knob
+          id="reverb"
+          label="Reverb"
+          value={knobValues.reverb}
+          isSelected={selectedKnob === 'reverb'}
+          onSelect={onKnobSelect}
+        />
       </div>
 
       <div className="grid grid-cols-3 gap-6 justify-items-center">
-        <Knob label="Rainbowlize" value={0.7} subtitle="wet/dry" rainbow />
-        <Knob label="Power" value={0.6} subtitle="distortion" />
-        <Knob label="Oct" value={0.5} />
+        <Knob
+          id="rainbowlize"
+          label="Rainbowlize"
+          value={knobValues.rainbowlize}
+          subtitle="wet/dry"
+          rainbow
+          isSelected={selectedKnob === 'rainbowlize'}
+          onSelect={onKnobSelect}
+        />
+        <Knob
+          id="power"
+          label="Power"
+          value={knobValues.power}
+          subtitle="distortion"
+          isSelected={selectedKnob === 'power'}
+          onSelect={onKnobSelect}
+        />
+        <Knob
+          id="oct"
+          label="Oct"
+          value={knobValues.oct}
+          isSelected={selectedKnob === 'oct'}
+          onSelect={onKnobSelect}
+        />
       </div>
 
       <div className="grid grid-cols-4 gap-4 justify-items-center">
-        <Knob label="Sub Level" value={0.4} subtitle="volume" />
-        <Knob label="Sub Power" value={0.5} subtitle="distortion" />
-        <Knob label="Sub Punch" value={0.6} subtitle="pitch drop" />
-        <Knob label="Sub Fuzz" value={0.3} subtitle="white noise" />
+        <Knob
+          id="subLevel"
+          label="Sub Level"
+          value={knobValues.subLevel}
+          subtitle="volume"
+          isSelected={selectedKnob === 'subLevel'}
+          onSelect={onKnobSelect}
+        />
+        <Knob
+          id="subPower"
+          label="Sub Power"
+          value={knobValues.subPower}
+          subtitle="distortion"
+          isSelected={selectedKnob === 'subPower'}
+          onSelect={onKnobSelect}
+        />
+        <Knob
+          id="subPunch"
+          label="Sub Punch"
+          value={knobValues.subPunch}
+          subtitle="pitch drop"
+          isSelected={selectedKnob === 'subPunch'}
+          onSelect={onKnobSelect}
+        />
+        <Knob
+          id="subFuzz"
+          label="Sub Fuzz"
+          value={knobValues.subFuzz}
+          subtitle="white noise"
+          isSelected={selectedKnob === 'subFuzz'}
+          onSelect={onKnobSelect}
+        />
       </div>
     </div>
   );
