@@ -1,20 +1,27 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { guns } from '@/data/guns';
 import SelectableGridItem from './SelectableGridItem';
 
 export default function GunSelector() {
   const [selectedGunId, setSelectedGunId] = useState<string>('');
+  const audioRefMap = useRef<Record<string, HTMLAudioElement | null>>({});
 
   const playGunSound = (gunId: string) => {
     const gun = guns.find(g => g.id === gunId);
     if (!gun) return;
 
     const audio = new Audio(gun.soundUrl);
+    audioRefMap.current[gunId] = audio;
+
     audio.addEventListener('ended', () => {
-      setSelectedGunId('');
+      // Only deselect if this is still the current audio for this gun
+      if (audioRefMap.current[gunId] === audio) {
+        setSelectedGunId('');
+      }
     });
+
     audio.play().catch(() => {
       // Silently fail if audio can't play
     });
