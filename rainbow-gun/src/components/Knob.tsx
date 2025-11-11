@@ -8,6 +8,8 @@ interface KnobProps {
   rainbow?: boolean;
 }
 
+const RAINBOW_GRADIENT = 'linear-gradient(to right, #FF4444, #FF8C00, #FFD700, #22DD88, #4466FF, #BB55FF)';
+
 export default function Knob({
   id,
   label,
@@ -33,7 +35,7 @@ export default function Knob({
             : 'border-gray-300'
         } ${!rainbow ? 'bg-white' : ''}`}
         style={rainbow ? {
-          background: 'linear-gradient(to right, #FF4444, #FF8C00, #FFD700, #22DD88, #4466FF, #BB55FF)',
+          background: RAINBOW_GRADIENT,
           filter: `saturate(${value})`
         } : undefined}
       >
