@@ -35,7 +35,11 @@ export default function Knob({
           isSelected
             ? 'border-blue-500 shadow-lg shadow-blue-300'
             : 'border-gray-300'
-        } ${rainbow ? 'bg-gradient-to-r from-red-400 via-yellow-400 via-green-400 via-blue-400 to-purple-400' : 'bg-white'}`}
+        } ${!rainbow ? 'bg-white' : ''}`}
+        style={rainbow ? {
+          background: 'linear-gradient(to right, #FF4444, #FF8C00, #FFD700, #22DD88, #4466FF, #BB55FF)',
+          filter: `saturate(${value})`
+        } : undefined}
       >
         {!rainbow && (
           <div
