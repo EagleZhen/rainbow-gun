@@ -31,7 +31,7 @@ export default function Home() {
   });
 
   const handleKnobSelect = (knobId: string) => {
-    setSelectedKnob(knobId);
+    setSelectedKnob(prev => prev === knobId ? null : knobId);
   };
 
   const STEP = 0.02;
