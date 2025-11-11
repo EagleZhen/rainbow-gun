@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { guns } from '@/data/guns';
 import SelectableGridItem from './SelectableGridItem';
 
@@ -31,6 +31,20 @@ export default function GunSelector() {
     setSelectedGunId(gunId);
     playGunSound(gunId);
   };
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const keyNum = parseInt(e.key);
+      if (isNaN(keyNum) || keyNum < 1 || keyNum > guns.length) return;
+
+      const gun = guns[keyNum - 1];
+      setSelectedGunId(gun.id);
+      playGunSound(gun.id);
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   return (
     <div className="border border-gray-300 rounded p-4 bg-white">
