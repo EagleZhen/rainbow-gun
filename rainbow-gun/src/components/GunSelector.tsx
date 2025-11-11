@@ -8,9 +8,11 @@ export default function GunSelector() {
   const [selectedGunIds, setSelectedGunIds] = useState<Set<string>>(new Set());
   const audioRefMap = useRef<Record<string, HTMLAudioElement | null>>({});
 
-  const playGunSound = (gunId: string) => {
+  const handleSelectGun = (gunId: string) => {
     const gun = guns.find(g => g.id === gunId);
     if (!gun) return;
+
+    setSelectedGunIds(prev => new Set(prev).add(gunId));
 
     const audio = new Audio(gun.soundUrl);
     audioRefMap.current[gunId] = audio;
@@ -18,7 +20,6 @@ export default function GunSelector() {
     audio.addEventListener(
       'ended',
       () => {
-        // Only deselect if this is still the current audio for this gun
         if (audioRefMap.current[gunId] === audio) {
           setSelectedGunIds(prev => {
             const next = new Set(prev);
@@ -30,24 +31,41 @@ export default function GunSelector() {
       { once: true }
     );
 
-    audio.play().catch(() => {
-      // Silently fail if audio can't play
-    });
-  };
-
-  const handleSelectGun = (gunId: string) => {
-    setSelectedGunIds(prev => new Set(prev).add(gunId));
-    playGunSound(gunId);
+    audio.play().catch(() => {});
   };
 
   useEffect(() => {
+    const playSound = (gunId: string) => {
+      const gun = guns.find(g => g.id === gunId);
+      if (!gun) return;
+
+      const audio = new Audio(gun.soundUrl);
+      audioRefMap.current[gunId] = audio;
+
+      audio.addEventListener(
+        'ended',
+        () => {
+          if (audioRefMap.current[gunId] === audio) {
+            setSelectedGunIds(prev => {
+              const next = new Set(prev);
+              next.delete(gunId);
+              return next;
+            });
+          }
+        },
+        { once: true }
+      );
+
+      audio.play().catch(() => {});
+    };
+
     const handleKeyDown = (e: KeyboardEvent) => {
       const keyNum = parseInt(e.key);
       if (isNaN(keyNum) || keyNum < 1 || keyNum > guns.length) return;
 
       const gun = guns[keyNum - 1];
       setSelectedGunIds(prev => new Set(prev).add(gun.id));
-      playGunSound(gun.id);
+      playSound(gun.id);
     };
 
     window.addEventListener('keydown', handleKeyDown);
