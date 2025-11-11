@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import GunSelector from '@/components/GunSelector';
 import ChordSelector from '@/components/ChordSelector';
 import SubBassPanel from '@/components/SubBassPanel';
@@ -34,12 +34,31 @@ export default function Home() {
     setSelectedKnob(knobId);
   };
 
-  const updateKnobValue = (knobId: string, newValue: number) => {
-    setKnobValues(prev => ({
-      ...prev,
-      [knobId]: Math.max(0, Math.min(1, newValue))
-    }));
-  };
+  const STEP = 0.02;
+  const clampValue = (value: number) => Math.max(0, Math.min(1, value));
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (!selectedKnob) return;
+
+      let delta = 0;
+      if (e.key === 'ArrowUp') delta = STEP;
+      else if (e.key === 'ArrowDown') delta = -STEP;
+      else return;
+
+      e.preventDefault();
+      setKnobValues(prev => {
+        const currentValue = prev[selectedKnob as keyof typeof prev];
+        return {
+          ...prev,
+          [selectedKnob]: clampValue(currentValue + delta)
+        };
+      });
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedKnob]);
 
   return (
     <div className="min-h-screen p-8 bg-gray-50">
