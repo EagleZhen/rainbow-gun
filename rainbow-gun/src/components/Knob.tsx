@@ -2,8 +2,6 @@ interface KnobProps {
   id: string;
   label: string;
   value: number;
-  min?: number;
-  max?: number;
   isSelected?: boolean;
   onSelect?: (id: string) => void;
   subtitle?: string;
@@ -14,15 +12,13 @@ export default function Knob({
   id,
   label,
   value,
-  min = 0,
-  max = 1,
   isSelected = false,
   onSelect,
   subtitle,
   rainbow = false
 }: KnobProps) {
-  // Maps value to rotation: 270° range from -135° (left) to +135° (right)
-  const rotation = (value - min) / (max - min) * 270 - 135;
+  // Maps value (0-1) to rotation: 270° range from -135° (left) to +135° (right)
+  const rotation = value * 270 - 135;
 
   return (
     <div
