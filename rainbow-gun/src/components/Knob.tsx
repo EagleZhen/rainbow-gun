@@ -39,7 +39,7 @@ export default function Knob({
       >
         {!rainbow && (
           <div
-            className="absolute w-0.5 h-4 bg-black rounded-full left-1/2 top-2"
+            className="absolute w-px h-4 bg-black rounded-full left-1/2 top-2"
             style={{
               transform: `translateX(-50%) rotate(${rotation}deg)`,
               transformOrigin: 'center 16px'
