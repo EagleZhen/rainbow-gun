@@ -34,7 +34,7 @@ export default function Home() {
     setSelectedKnob(prev => prev === knobId ? null : knobId);
   };
 
-  const STEP = 0.02;
+  const KNOB_ADJUSTMENT_STEP = 0.02; // 2% adjustment per keypress
   const clampValue = (value: number) => Math.max(0, Math.min(1, value));
 
   useEffect(() => {
@@ -42,8 +42,8 @@ export default function Home() {
       if (!selectedKnob) return;
 
       let delta = 0;
-      if (e.key === 'ArrowUp') delta = STEP;
-      else if (e.key === 'ArrowDown') delta = -STEP;
+      if (e.key === 'ArrowUp') delta = KNOB_ADJUSTMENT_STEP;
+      else if (e.key === 'ArrowDown') delta = -KNOB_ADJUSTMENT_STEP;
       else return;
 
       e.preventDefault();
