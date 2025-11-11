@@ -31,7 +31,7 @@ export default function SelectableGridItem({
   return (
     <button
       onClick={() => onClick(id)}
-      className={`flex flex-col items-center gap-2 p-3 rounded border-2 transition-colors cursor-pointer ${
+      className={`flex flex-col items-center gap-2 p-3 rounded border transition-colors cursor-pointer ${
         isSelected
           ? 'border-blue-500 bg-blue-50'
           : 'border-gray-300 bg-white hover:bg-gray-100'
