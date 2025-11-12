@@ -56,7 +56,7 @@ export default function GunSelector() {
         { once: true }
       );
 
-      audio.play().catch(() => {});
+      audio.play().catch((error) => console.error('Failed to play audio:', error)); 
     };
 
     const handleKeyDown = (e: KeyboardEvent) => {
