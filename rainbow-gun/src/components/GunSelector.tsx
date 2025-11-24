@@ -1,38 +1,35 @@
 'use client';
 
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { guns } from '@/data/guns';
 import SelectableGridItem from './SelectableGridItem';
+import { useAudioEngine } from '@/hooks/useAudioEngine';
 
 export default function GunSelector() {
   const [selectedGunIds, setSelectedGunIds] = useState<Set<string>>(new Set());
-  const audioRefMap = useRef<Record<string, HTMLAudioElement | null>>({});
+  const { engine, initEngine, ready } = useAudioEngine();
 
   const playGunSound = useCallback((gunId: string) => {
-    const gun = guns.find(g => g.id === gunId);
-    if (!gun) return;
+    if (!engine || !ready) return;
 
+    // Initialize audio context on first interaction
+    initEngine().catch(console.error);
+
+    // Play gun sound
     setSelectedGunIds(prev => new Set(prev).add(gunId));
+    engine.playGun(gunId);
 
-    const audio = new Audio(gun.soundUrl);
-    audioRefMap.current[gunId] = audio;
+    // Auto-deselect after sound duration (estimate: 1 second for gun samples)
+    const timeout = setTimeout(() => {
+      setSelectedGunIds(prev => {
+        const next = new Set(prev);
+        next.delete(gunId);
+        return next;
+      });
+    }, 1000);
 
-    audio.addEventListener(
-      'ended',
-      () => {
-        if (audioRefMap.current[gunId] === audio) {
-          setSelectedGunIds(prev => {
-            const next = new Set(prev);
-            next.delete(gunId);
-            return next;
-          });
-        }
-      },
-      { once: true }
-    );
-
-    audio.play().catch(() => {});
-  }, []);
+    return () => clearTimeout(timeout);
+  }, [engine, initEngine, ready]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
