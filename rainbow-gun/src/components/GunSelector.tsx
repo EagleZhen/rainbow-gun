@@ -46,7 +46,13 @@ export default function GunSelector() {
 
   return (
     <div className="border border-gray-300 rounded p-4 bg-white">
-      <div className="text-xs font-semibold mb-3">GUN SELECTOR</div>
+      <div className="flex items-center justify-between mb-3">
+        <div className="text-xs font-semibold">GUN SELECTOR</div>
+        <div className="flex items-center gap-1.5 text-xs text-gray-500">
+          <div className={`w-2 h-2 rounded-full transition-colors ${ready ? 'bg-green-600' : 'bg-gray-400'}`}></div>
+          <span className="text-gray-600">{ready ? 'Ready' : 'Loading'}</span>
+        </div>
+      </div>
 
       {/* Guns grid */}
       <div className="grid grid-cols-3 gap-2">
