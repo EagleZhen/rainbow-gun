@@ -1,38 +1,33 @@
 'use client';
 
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { guns } from '@/data/guns';
 import SelectableGridItem from './SelectableGridItem';
+import { useAudioEngine } from '@/hooks/useAudioEngine';
 
 export default function GunSelector() {
   const [selectedGunIds, setSelectedGunIds] = useState<Set<string>>(new Set());
-  const audioRefMap = useRef<Record<string, HTMLAudioElement | null>>({});
+  const { engine, initEngine, ready } = useAudioEngine();
 
-  const playGunSound = useCallback((gunId: string) => {
-    const gun = guns.find(g => g.id === gunId);
-    if (!gun) return;
+  const playGunSound = useCallback(async (gunId: string) => {
+    if (!engine || !ready) return;
 
+    // Initialize audio context on first interaction
+    await initEngine();
+
+    // Play gun sound
     setSelectedGunIds(prev => new Set(prev).add(gunId));
+    engine.playGun(gunId);
 
-    const audio = new Audio(gun.soundUrl);
-    audioRefMap.current[gunId] = audio;
-
-    audio.addEventListener(
-      'ended',
-      () => {
-        if (audioRefMap.current[gunId] === audio) {
-          setSelectedGunIds(prev => {
-            const next = new Set(prev);
-            next.delete(gunId);
-            return next;
-          });
-        }
-      },
-      { once: true }
-    );
-
-    audio.play().catch(() => {});
-  }, []);
+    // Auto-deselect after sound duration (estimate: 1 second for gun samples)
+    setTimeout(() => {
+      setSelectedGunIds(prev => {
+        const next = new Set(prev);
+        next.delete(gunId);
+        return next;
+      });
+    }, 1000);
+  }, [engine, initEngine, ready]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -40,7 +35,7 @@ export default function GunSelector() {
       if (isNaN(keyNum) || keyNum < 1 || keyNum > guns.length) return;
 
       const gun = guns[keyNum - 1];
-      playGunSound(gun.id);
+      playGunSound(gun.id).catch(console.error);
     };
 
     window.addEventListener('keydown', handleKeyDown);
@@ -49,7 +44,13 @@ export default function GunSelector() {
 
   return (
     <div className="border border-gray-300 rounded p-4 bg-white">
-      <div className="text-xs font-semibold mb-3">GUN SELECTOR</div>
+      <div className="flex items-center justify-between mb-3">
+        <div className="text-xs font-semibold">GUN SELECTOR</div>
+        <div className="flex items-center gap-1.5 text-xs text-gray-500">
+          <div className={`w-2 h-2 rounded-full transition-colors ${ready ? 'bg-green-600' : 'bg-gray-400'}`}></div>
+          <span className="text-gray-600">{ready ? 'Ready' : 'Loading'}</span>
+        </div>
+      </div>
 
       {/* Guns grid */}
       <div className="grid grid-cols-3 gap-2">
