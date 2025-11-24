@@ -9,26 +9,24 @@ export default function GunSelector() {
   const [selectedGunIds, setSelectedGunIds] = useState<Set<string>>(new Set());
   const { engine, initEngine, ready } = useAudioEngine();
 
-  const playGunSound = useCallback((gunId: string) => {
+  const playGunSound = useCallback(async (gunId: string) => {
     if (!engine || !ready) return;
 
     // Initialize audio context on first interaction
-    initEngine().catch(console.error);
+    await initEngine();
 
     // Play gun sound
     setSelectedGunIds(prev => new Set(prev).add(gunId));
     engine.playGun(gunId);
 
     // Auto-deselect after sound duration (estimate: 1 second for gun samples)
-    const timeout = setTimeout(() => {
+    setTimeout(() => {
       setSelectedGunIds(prev => {
         const next = new Set(prev);
         next.delete(gunId);
         return next;
       });
     }, 1000);
-
-    return () => clearTimeout(timeout);
   }, [engine, initEngine, ready]);
 
   useEffect(() => {
@@ -37,7 +35,7 @@ export default function GunSelector() {
       if (isNaN(keyNum) || keyNum < 1 || keyNum > guns.length) return;
 
       const gun = guns[keyNum - 1];
-      playGunSound(gun.id);
+      playGunSound(gun.id).catch(console.error);
     };
 
     window.addEventListener('keydown', handleKeyDown);
