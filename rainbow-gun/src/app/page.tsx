@@ -8,11 +8,13 @@ import EffectsPanel from '@/components/EffectsPanel';
 import TriggerPanel from '@/components/TriggerPanel';
 import DebugPanel from '@/components/DebugPanel';
 import { useAudioEngine } from '@/hooks/useAudioEngine';
+import { useMIDI } from '@/hooks/useMIDI';
 import { knobValueToPitchIndex, PITCH_STEP, DEFAULT_PITCH } from '@/data/notes';
 import { guns } from '@/data/guns';
 
 export default function Home() {
   const { engine, initEngine } = useAudioEngine();
+  const { isSupported, midiAccess, midiDevices, error, requestMIDIAccess } = useMIDI();
   const [selectedKnob, setSelectedKnob] = useState<string | null>(null);
   const [selectedChord, setSelectedChord] = useState<'major' | 'minor'>('major');
   const [selectedGunIds, setSelectedGunIds] = useState<Set<string>>(new Set());
@@ -124,6 +126,18 @@ export default function Home() {
     };
   }, []);
 
+  // Build debug items from MIDI state
+  const debugItems = [
+    { label: 'MIDI Supported', value: isSupported ? 'Yes' : 'No' },
+    { label: 'MIDI Access', value: midiAccess ? 'Granted' : 'Not Granted' },
+    { label: 'Devices', value: String(midiDevices.length) },
+    ...(midiDevices.length > 0 ? [{
+      label: 'Device Names',
+      value: midiDevices.map(d => d.name).join(', ')
+    }] : []),
+    ...(error ? [{ label: 'MIDI Error', value: error }] : []),
+  ];
+
   return (
     <div className="min-h-screen p-8 bg-gray-50">
       <div className="max-w-7xl mx-auto">
@@ -157,7 +171,7 @@ export default function Home() {
         </div>
 
         {/* Debug Panel */}
-        <DebugPanel />
+        <DebugPanel items={debugItems} onRequestMIDI={requestMIDIAccess} />
       </div>
     </div>
   );
