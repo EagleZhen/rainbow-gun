@@ -6,8 +6,10 @@ import ChordSelector from '@/components/ChordSelector';
 import SubBassPanel from '@/components/SubBassPanel';
 import EffectsPanel from '@/components/EffectsPanel';
 import TriggerPanel from '@/components/TriggerPanel';
+import { useAudioEngine } from '@/hooks/useAudioEngine';
 
 export default function Home() {
+  const { engine } = useAudioEngine();
   const [selectedKnob, setSelectedKnob] = useState<string | null>(null);
   const [knobValues, setKnobValues] = useState({
     // Sub Bass
@@ -36,6 +38,13 @@ export default function Home() {
 
   const KNOB_ADJUSTMENT_STEP = 0.02; // 2% adjustment per keypress
   const clampValue = (value: number) => Math.max(0, Math.min(1, value));
+
+  // Wire rainbowlize knob to AudioEngine crossfade
+  useEffect(() => {
+    if (engine) {
+      engine.setCrossfadeAmount(knobValues.rainbowlize);
+    }
+  }, [engine, knobValues.rainbowlize]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
