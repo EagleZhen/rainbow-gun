@@ -103,11 +103,11 @@ export default function Home() {
         return;
       }
 
-      // Handle number keys for gun selection/firing
-      const keyNum = parseInt(e.key);
-      if (!isNaN(keyNum) && keyNum >= 1 && keyNum <= guns.length) {
-        const gun = guns[keyNum - 1];
-        fireGun(gun.id);
+      // Handle Q/W/E keys for gun selection/firing (remapped from 1/2/3 to avoid MIDI conflicts)
+      const gunKeyMap: Record<string, number> = { 'q': 0, 'w': 1, 'e': 2 };
+      const gunIndex = gunKeyMap[e.key.toLowerCase()];
+      if (gunIndex !== undefined && gunIndex < guns.length) {
+        fireGun(guns[gunIndex].id);
       }
     };
 
