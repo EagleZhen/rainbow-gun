@@ -103,7 +103,8 @@ export default function Home() {
         return;
       }
 
-      // Handle Q/W/E keys for gun selection/firing (remapped from 1/2/3 to avoid MIDI conflicts)
+      // Handle Q/W/E keys for gun selection/firing
+      // Remapped from 1/2/3 to avoid conflict with the default key on the rainbow gun
       const gunKeyMap: Record<string, number> = { 'q': 0, 'w': 1, 'e': 2 };
       const gunIndex = gunKeyMap[e.key.toLowerCase()];
       if (gunIndex !== undefined && gunIndex < guns.length) {
