@@ -10,8 +10,9 @@ export interface Gun {
 
 /**
  * Build wet sample file path
- * Format: {wetSampleDir}/{fileIndex} {noteName} {chordType}.wav
- * Example: /guns/scout/1%20c%23%20maj.wav
+ * Format: {wetSampleDir}/{fileIndex}_{noteName}_{chordType}.wav
+ * Example: /guns/scout/1_c_maj.wav
+ * Note: # is replaced with note name suffix (e.g., c# → csharp), underscores are used as delimiters instead of spaces
  */
 export function getWetSamplePath(
   wetSampleDir: string,
@@ -21,8 +22,12 @@ export function getWetSamplePath(
   const fileIndex = pitchIndexToFileIndex(pitchIndex);
   const noteName = pitchIndexToNote(pitchIndex);
   const suffix = chordType === 'major' ? 'maj' : 'min';
-  const fileName = `${fileIndex} ${noteName} ${suffix}.wav`;
-  return `${wetSampleDir}/${encodeURIComponent(fileName)}`;
+
+  // Replace # with 'sharp' to match renamed files (c# → csharp)
+  const normalizedNoteName = noteName.replace('#', 'sharp');
+
+  const fileName = `${fileIndex}_${normalizedNoteName}_${suffix}.wav`;
+  return `${wetSampleDir}/${fileName}`;
 }
 
 export const guns: Gun[] = [
