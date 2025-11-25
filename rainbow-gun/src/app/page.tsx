@@ -129,7 +129,14 @@ export default function Home() {
   // Subscribe to MIDI messages and log them to console for testing
   useEffect(() => {
     const unsubscribe = onMIDIMessage((event) => {
-      const status = event.data[0] & 0xf0;
+      const byte0 = event.data[0];
+
+      // Skip system real-time messages (0xF8 = Timing Clock, etc.)
+      if (byte0 >= 0xf8) {
+        return;
+      }
+
+      const status = byte0 & 0xf0;
       const data1 = event.data[1];
       const data2 = event.data[2];
 
@@ -141,7 +148,7 @@ export default function Home() {
       } else if (status === 0x80) {
         messageType = `Note Off ${data1}`;
       } else {
-        messageType = `Unknown [${event.data[0]}, ${data1}, ${data2}]`;
+        messageType = `Unknown [${byte0}, ${data1}, ${data2}]`;
       }
 
       console.log(`[MIDI] ${event.deviceName}: ${messageType}`);
