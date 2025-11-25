@@ -61,6 +61,12 @@ export default function Home() {
     }
   }, [engine, knobValues.rainbowlize]);
 
+  // Wire pitch knob to selected pitch (0-1 → 0-11)
+  useEffect(() => {
+    const pitchIndex = Math.round(knobValues.pitch * 11);
+    setSelectedPitch(pitchIndex);
+  }, [knobValues.pitch]);
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (!selectedKnob) return;
@@ -107,6 +113,7 @@ export default function Home() {
               knobValues={knobValues}
               selectedKnob={selectedKnob}
               onKnobSelect={handleKnobSelect}
+              selectedPitch={selectedPitch}
             />
             <TriggerPanel
               knobValues={knobValues}
