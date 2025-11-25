@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import GunSelector from '@/components/GunSelector';
 import ChordSelector from '@/components/ChordSelector';
 import SubBassPanel from '@/components/SubBassPanel';
@@ -8,6 +8,7 @@ import EffectsPanel from '@/components/EffectsPanel';
 import TriggerPanel from '@/components/TriggerPanel';
 import { useAudioEngine } from '@/hooks/useAudioEngine';
 import { knobValueToPitchIndex } from '@/data/notes';
+import { guns } from '@/data/guns';
 
 export default function Home() {
   const { engine, initEngine } = useAudioEngine();
@@ -43,7 +44,7 @@ export default function Home() {
   const clampValue = (value: number) => Math.max(0, Math.min(1, value));
 
   // Fire trigger: play dry gun + wet sample with selected pitch/chord
-  const handleFireWithGun = async (gunId: string) => {
+  const handleFireWithGun = useCallback(async (gunId: string) => {
     setSelectedGun(gunId);
 
     if (!engine) return;
@@ -54,10 +55,7 @@ export default function Home() {
     // Play both dry and wet sounds with the fired gun
     engine.playGun(gunId);
     engine.playWetGun(gunId, knobValueToPitchIndex(knobValues.pitch), selectedChord);
-  };
-
-  // Convenience wrapper for firing with currently selected gun
-  const handleFire = () => handleFireWithGun(selectedGun);
+  }, [engine, initEngine, knobValues.pitch, selectedChord]);
 
   // Wire rainbowlize knob to AudioEngine crossfade
   useEffect(() => {
@@ -68,26 +66,31 @@ export default function Home() {
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (!selectedKnob) return;
+      // Handle arrow keys for knob adjustment (only if a knob is selected)
+      if (selectedKnob && (e.key === 'ArrowUp' || e.key === 'ArrowDown')) {
+        const delta = e.key === 'ArrowUp' ? KNOB_ADJUSTMENT_STEP : -KNOB_ADJUSTMENT_STEP;
+        e.preventDefault();
+        setKnobValues(prev => {
+          const currentValue = prev[selectedKnob as keyof typeof prev];
+          return {
+            ...prev,
+            [selectedKnob]: clampValue(currentValue + delta)
+          };
+        });
+        return;
+      }
 
-      let delta = 0;
-      if (e.key === 'ArrowUp') delta = KNOB_ADJUSTMENT_STEP;
-      else if (e.key === 'ArrowDown') delta = -KNOB_ADJUSTMENT_STEP;
-      else return;
-
-      e.preventDefault();
-      setKnobValues(prev => {
-        const currentValue = prev[selectedKnob as keyof typeof prev];
-        return {
-          ...prev,
-          [selectedKnob]: clampValue(currentValue + delta)
-        };
-      });
+      // Handle number keys for gun selection/firing
+      const keyNum = parseInt(e.key);
+      if (!isNaN(keyNum) && keyNum >= 1 && keyNum <= guns.length) {
+        const gun = guns[keyNum - 1];
+        handleFireWithGun(gun.id);
+      }
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [selectedKnob]);
+  }, [selectedKnob, handleFireWithGun]);
 
   return (
     <div className="min-h-screen p-8 bg-gray-50">

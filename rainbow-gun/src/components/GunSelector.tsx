@@ -38,18 +38,6 @@ export default function GunSelector({ selectedGun, onFire }: GunSelectorProps) {
     }, 1000);
   }, [onFire]);
 
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      const keyNum = parseInt(e.key);
-      if (isNaN(keyNum) || keyNum < 1 || keyNum > guns.length) return;
-
-      const gun = guns[keyNum - 1];
-      handleFireGun(gun.id);
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [handleFireGun]);
 
   // Cleanup timeouts on unmount
   useEffect(() => {
