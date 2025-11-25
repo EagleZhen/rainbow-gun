@@ -1,5 +1,6 @@
 import * as Tone from 'tone';
 import { guns, getWetSamplePath } from '@/data/guns';
+import { createPlayerPool, getNextPlayerFromPool, disposePlayerPool } from './player-pool';
 
 /**
  * AudioEngine: Tone.js engine for dry gun + wet sample crossfading
@@ -29,16 +30,8 @@ export class AudioEngine {
 
     // Load dry gun sounds (create a pool of players for polyphony)
     guns.forEach(gun => {
-      this.dryGunPlayers[gun.id] = [];
+      this.dryGunPlayers[gun.id] = createPlayerPool(gun.soundUrl, this.dryGain, this.POLYPHONY);
       this.dryGunPlayerIndices[gun.id] = 0;
-      for (let i = 0; i < this.POLYPHONY; i++) {
-        this.dryGunPlayers[gun.id].push(
-          new Tone.Player({
-            url: gun.soundUrl,
-            loop: false,
-          }).connect(this.dryGain)
-        );
-      }
     });
 
     // Initialize wet sample players (scout only for now)
@@ -57,27 +50,11 @@ export class AudioEngine {
         this.wetSampleIndices[gun.id][pitchIndex] = {};
 
         // Create player pools for both major and minor
-        this.wetSamplePlayers[gun.id][pitchIndex].major = [];
+        this.wetSamplePlayers[gun.id][pitchIndex].major = createPlayerPool(majorPath, this.wetGain, this.POLYPHONY);
         this.wetSampleIndices[gun.id][pitchIndex].major = 0;
-        for (let i = 0; i < this.POLYPHONY; i++) {
-          this.wetSamplePlayers[gun.id][pitchIndex].major.push(
-            new Tone.Player({
-              url: majorPath,
-              loop: false,
-            }).connect(this.wetGain)
-          );
-        }
 
-        this.wetSamplePlayers[gun.id][pitchIndex].minor = [];
+        this.wetSamplePlayers[gun.id][pitchIndex].minor = createPlayerPool(minorPath, this.wetGain, this.POLYPHONY);
         this.wetSampleIndices[gun.id][pitchIndex].minor = 0;
-        for (let i = 0; i < this.POLYPHONY; i++) {
-          this.wetSamplePlayers[gun.id][pitchIndex].minor.push(
-            new Tone.Player({
-              url: minorPath,
-              loop: false,
-            }).connect(this.wetGain)
-          );
-        }
       }
     });
   }
@@ -106,11 +83,7 @@ export class AudioEngine {
       return;
     }
 
-    // Cycle through the player pool
-    const index = this.dryGunPlayerIndices[gunId];
-    const player = playerPool[index];
-    this.dryGunPlayerIndices[gunId] = (index + 1) % this.POLYPHONY;
-
+    const player = getNextPlayerFromPool(playerPool, this.dryGunPlayerIndices, gunId, this.POLYPHONY);
     player.start();
   }
 
@@ -141,10 +114,12 @@ export class AudioEngine {
       return;
     }
 
-    // Cycle through the player pool
-    const index = this.wetSampleIndices[gunId][pitchIndex][chordType];
-    const player = playerPool[index];
-    this.wetSampleIndices[gunId][pitchIndex][chordType] = (index + 1) % this.POLYPHONY;
+    const player = getNextPlayerFromPool(
+      playerPool,
+      this.wetSampleIndices[gunId][pitchIndex],
+      chordType,
+      this.POLYPHONY
+    );
 
     console.log(`Playing wet sample: ${gunId} pitch ${pitchIndex} ${chordType}, loaded: ${player.loaded}`);
     player.start();
@@ -164,10 +139,7 @@ export class AudioEngine {
   dispose(): void {
     // Cleanup dry gun player pools
     Object.values(this.dryGunPlayers).forEach(playerPool => {
-      playerPool.forEach(player => {
-        player.stop();
-        player.dispose();
-      });
+      disposePlayerPool(playerPool);
     });
     this.dryGunPlayers = {};
 
@@ -176,10 +148,7 @@ export class AudioEngine {
       Object.values(pitchMap).forEach(chordMap => {
         Object.values(chordMap).forEach(playerPool => {
           if (Array.isArray(playerPool)) {
-            playerPool.forEach(player => {
-              player.stop();
-              player.dispose();
-            });
+            disposePlayerPool(playerPool);
           }
         });
       });
