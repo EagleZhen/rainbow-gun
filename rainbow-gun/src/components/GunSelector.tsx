@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { guns } from '@/data/guns';
 import SelectableGridItem from './SelectableGridItem';
 import { useAudioEngine } from '@/hooks/useAudioEngine';
@@ -8,6 +8,7 @@ import { useAudioEngine } from '@/hooks/useAudioEngine';
 export default function GunSelector() {
   const [selectedGunIds, setSelectedGunIds] = useState<Set<string>>(new Set());
   const { engine, initEngine, ready } = useAudioEngine();
+  const timeoutRefs = useRef<Record<string, NodeJS.Timeout>>({});
 
   const playGunSound = useCallback(async (gunId: string) => {
     if (!engine || !ready) return;
@@ -20,12 +21,18 @@ export default function GunSelector() {
     engine.playGun(gunId);
 
     // Auto-deselect after sound duration (estimate: 1 second for gun samples)
-    setTimeout(() => {
+    // Clear any existing timeout for this gun
+    if (timeoutRefs.current[gunId]) {
+      clearTimeout(timeoutRefs.current[gunId]);
+    }
+
+    timeoutRefs.current[gunId] = setTimeout(() => {
       setSelectedGunIds(prev => {
         const next = new Set(prev);
         next.delete(gunId);
         return next;
       });
+      delete timeoutRefs.current[gunId];
     }, 1000);
   }, [engine, initEngine, ready]);
 
@@ -41,6 +48,14 @@ export default function GunSelector() {
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [playGunSound]);
+
+  // Cleanup timeouts on unmount
+  useEffect(() => {
+    const refs = timeoutRefs.current;
+    return () => {
+      Object.values(refs).forEach(clearTimeout);
+    };
+  }, []);
 
   return (
     <div className="border border-gray-300 rounded p-4 bg-white">
