@@ -1,63 +1,16 @@
 'use client';
 
-import { useState, useEffect, useCallback, useRef } from 'react';
 import { guns } from '@/data/guns';
 import SelectableGridItem from './SelectableGridItem';
 import { useAudioEngine } from '@/hooks/useAudioEngine';
 
 interface GunSelectorProps {
-  selectedGun: string;
+  selectedGunIds: Set<string>;
   onFire: (gunId: string) => void;
 }
 
-export default function GunSelector({ selectedGun, onFire }: GunSelectorProps) {
-  const [selectedGunIds, setSelectedGunIds] = useState<Set<string>>(new Set());
+export default function GunSelector({ selectedGunIds, onFire }: GunSelectorProps) {
   const { ready } = useAudioEngine();
-  const timeoutRefs = useRef<Record<string, NodeJS.Timeout>>({});
-
-  const handleFireGun = useCallback((gunId: string) => {
-    // Call the onFire callback from parent
-    onFire(gunId);
-
-    // Visual feedback: highlight the gun button
-    setSelectedGunIds(prev => new Set(prev).add(gunId));
-
-    // Auto-deselect after sound duration (estimate: 1 second for gun samples)
-    // Clear any existing timeout for this gun
-    if (timeoutRefs.current[gunId]) {
-      clearTimeout(timeoutRefs.current[gunId]);
-    }
-
-    timeoutRefs.current[gunId] = setTimeout(() => {
-      setSelectedGunIds(prev => {
-        const next = new Set(prev);
-        next.delete(gunId);
-        return next;
-      });
-      delete timeoutRefs.current[gunId];
-    }, 1000);
-  }, [onFire]);
-
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      const keyNum = parseInt(e.key);
-      if (isNaN(keyNum) || keyNum < 1 || keyNum > guns.length) return;
-
-      const gun = guns[keyNum - 1];
-      handleFireGun(gun.id);
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [handleFireGun]);
-
-  // Cleanup timeouts on unmount
-  useEffect(() => {
-    const refs = timeoutRefs.current;
-    return () => {
-      Object.values(refs).forEach(clearTimeout);
-    };
-  }, []);
 
   return (
     <div className="border border-gray-300 rounded p-4 bg-white">
@@ -78,7 +31,7 @@ export default function GunSelector({ selectedGun, onFire }: GunSelectorProps) {
             label={gun.name}
             imageUrl={gun.imageUrl}
             isSelected={selectedGunIds.has(gun.id)}
-            onClick={handleFireGun}
+            onClick={onFire}
           />
         ))}
       </div>
