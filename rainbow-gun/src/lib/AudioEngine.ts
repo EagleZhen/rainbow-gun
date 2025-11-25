@@ -29,7 +29,6 @@ export class AudioEngine {
       this.dryGunPlayers[gun.id] = new Tone.Player({
         url: gun.soundUrl,
         loop: false,
-        fadeOut: 0.1,
       }).connect(this.dryGain);
     });
 
@@ -44,12 +43,10 @@ export class AudioEngine {
           major: new Tone.Player({
             url: majorPath,
             loop: false,
-            fadeOut: 0.1,
           }).connect(this.wetGain),
           minor: new Tone.Player({
             url: minorPath,
             loop: false,
-            fadeOut: 0.1,
           }).connect(this.wetGain),
         };
       }
