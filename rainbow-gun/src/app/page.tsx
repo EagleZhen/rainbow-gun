@@ -7,7 +7,7 @@ import SubBassPanel from '@/components/SubBassPanel';
 import EffectsPanel from '@/components/EffectsPanel';
 import TriggerPanel from '@/components/TriggerPanel';
 import { useAudioEngine } from '@/hooks/useAudioEngine';
-import { knobValueToPitchIndex } from '@/data/notes';
+import { knobValueToPitchIndex, PITCH_STEP, DEFAULT_PITCH } from '@/data/notes';
 import { guns } from '@/data/guns';
 
 export default function Home() {
@@ -16,6 +16,7 @@ export default function Home() {
   const [selectedChord, setSelectedChord] = useState<'major' | 'minor'>('major');
   const [selectedGunIds, setSelectedGunIds] = useState<Set<string>>(new Set());
   const timeoutRefs = useRef<Record<string, NodeJS.Timeout>>({});
+
   const [knobValues, setKnobValues] = useState({
     // Sub Bass
     subLevel: 0.4,
@@ -24,7 +25,7 @@ export default function Home() {
     subFuzz: 0.3,
     // Effects
     master: 0.8,
-    pitch: 0.5,
+    pitch: DEFAULT_PITCH,
     reverb: 0.3,
     rainbowlize: 0.5,
     power: 0.6,
@@ -42,7 +43,6 @@ export default function Home() {
   };
 
   const KNOB_ADJUSTMENT_STEP = 0.02; // 2% adjustment per keypress
-  const PITCH_STEP = 1 / 12; // One semitone (12 pitches total)
   const clampValue = (value: number) => Math.max(0, Math.min(1, value));
 
   // Fire trigger: play audio + show visual feedback
@@ -109,7 +109,7 @@ export default function Home() {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [selectedKnob, fireGun, PITCH_STEP, KNOB_ADJUSTMENT_STEP]);
+  }, [selectedKnob, fireGun]);
 
   // Cleanup timeouts on unmount
   useEffect(() => {
