@@ -1,17 +1,21 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import { MIDIDevice, MIDIMessageEvent } from '@/types/midi';
 
 /**
  * Hook for accessing Web MIDI API
- * Handles MIDI device enumeration and access
+ * Handles MIDI device enumeration and message listening
+ * Listens to ALL connected devices simultaneously
  */
 export function useMIDI() {
   const [midiAccess, setMidiAccess] = useState<MIDIAccess | null>(null);
   const [midiDevices, setMidiDevices] = useState<MIDIDevice[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [isSupported, setIsSupported] = useState(true);
+
+  // Message listeners registry
+  const messageListeners = useRef<Set<(event: MIDIMessageEvent) => void>>(new Set());
 
   /**
    * Request MIDI access from the browser (shows permission dialog)
