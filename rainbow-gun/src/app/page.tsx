@@ -15,6 +15,7 @@ export default function Home() {
   const [selectedKnob, setSelectedKnob] = useState<string | null>(null);
   const [selectedChord, setSelectedChord] = useState<'major' | 'minor'>('major');
   const [selectedGunIds, setSelectedGunIds] = useState<Set<string>>(new Set());
+  const [activeGunId, setActiveGunId] = useState<string>('scout'); // Persistent gun selection
   const timeoutRefs = useRef<Record<string, NodeJS.Timeout>>({});
 
   const [knobValues, setKnobValues] = useState({
@@ -47,7 +48,10 @@ export default function Home() {
 
   // Fire trigger: play audio + show visual feedback
   const fireGun = useCallback(async (gunId: string) => {
-    // Show visual feedback: highlight the gun button
+    // Set as active gun (persistent selection)
+    setActiveGunId(gunId);
+
+    // Show temporary visual feedback: highlight the gun button
     setSelectedGunIds(prev => new Set(prev).add(gunId));
 
     // Clear any existing timeout for this gun
@@ -55,7 +59,7 @@ export default function Home() {
       clearTimeout(timeoutRefs.current[gunId]);
     }
 
-    // Auto-deselect after 1 second
+    // Auto-deselect from selectedGunIds after 1 second (but activeGunId persists)
     timeoutRefs.current[gunId] = setTimeout(() => {
       setSelectedGunIds(prev => {
         const next = new Set(prev);
@@ -126,7 +130,7 @@ export default function Home() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* LEFT PANEL - Gun Selection & Sub Bass */}
           <div className="space-y-6">
-            <GunSelector selectedGunIds={selectedGunIds} onFire={fireGun} />
+            <GunSelector selectedGunIds={selectedGunIds} activeGunId={activeGunId} onFire={fireGun} />
             <ChordSelector selectedChord={selectedChord} onSelectChord={setSelectedChord} />
             <SubBassPanel
               knobValues={knobValues}
