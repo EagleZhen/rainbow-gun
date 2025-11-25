@@ -16,6 +16,8 @@ export function useMIDI() {
 
   // Message listeners registry
   const messageListeners = useRef<Set<(event: MIDIMessageEvent) => void>>(new Set());
+  // Track which devices already have listeners attached to prevent duplicates on reconnect
+  const attachedDeviceIds = useRef<Set<string>>(new Set());
 
   /**
    * Request MIDI access from the browser (shows permission dialog)
@@ -63,18 +65,22 @@ export function useMIDI() {
         input,
       });
 
-      // Attach message listener to this device
-      // Each message includes device context (name + id)
-      input.addEventListener('midimessage', (event: any) => {
-        messageListeners.current.forEach(listener => {
-          listener({
-            data: event.data,
-            timestamp: event.timeStamp,
-            deviceName,
-            deviceId: input.id,
+      // Attach message listener to this device only if not already attached
+      // Prevents duplicate listeners on device reconnect
+      if (!attachedDeviceIds.current.has(input.id)) {
+        attachedDeviceIds.current.add(input.id);
+
+        input.addEventListener('midimessage', (event: any) => {
+          messageListeners.current.forEach(listener => {
+            listener({
+              data: event.data,
+              timestamp: event.timeStamp,
+              deviceName,
+              deviceId: input.id,
+            });
           });
         });
-      });
+      }
     }
 
     setMidiDevices(devices);
