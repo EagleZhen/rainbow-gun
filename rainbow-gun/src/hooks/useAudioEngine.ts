@@ -6,6 +6,8 @@ interface IAudioEngine {
   isInitialized(): boolean;
   init(): Promise<void>;
   playGun(id: string): void;
+  playWetGun(id: string, pitchIndex: number, chordType: 'major' | 'minor'): void;
+  setCrossfadeAmount(amount: number): void;
   dispose(): void;
 }
 

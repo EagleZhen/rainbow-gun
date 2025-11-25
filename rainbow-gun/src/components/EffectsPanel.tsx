@@ -1,5 +1,6 @@
 import Knob from './Knob';
 import type { PanelProps } from '@/types/panel';
+import { pitchIndexToNote, knobValueToPitchIndex } from '@/data/notes';
 
 export default function EffectsPanel({
   knobValues,
@@ -17,14 +18,19 @@ export default function EffectsPanel({
           isSelected={selectedKnob === 'master'}
           onSelect={onKnobSelect}
         />
-        <Knob
-          id="pitch"
-          label="Pitch"
-          value={knobValues.pitch}
-          subtitle="root note"
-          isSelected={selectedKnob === 'pitch'}
-          onSelect={onKnobSelect}
-        />
+        <div className="flex flex-col items-center gap-2">
+          <Knob
+            id="pitch"
+            label="Pitch"
+            value={knobValues.pitch}
+            subtitle="root note"
+            isSelected={selectedKnob === 'pitch'}
+            onSelect={onKnobSelect}
+          />
+          <div className="text-xs font-semibold text-gray-600 uppercase">
+            {pitchIndexToNote(knobValueToPitchIndex(knobValues.pitch))}
+          </div>
+        </div>
         <Knob
           id="reverb"
           label="Reverb"

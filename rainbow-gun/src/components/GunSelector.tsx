@@ -5,20 +5,22 @@ import { guns } from '@/data/guns';
 import SelectableGridItem from './SelectableGridItem';
 import { useAudioEngine } from '@/hooks/useAudioEngine';
 
-export default function GunSelector() {
+interface GunSelectorProps {
+  selectedGun: string;
+  onFire: (gunId: string) => void;
+}
+
+export default function GunSelector({ selectedGun, onFire }: GunSelectorProps) {
   const [selectedGunIds, setSelectedGunIds] = useState<Set<string>>(new Set());
-  const { engine, initEngine, ready } = useAudioEngine();
+  const { ready } = useAudioEngine();
   const timeoutRefs = useRef<Record<string, NodeJS.Timeout>>({});
 
-  const playGunSound = useCallback(async (gunId: string) => {
-    if (!engine || !ready) return;
+  const handleFireGun = useCallback((gunId: string) => {
+    // Call the onFire callback from parent
+    onFire(gunId);
 
-    // Initialize audio context on first interaction
-    await initEngine();
-
-    // Play gun sound
+    // Visual feedback: highlight the gun button
     setSelectedGunIds(prev => new Set(prev).add(gunId));
-    engine.playGun(gunId);
 
     // Auto-deselect after sound duration (estimate: 1 second for gun samples)
     // Clear any existing timeout for this gun
@@ -34,7 +36,7 @@ export default function GunSelector() {
       });
       delete timeoutRefs.current[gunId];
     }, 1000);
-  }, [engine, initEngine, ready]);
+  }, [onFire]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -42,12 +44,12 @@ export default function GunSelector() {
       if (isNaN(keyNum) || keyNum < 1 || keyNum > guns.length) return;
 
       const gun = guns[keyNum - 1];
-      playGunSound(gun.id).catch(console.error);
+      handleFireGun(gun.id);
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [playGunSound]);
+  }, [handleFireGun]);
 
   // Cleanup timeouts on unmount
   useEffect(() => {
@@ -76,7 +78,7 @@ export default function GunSelector() {
             label={gun.name}
             imageUrl={gun.imageUrl}
             isSelected={selectedGunIds.has(gun.id)}
-            onClick={playGunSound}
+            onClick={handleFireGun}
           />
         ))}
       </div>

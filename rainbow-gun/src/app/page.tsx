@@ -6,9 +6,14 @@ import ChordSelector from '@/components/ChordSelector';
 import SubBassPanel from '@/components/SubBassPanel';
 import EffectsPanel from '@/components/EffectsPanel';
 import TriggerPanel from '@/components/TriggerPanel';
+import { useAudioEngine } from '@/hooks/useAudioEngine';
+import { knobValueToPitchIndex } from '@/data/notes';
 
 export default function Home() {
+  const { engine, initEngine } = useAudioEngine();
   const [selectedKnob, setSelectedKnob] = useState<string | null>(null);
+  const [selectedGun, setSelectedGun] = useState<string>('scout');
+  const [selectedChord, setSelectedChord] = useState<'major' | 'minor'>('major');
   const [knobValues, setKnobValues] = useState({
     // Sub Bass
     subLevel: 0.4,
@@ -19,7 +24,7 @@ export default function Home() {
     master: 0.8,
     pitch: 0.5,
     reverb: 0.3,
-    rainbowlize: 0.7,
+    rainbowlize: 0.5,
     power: 0.6,
     oct: 0.5,
     attack: 0.05,
@@ -36,6 +41,30 @@ export default function Home() {
 
   const KNOB_ADJUSTMENT_STEP = 0.02; // 2% adjustment per keypress
   const clampValue = (value: number) => Math.max(0, Math.min(1, value));
+
+  // Fire trigger: play dry gun + wet sample with selected pitch/chord
+  const handleFireWithGun = async (gunId: string) => {
+    setSelectedGun(gunId);
+
+    if (!engine) return;
+
+    // Initialize audio context on first interaction
+    await initEngine();
+
+    // Play both dry and wet sounds with the fired gun
+    engine.playGun(gunId);
+    engine.playWetGun(gunId, knobValueToPitchIndex(knobValues.pitch), selectedChord);
+  };
+
+  // Convenience wrapper for firing with currently selected gun
+  const handleFire = () => handleFireWithGun(selectedGun);
+
+  // Wire rainbowlize knob to AudioEngine crossfade
+  useEffect(() => {
+    if (engine) {
+      engine.setCrossfadeAmount(knobValues.rainbowlize);
+    }
+  }, [engine, knobValues.rainbowlize]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -68,8 +97,8 @@ export default function Home() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* LEFT PANEL - Gun Selection & Sub Bass */}
           <div className="space-y-6">
-            <GunSelector />
-            <ChordSelector />
+            <GunSelector selectedGun={selectedGun} onFire={handleFireWithGun} />
+            <ChordSelector selectedChord={selectedChord} onSelectChord={setSelectedChord} />
             <SubBassPanel
               knobValues={knobValues}
               selectedKnob={selectedKnob}
