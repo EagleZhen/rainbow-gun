@@ -42,3 +42,14 @@ export interface MIDIDevice {
   name: string;
   input?: MIDIInput;
 }
+
+/**
+ * MIDI message event with device context
+ * Includes the raw MIDI data plus info about which device sent it
+ */
+export interface MIDIMessageEvent {
+  data: Uint8Array; // [status, data1, data2]
+  timestamp: number;
+  deviceName: string;
+  deviceId: string;
+}

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useCallback } from 'react';
-import { MIDIDevice } from '@/types/midi';
+import { MIDIDevice, MIDIMessageEvent } from '@/types/midi';
 
 /**
  * Hook for accessing Web MIDI API
