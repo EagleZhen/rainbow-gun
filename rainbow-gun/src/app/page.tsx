@@ -9,7 +9,7 @@ import TriggerPanel from '@/components/TriggerPanel';
 import { useAudioEngine } from '@/hooks/useAudioEngine';
 
 export default function Home() {
-  const { engine } = useAudioEngine();
+  const { engine, initEngine } = useAudioEngine();
   const [selectedKnob, setSelectedKnob] = useState<string | null>(null);
   const [selectedGun, setSelectedGun] = useState<string>('scout');
   const [selectedChord, setSelectedChord] = useState<'major' | 'minor'>('major');
@@ -41,6 +41,18 @@ export default function Home() {
 
   const KNOB_ADJUSTMENT_STEP = 0.02; // 2% adjustment per keypress
   const clampValue = (value: number) => Math.max(0, Math.min(1, value));
+
+  // Fire trigger: play dry gun + wet sample with selected pitch/chord
+  const handleFire = async () => {
+    if (!engine) return;
+
+    // Initialize audio context on first interaction
+    await initEngine();
+
+    // Play both dry and wet sounds
+    engine.playGun(selectedGun);
+    engine.playWetGun(selectedGun, selectedPitch, selectedChord);
+  };
 
   // Wire rainbowlize knob to AudioEngine crossfade
   useEffect(() => {
