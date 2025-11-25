@@ -7,7 +7,8 @@ interface SelectableGridItemProps {
   id: string;
   label: string;
   imageUrl: string;
-  isSelected: boolean;
+  isSelected: boolean; // Temporarily highlighted (just fired)
+  isActive?: boolean; // Persistently selected (active gun)
   onClick: (id: string) => void;
   size?: 'sm' | 'md' | 'lg';
 }
