@@ -24,7 +24,7 @@ export default function Home() {
     master: 0.8,
     pitch: 0.5,
     reverb: 0.3,
-    rainbowlize: 0.7,
+    rainbowlize: 0.5,
     power: 0.6,
     oct: 0.5,
     attack: 0.05,
