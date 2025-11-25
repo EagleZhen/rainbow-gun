@@ -12,7 +12,7 @@ export interface Gun {
  * Build wet sample file path
  * Format: {wetSampleDir}/{fileIndex}_{noteName}_{chordType}.wav
  * Example: /guns/scout/1_c_maj.wav
- * Note: # is replaced with note name suffix (e.g., c# → csharp), spaces with _
+ * Note: # is replaced with note name suffix (e.g., c# → csharp), underscores are used as delimiters instead of spaces
  */
 export function getWetSamplePath(
   wetSampleDir: string,
