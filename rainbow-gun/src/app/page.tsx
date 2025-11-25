@@ -14,7 +14,7 @@ import { guns } from '@/data/guns';
 
 export default function Home() {
   const { engine, initEngine } = useAudioEngine();
-  const { isSupported, midiAccess, midiDevices, error, requestMIDIAccess } = useMIDI();
+  const { isSupported, midiAccess, midiDevices, error, requestMIDIAccess, onMIDIMessage } = useMIDI();
   const [selectedKnob, setSelectedKnob] = useState<string | null>(null);
   const [selectedChord, setSelectedChord] = useState<'major' | 'minor'>('major');
   const [selectedGunIds, setSelectedGunIds] = useState<Set<string>>(new Set());
@@ -125,6 +125,30 @@ export default function Home() {
       Object.values(timeoutRefs.current).forEach(clearTimeout);
     };
   }, []);
+
+  // Subscribe to MIDI messages and log them to console for testing
+  useEffect(() => {
+    const unsubscribe = onMIDIMessage((event) => {
+      const status = event.data[0] & 0xf0;
+      const data1 = event.data[1];
+      const data2 = event.data[2];
+
+      let messageType = '';
+      if (status === 0xb0) {
+        messageType = `CC ${data1} = ${data2}`;
+      } else if (status === 0x90) {
+        messageType = `Note On ${data1} (velocity: ${data2})`;
+      } else if (status === 0x80) {
+        messageType = `Note Off ${data1}`;
+      } else {
+        messageType = `Unknown [${event.data[0]}, ${data1}, ${data2}]`;
+      }
+
+      console.log(`[MIDI] ${event.deviceName}: ${messageType}`);
+    });
+
+    return unsubscribe;
+  }, [onMIDIMessage]);
 
   // Build debug items from MIDI state
   const debugItems = [
