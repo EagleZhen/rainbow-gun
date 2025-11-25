@@ -83,6 +83,37 @@ export class AudioEngine {
   }
 
   /**
+   * Play a wet sample by gun ID, pitch index, and chord type
+   */
+  playWetGun(gunId: string, pitchIndex: number, chordType: 'major' | 'minor'): void {
+    if (!this.initialized) {
+      console.warn('AudioEngine not initialized. Call init() first.');
+      return;
+    }
+
+    const wetPlayers = this.wetSamplePlayers[gunId];
+    if (!wetPlayers) {
+      console.warn(`Gun not found: ${gunId}`);
+      return;
+    }
+
+    const pitchPlayers = wetPlayers[pitchIndex];
+    if (!pitchPlayers) {
+      console.warn(`Pitch index out of range: ${pitchIndex}`);
+      return;
+    }
+
+    const player = pitchPlayers[chordType];
+    if (!player) {
+      console.warn(`Chord type not found: ${chordType}`);
+      return;
+    }
+
+    player.stop();
+    player.start();
+  }
+
+  /**
    * Cleanup all resources
    */
   dispose(): void {
