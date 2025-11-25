@@ -43,16 +43,21 @@ export default function Home() {
   const clampValue = (value: number) => Math.max(0, Math.min(1, value));
 
   // Fire trigger: play dry gun + wet sample with selected pitch/chord
-  const handleFire = async () => {
+  const handleFireWithGun = async (gunId: string) => {
+    setSelectedGun(gunId);
+
     if (!engine) return;
 
     // Initialize audio context on first interaction
     await initEngine();
 
-    // Play both dry and wet sounds
-    engine.playGun(selectedGun);
-    engine.playWetGun(selectedGun, knobValueToPitchIndex(knobValues.pitch), selectedChord);
+    // Play both dry and wet sounds with the fired gun
+    engine.playGun(gunId);
+    engine.playWetGun(gunId, knobValueToPitchIndex(knobValues.pitch), selectedChord);
   };
+
+  // Convenience wrapper for firing with currently selected gun
+  const handleFire = () => handleFireWithGun(selectedGun);
 
   // Wire rainbowlize knob to AudioEngine crossfade
   useEffect(() => {
@@ -92,7 +97,7 @@ export default function Home() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* LEFT PANEL - Gun Selection & Sub Bass */}
           <div className="space-y-6">
-            <GunSelector />
+            <GunSelector selectedGun={selectedGun} onFire={handleFireWithGun} />
             <ChordSelector selectedChord={selectedChord} onSelectChord={setSelectedChord} />
             <SubBassPanel
               knobValues={knobValues}
