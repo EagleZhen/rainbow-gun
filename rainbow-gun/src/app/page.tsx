@@ -11,6 +11,9 @@ import { useAudioEngine } from '@/hooks/useAudioEngine';
 export default function Home() {
   const { engine } = useAudioEngine();
   const [selectedKnob, setSelectedKnob] = useState<string | null>(null);
+  const [selectedGun, setSelectedGun] = useState<string>('scout');
+  const [selectedChord, setSelectedChord] = useState<'major' | 'minor'>('major');
+  const [selectedPitch, setSelectedPitch] = useState<number>(0); // 0-11 (C-B)
   const [knobValues, setKnobValues] = useState({
     // Sub Bass
     subLevel: 0.4,
