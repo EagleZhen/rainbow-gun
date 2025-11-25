@@ -11,7 +11,7 @@ export interface Gun {
 /**
  * Build wet sample file path
  * Format: {wetSampleDir}/{fileIndex} {noteName} {chordType}.wav
- * Example: /guns/scout/1 c maj.wav
+ * Example: /guns/scout/1%20c%23%20maj.wav
  */
 export function getWetSamplePath(
   wetSampleDir: string,
@@ -21,7 +21,8 @@ export function getWetSamplePath(
   const fileIndex = pitchIndexToFileIndex(pitchIndex);
   const noteName = pitchIndexToNote(pitchIndex);
   const suffix = chordType === 'major' ? 'maj' : 'min';
-  return `${wetSampleDir}/${fileIndex} ${noteName} ${suffix}.wav`;
+  const fileName = `${fileIndex} ${noteName} ${suffix}.wav`;
+  return `${wetSampleDir}/${encodeURIComponent(fileName)}`;
 }
 
 export const guns: Gun[] = [
