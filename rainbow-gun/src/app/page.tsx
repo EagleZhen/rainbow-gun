@@ -11,6 +11,7 @@ import { useAudioEngine } from '@/hooks/useAudioEngine';
 import { useMIDI } from '@/hooks/useMIDI';
 import { knobValueToPitchIndex, PITCH_STEP, DEFAULT_PITCH } from '@/data/notes';
 import { guns } from '@/data/guns';
+import { getDeviceMapping, ccValueToKnobValue } from '@/data/midiMappings';
 
 export default function Home() {
   const { engine, initEngine } = useAudioEngine();
@@ -106,6 +107,12 @@ export default function Home() {
         return;
       }
 
+      // Handle number key 1 (default key on the rainbow gun) to fire the currently active gun
+      if (e.key === '1') {
+        fireGun(activeGunId);
+        return;
+      }
+
       // Handle Q/W/E keys for gun selection/firing
       // Remapped from 1/2/3 to avoid conflict with the default key on the rainbow gun
       const gunKeyMap: Record<string, number> = { 'q': 0, 'w': 1, 'e': 2 };
@@ -117,7 +124,7 @@ export default function Home() {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [selectedKnob, fireGun]);
+  }, [selectedKnob, fireGun, activeGunId]);
 
   // Request MIDI access on page load
   useEffect(() => {
@@ -157,6 +164,59 @@ export default function Home() {
       }
 
       console.log(`[MIDI] ${event.deviceName}: ${messageType}`);
+    });
+
+    return unsubscribe;
+  }, [onMIDIMessage]);
+
+  // Handle MIDI CC messages to control knobs
+  useEffect(() => {
+    const unsubscribe = onMIDIMessage((event) => {
+      const byte0 = event.data[0];
+      const status = byte0 & 0xf0;
+
+      // Only process CC (Control Change) messages
+      if (status !== 0xb0) {
+        return;
+      }
+
+      const ccNumber = event.data[1];
+      const ccValue = event.data[2];
+
+      // Get mapping for this device
+      const mapping = getDeviceMapping(event.deviceName);
+      if (!mapping) {
+        return;
+      }
+
+      // Find which knob this CC number maps to
+      const knobId = Object.entries(mapping).find(([, cc]) => cc === ccNumber)?.[0];
+      if (!knobId) {
+        return;
+      }
+
+      // Convert CC value (0-127) to knob value (0-1)
+      const knobValue = ccValueToKnobValue(ccValue);
+
+      // Update knobValues state
+      setKnobValues(prev => ({
+        ...prev,
+        [knobId]: knobValue,
+      }));
+
+      // Show visual feedback by selecting the knob
+      setSelectedKnob(knobId);
+
+      // Clear any existing timeout for this knob
+      if (timeoutRefs.current[knobId]) {
+        clearTimeout(timeoutRefs.current[knobId]);
+      }
+
+      // Auto-clear selection after a brief period
+      timeoutRefs.current[knobId] = setTimeout(() => {
+        setSelectedKnob(null);
+        delete timeoutRefs.current[knobId];
+      }, 500);
     });
 
     return unsubscribe;
