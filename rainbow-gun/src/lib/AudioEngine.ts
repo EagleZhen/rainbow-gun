@@ -114,6 +114,15 @@ export class AudioEngine {
   }
 
   /**
+   * Set wet/dry crossfade amount (0 = dry, 1 = wet)
+   */
+  setCrossfadeAmount(amount: number): void {
+    this.crossfadeAmount = amount;
+    this.dryGain.gain.value = 1 - amount;
+    this.wetGain.gain.value = amount;
+  }
+
+  /**
    * Cleanup all resources
    */
   dispose(): void {
