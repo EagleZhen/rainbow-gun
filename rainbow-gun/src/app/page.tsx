@@ -6,6 +6,7 @@ import ChordSelector from '@/components/ChordSelector';
 import SubBassPanel from '@/components/SubBassPanel';
 import EffectsPanel from '@/components/EffectsPanel';
 import TriggerPanel from '@/components/TriggerPanel';
+import DebugPanel from '@/components/DebugPanel';
 import { useAudioEngine } from '@/hooks/useAudioEngine';
 import { knobValueToPitchIndex, PITCH_STEP, DEFAULT_PITCH } from '@/data/notes';
 import { guns } from '@/data/guns';
@@ -154,6 +155,9 @@ export default function Home() {
             />
           </div>
         </div>
+
+        {/* Debug Panel */}
+        <DebugPanel />
       </div>
     </div>
   );
