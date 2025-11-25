@@ -1,13 +1,12 @@
 import Knob from './Knob';
 import type { PanelProps } from '@/types/panel';
-import { pitchIndexToNote } from '@/data/notes';
+import { pitchIndexToNote, knobValueToPitchIndex } from '@/data/notes';
 
 export default function EffectsPanel({
   knobValues,
   selectedKnob,
   onKnobSelect
 }: PanelProps) {
-  const getPitchIndex = (pitchValue: number) => Math.round(pitchValue * 11);
   return (
     <div className="border border-gray-300 rounded p-6 bg-white space-y-6">
       <div className="grid grid-cols-3 gap-6 justify-items-center">
@@ -29,7 +28,7 @@ export default function EffectsPanel({
             onSelect={onKnobSelect}
           />
           <div className="text-xs font-semibold text-gray-600 uppercase">
-            {pitchIndexToNote(getPitchIndex(knobValues.pitch))}
+            {pitchIndexToNote(knobValueToPitchIndex(knobValues.pitch))}
           </div>
         </div>
         <Knob

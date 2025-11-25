@@ -21,3 +21,10 @@ export function pitchIndexToFileIndex(pitchIndex: number): number {
   const noteIndex = ((pitchIndex % 12) + 12) % 12;
   return noteIndex + 1; // Convert 0-11 to 1-12
 }
+
+/**
+ * Convert normalized knob value (0-1) to pitch index (0-11)
+ */
+export function knobValueToPitchIndex(knobValue: number): number {
+  return Math.round(knobValue * 11);
+}

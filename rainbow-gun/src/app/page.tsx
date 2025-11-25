@@ -7,6 +7,7 @@ import SubBassPanel from '@/components/SubBassPanel';
 import EffectsPanel from '@/components/EffectsPanel';
 import TriggerPanel from '@/components/TriggerPanel';
 import { useAudioEngine } from '@/hooks/useAudioEngine';
+import { knobValueToPitchIndex } from '@/data/notes';
 
 export default function Home() {
   const { engine, initEngine } = useAudioEngine();
@@ -40,7 +41,6 @@ export default function Home() {
 
   const KNOB_ADJUSTMENT_STEP = 0.02; // 2% adjustment per keypress
   const clampValue = (value: number) => Math.max(0, Math.min(1, value));
-  const getPitchIndex = (pitchValue: number) => Math.round(pitchValue * 11);
 
   // Fire trigger: play dry gun + wet sample with selected pitch/chord
   const handleFire = async () => {
@@ -51,7 +51,7 @@ export default function Home() {
 
     // Play both dry and wet sounds
     engine.playGun(selectedGun);
-    engine.playWetGun(selectedGun, getPitchIndex(knobValues.pitch), selectedChord);
+    engine.playWetGun(selectedGun, knobValueToPitchIndex(knobValues.pitch), selectedChord);
   };
 
   // Wire rainbowlize knob to AudioEngine crossfade
