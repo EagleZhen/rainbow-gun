@@ -119,6 +119,11 @@ export default function Home() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [selectedKnob, fireGun]);
 
+  // Request MIDI access on page load
+  useEffect(() => {
+    requestMIDIAccess();
+  }, [requestMIDIAccess]);
+
   // Cleanup timeouts on unmount
   useEffect(() => {
     return () => {
