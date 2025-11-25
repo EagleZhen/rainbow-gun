@@ -15,7 +15,7 @@ export class AudioEngine {
         url: gun.soundUrl,
         loop: false,
         fadeOut: 0.1,
-      }).connect(Tone.Destination);
+      }).connect(Tone.getDestination());
     });
   }
 
