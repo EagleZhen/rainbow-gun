@@ -52,7 +52,7 @@ export function useMIDI() {
   /**
    * List all available MIDI input devices and attach message listeners
    */
-  const enumerateMIDIDevices = (access: MIDIAccess) => {
+  const enumerateMIDIDevices = useCallback((access: MIDIAccess) => {
     const devices: MIDIDevice[] = [];
     const inputs = access.inputs.values();
 
@@ -85,7 +85,7 @@ export function useMIDI() {
     }
 
     setMidiDevices(devices);
-  };
+  }, []);
 
   /**
    * Subscribe to MIDI messages from all devices
