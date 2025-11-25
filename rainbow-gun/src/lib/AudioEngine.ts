@@ -64,7 +64,7 @@ export class AudioEngine {
   }
 
   /**
-   * Play a gun sound by ID
+   * Play a dry gun sound by ID
    */
   playGun(gunId: string): void {
     if (!this.initialized) {
@@ -72,7 +72,7 @@ export class AudioEngine {
       return;
     }
 
-    const player = this.gunPlayers[gunId];
+    const player = this.dryGunPlayers[gunId];
     if (!player) {
       console.warn(`Gun not found: ${gunId}`);
       return;
@@ -83,14 +83,31 @@ export class AudioEngine {
   }
 
   /**
-   * Cleanup
+   * Cleanup all resources
    */
   dispose(): void {
-    Object.values(this.gunPlayers).forEach(player => {
+    // Cleanup dry gun players
+    Object.values(this.dryGunPlayers).forEach(player => {
       player.stop();
       player.dispose();
     });
-    this.gunPlayers = {};
+    this.dryGunPlayers = {};
+
+    // Cleanup wet sample players
+    Object.values(this.wetSamplePlayers).forEach(pitchMap => {
+      Object.values(pitchMap).forEach(chordMap => {
+        Object.values(chordMap).forEach(player => {
+          player.stop();
+          player.dispose();
+        });
+      });
+    });
+    this.wetSamplePlayers = {};
+
+    // Cleanup gain nodes
+    this.dryGain.dispose();
+    this.wetGain.dispose();
+
     this.initialized = false;
   }
 
