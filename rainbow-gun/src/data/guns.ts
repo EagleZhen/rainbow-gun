@@ -1,9 +1,27 @@
+import { pitchIndexToFileIndex, pitchIndexToNote } from '@/data/notes';
+
 export interface Gun {
   id: string;
   name: string;
   soundUrl: string;      // dry gun sample
   imageUrl: string;
   wetSampleDir: string;  // directory containing wet samples (e.g., '/guns/scout')
+}
+
+/**
+ * Build wet sample file path
+ * Format: {wetSampleDir}/{fileIndex} {noteName} {chordType}.wav
+ * Example: /guns/scout/1 c maj.wav
+ */
+export function getWetSamplePath(
+  wetSampleDir: string,
+  pitchIndex: number,
+  chordType: 'major' | 'minor'
+): string {
+  const fileIndex = pitchIndexToFileIndex(pitchIndex);
+  const noteName = pitchIndexToNote(pitchIndex);
+  const suffix = chordType === 'major' ? 'maj' : 'min';
+  return `${wetSampleDir}/${fileIndex} ${noteName} ${suffix}.wav`;
 }
 
 export const guns: Gun[] = [
