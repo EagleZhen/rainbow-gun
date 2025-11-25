@@ -107,6 +107,12 @@ export default function Home() {
         return;
       }
 
+      // Handle number key 1 (default key on the rainbow gun) to fire the currently active gun
+      if (e.key === '1') {
+        fireGun(activeGunId);
+        return;
+      }
+
       // Handle Q/W/E keys for gun selection/firing
       // Remapped from 1/2/3 to avoid conflict with the default key on the rainbow gun
       const gunKeyMap: Record<string, number> = { 'q': 0, 'w': 1, 'e': 2 };
@@ -118,7 +124,7 @@ export default function Home() {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [selectedKnob, fireGun]);
+  }, [selectedKnob, fireGun, activeGunId]);
 
   // Request MIDI access on page load
   useEffect(() => {
