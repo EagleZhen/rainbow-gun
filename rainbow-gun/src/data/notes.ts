@@ -1,3 +1,9 @@
+// Pitch system constants
+export const PITCH_COUNT = 12; // 12 chromatic notes
+export const PITCH_STEP = 1 / 11; // 12 pitches = 11 intervals between them
+export const DEFAULT_PITCH_INDEX = 6; // F# (6th pitch in chromatic scale)
+export const DEFAULT_PITCH = DEFAULT_PITCH_INDEX * PITCH_STEP; // Calculate from pitch index
+
 // 12 chromatic notes (pitch indices 0-11 map to these)
 export const NOTE_NAMES = ['c', 'c#', 'd', 'd#', 'e', 'f', 'f#', 'g', 'g#', 'a', 'a#', 'b'] as const;
 

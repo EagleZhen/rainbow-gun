@@ -7,7 +7,7 @@ import SubBassPanel from '@/components/SubBassPanel';
 import EffectsPanel from '@/components/EffectsPanel';
 import TriggerPanel from '@/components/TriggerPanel';
 import { useAudioEngine } from '@/hooks/useAudioEngine';
-import { knobValueToPitchIndex } from '@/data/notes';
+import { knobValueToPitchIndex, PITCH_STEP, DEFAULT_PITCH } from '@/data/notes';
 import { guns } from '@/data/guns';
 
 export default function Home() {
@@ -16,6 +16,7 @@ export default function Home() {
   const [selectedChord, setSelectedChord] = useState<'major' | 'minor'>('major');
   const [selectedGunIds, setSelectedGunIds] = useState<Set<string>>(new Set());
   const timeoutRefs = useRef<Record<string, NodeJS.Timeout>>({});
+
   const [knobValues, setKnobValues] = useState({
     // Sub Bass
     subLevel: 0.4,
@@ -24,7 +25,7 @@ export default function Home() {
     subFuzz: 0.3,
     // Effects
     master: 0.8,
-    pitch: 0.5,
+    pitch: DEFAULT_PITCH,
     reverb: 0.3,
     rainbowlize: 0.5,
     power: 0.6,
@@ -85,7 +86,8 @@ export default function Home() {
     const handleKeyDown = (e: KeyboardEvent) => {
       // Handle arrow keys for knob adjustment (only if a knob is selected)
       if (selectedKnob && (e.key === 'ArrowUp' || e.key === 'ArrowDown')) {
-        const delta = e.key === 'ArrowUp' ? KNOB_ADJUSTMENT_STEP : -KNOB_ADJUSTMENT_STEP;
+        const step = selectedKnob === 'pitch' ? PITCH_STEP : KNOB_ADJUSTMENT_STEP;
+        const delta = e.key === 'ArrowUp' ? step : -step;
         e.preventDefault();
         setKnobValues(prev => {
           const currentValue = prev[selectedKnob as keyof typeof prev];
