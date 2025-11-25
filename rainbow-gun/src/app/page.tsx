@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import GunSelector from '@/components/GunSelector';
 import ChordSelector from '@/components/ChordSelector';
 import SubBassPanel from '@/components/SubBassPanel';
@@ -13,8 +13,9 @@ import { guns } from '@/data/guns';
 export default function Home() {
   const { engine, initEngine } = useAudioEngine();
   const [selectedKnob, setSelectedKnob] = useState<string | null>(null);
-  const [selectedGun, setSelectedGun] = useState<string>('scout');
   const [selectedChord, setSelectedChord] = useState<'major' | 'minor'>('major');
+  const [selectedGunIds, setSelectedGunIds] = useState<Set<string>>(new Set());
+  const timeoutRefs = useRef<Record<string, NodeJS.Timeout>>({});
   const [knobValues, setKnobValues] = useState({
     // Sub Bass
     subLevel: 0.4,
@@ -43,9 +44,25 @@ export default function Home() {
   const KNOB_ADJUSTMENT_STEP = 0.02; // 2% adjustment per keypress
   const clampValue = (value: number) => Math.max(0, Math.min(1, value));
 
-  // Fire trigger: play dry gun + wet sample with selected pitch/chord
-  const handleFireWithGun = useCallback(async (gunId: string) => {
-    setSelectedGun(gunId);
+  // Fire trigger: play audio + show visual feedback
+  const fireGun = useCallback(async (gunId: string) => {
+    // Show visual feedback: highlight the gun button
+    setSelectedGunIds(prev => new Set(prev).add(gunId));
+
+    // Clear any existing timeout for this gun
+    if (timeoutRefs.current[gunId]) {
+      clearTimeout(timeoutRefs.current[gunId]);
+    }
+
+    // Auto-deselect after 1 second
+    timeoutRefs.current[gunId] = setTimeout(() => {
+      setSelectedGunIds(prev => {
+        const next = new Set(prev);
+        next.delete(gunId);
+        return next;
+      });
+      delete timeoutRefs.current[gunId];
+    }, 1000);
 
     if (!engine) return;
 
@@ -84,13 +101,20 @@ export default function Home() {
       const keyNum = parseInt(e.key);
       if (!isNaN(keyNum) && keyNum >= 1 && keyNum <= guns.length) {
         const gun = guns[keyNum - 1];
-        handleFireWithGun(gun.id);
+        fireGun(gun.id);
       }
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [selectedKnob, handleFireWithGun]);
+  }, [selectedKnob, fireGun]);
+
+  // Cleanup timeouts on unmount
+  useEffect(() => {
+    return () => {
+      Object.values(timeoutRefs.current).forEach(clearTimeout);
+    };
+  }, []);
 
   return (
     <div className="min-h-screen p-8 bg-gray-50">
@@ -100,7 +124,7 @@ export default function Home() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* LEFT PANEL - Gun Selection & Sub Bass */}
           <div className="space-y-6">
-            <GunSelector selectedGun={selectedGun} onFire={handleFireWithGun} />
+            <GunSelector selectedGunIds={selectedGunIds} onFire={fireGun} />
             <ChordSelector selectedChord={selectedChord} onSelectChord={setSelectedChord} />
             <SubBassPanel
               knobValues={knobValues}
