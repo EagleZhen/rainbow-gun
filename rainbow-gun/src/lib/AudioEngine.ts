@@ -32,9 +32,12 @@ export class AudioEngine {
       }).connect(this.dryGain);
     });
 
-    // Initialize wet sample players structure (don't load yet, just set up structure)
+    // Initialize wet sample players (scout only for now)
     guns.forEach(gun => {
       this.wetSamplePlayers[gun.id] = {};
+      // TODO: Add wet samples for other guns
+      if (gun.id !== 'scout') return;
+
       for (let pitchIndex = 0; pitchIndex < 12; pitchIndex++) {
         const majorPath = getWetSamplePath(gun.wetSampleDir, pitchIndex, 'major');
         const minorPath = getWetSamplePath(gun.wetSampleDir, pitchIndex, 'minor');
