@@ -37,14 +37,17 @@ export class AudioEngine {
     guns.forEach(gun => {
       this.wetSamplePlayers[gun.id] = {};
       for (let pitchIndex = 0; pitchIndex < 12; pitchIndex++) {
+        const majorPath = getWetSamplePath(gun.wetSampleDir, pitchIndex, 'major');
+        const minorPath = getWetSamplePath(gun.wetSampleDir, pitchIndex, 'minor');
+        console.log(`[AudioEngine] Loading ${gun.id} pitch ${pitchIndex}: major="${majorPath}" minor="${minorPath}"`);
         this.wetSamplePlayers[gun.id][pitchIndex] = {
           major: new Tone.Player({
-            url: getWetSamplePath(gun.wetSampleDir, pitchIndex, 'major'),
+            url: majorPath,
             loop: false,
             fadeOut: 0.1,
           }).connect(this.wetGain),
           minor: new Tone.Player({
-            url: getWetSamplePath(gun.wetSampleDir, pitchIndex, 'minor'),
+            url: minorPath,
             loop: false,
             fadeOut: 0.1,
           }).connect(this.wetGain),
