@@ -48,22 +48,53 @@ export function useMIDI() {
   }, []);
 
   /**
-   * List all available MIDI input devices
+   * List all available MIDI input devices and attach message listeners
    */
   const enumerateMIDIDevices = (access: MIDIAccess) => {
     const devices: MIDIDevice[] = [];
     const inputs = access.inputs.values();
 
     for (let input of inputs) {
+      const deviceName = input.name || `MIDI Device (${input.id})`;
+
       devices.push({
         id: input.id,
-        name: input.name || `MIDI Device (${input.id})`,
+        name: deviceName,
         input,
+      });
+
+      // Attach message listener to this device
+      // Each message includes device context (name + id)
+      input.addEventListener('midimessage', (event: any) => {
+        messageListeners.current.forEach(listener => {
+          listener({
+            data: event.data,
+            timestamp: event.timeStamp,
+            deviceName,
+            deviceId: input.id,
+          });
+        });
       });
     }
 
     setMidiDevices(devices);
   };
+
+  /**
+   * Subscribe to MIDI messages from all devices
+   * Returns unsubscribe function
+   */
+  const onMIDIMessage = useCallback(
+    (handler: (event: MIDIMessageEvent) => void) => {
+      messageListeners.current.add(handler);
+
+      // Return unsubscribe function
+      return () => {
+        messageListeners.current.delete(handler);
+      };
+    },
+    []
+  );
 
   return {
     // State
@@ -74,5 +105,6 @@ export function useMIDI() {
 
     // Methods
     requestMIDIAccess,
+    onMIDIMessage,
   };
 }
