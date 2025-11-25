@@ -42,6 +42,7 @@ export default function Home() {
   };
 
   const KNOB_ADJUSTMENT_STEP = 0.02; // 2% adjustment per keypress
+  const PITCH_STEP = 1 / 12; // One semitone (12 pitches total)
   const clampValue = (value: number) => Math.max(0, Math.min(1, value));
 
   // Fire trigger: play audio + show visual feedback
@@ -85,7 +86,8 @@ export default function Home() {
     const handleKeyDown = (e: KeyboardEvent) => {
       // Handle arrow keys for knob adjustment (only if a knob is selected)
       if (selectedKnob && (e.key === 'ArrowUp' || e.key === 'ArrowDown')) {
-        const delta = e.key === 'ArrowUp' ? KNOB_ADJUSTMENT_STEP : -KNOB_ADJUSTMENT_STEP;
+        const step = selectedKnob === 'pitch' ? PITCH_STEP : KNOB_ADJUSTMENT_STEP;
+        const delta = e.key === 'ArrowUp' ? step : -step;
         e.preventDefault();
         setKnobValues(prev => {
           const currentValue = prev[selectedKnob as keyof typeof prev];
@@ -107,7 +109,7 @@ export default function Home() {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [selectedKnob, fireGun]);
+  }, [selectedKnob, fireGun, PITCH_STEP, KNOB_ADJUSTMENT_STEP]);
 
   // Cleanup timeouts on unmount
   useEffect(() => {
