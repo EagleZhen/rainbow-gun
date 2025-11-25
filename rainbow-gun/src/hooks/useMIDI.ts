@@ -20,36 +20,6 @@ export function useMIDI() {
   const attachedDeviceIds = useRef<Set<string>>(new Set());
 
   /**
-   * Request MIDI access from the browser (shows permission dialog)
-   */
-  const requestMIDIAccess = useCallback(async () => {
-    try {
-      // Check if Web MIDI API is available
-      if (!navigator.requestMIDIAccess) {
-        setIsSupported(false);
-        setError('Web MIDI API is not supported in this browser');
-        return;
-      }
-
-      const access = await navigator.requestMIDIAccess();
-      setMidiAccess(access);
-      setError(null);
-
-      // Enumerate devices
-      enumerateMIDIDevices(access);
-
-      // Listen for device changes (connect/disconnect)
-      access.addEventListener('statechange', () => {
-        enumerateMIDIDevices(access);
-      });
-    } catch (err) {
-      const errorMsg = err instanceof Error ? err.message : 'Failed to request MIDI access';
-      setError(errorMsg);
-      console.error('MIDI access error:', errorMsg);
-    }
-  }, []);
-
-  /**
    * List all available MIDI input devices and attach message listeners
    */
   const enumerateMIDIDevices = useCallback((access: MIDIAccess) => {
@@ -86,6 +56,36 @@ export function useMIDI() {
 
     setMidiDevices(devices);
   }, []);
+
+  /**
+   * Request MIDI access from the browser (shows permission dialog)
+   */
+  const requestMIDIAccess = useCallback(async () => {
+    try {
+      // Check if Web MIDI API is available
+      if (!navigator.requestMIDIAccess) {
+        setIsSupported(false);
+        setError('Web MIDI API is not supported in this browser');
+        return;
+      }
+
+      const access = await navigator.requestMIDIAccess();
+      setMidiAccess(access);
+      setError(null);
+
+      // Enumerate devices
+      enumerateMIDIDevices(access);
+
+      // Listen for device changes (connect/disconnect)
+      access.addEventListener('statechange', () => {
+        enumerateMIDIDevices(access);
+      });
+    } catch (err) {
+      const errorMsg = err instanceof Error ? err.message : 'Failed to request MIDI access';
+      setError(errorMsg);
+      console.error('MIDI access error:', errorMsg);
+    }
+  }, [enumerateMIDIDevices]);
 
   /**
    * Subscribe to MIDI messages from all devices
