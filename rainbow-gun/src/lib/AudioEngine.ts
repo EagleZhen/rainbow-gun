@@ -108,6 +108,7 @@ export class AudioEngine {
       return;
     }
 
+    console.log(`Playing wet sample: ${gunId} pitch ${pitchIndex} ${chordType}, loaded: ${player.loaded}`);
     player.stop();
     player.start();
   }
