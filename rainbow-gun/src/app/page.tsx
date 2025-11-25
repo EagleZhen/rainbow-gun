@@ -13,7 +13,6 @@ export default function Home() {
   const [selectedKnob, setSelectedKnob] = useState<string | null>(null);
   const [selectedGun, setSelectedGun] = useState<string>('scout');
   const [selectedChord, setSelectedChord] = useState<'major' | 'minor'>('major');
-  const [selectedPitch, setSelectedPitch] = useState<number>(0); // 0-11 (C-B)
   const [knobValues, setKnobValues] = useState({
     // Sub Bass
     subLevel: 0.4,
@@ -41,6 +40,7 @@ export default function Home() {
 
   const KNOB_ADJUSTMENT_STEP = 0.02; // 2% adjustment per keypress
   const clampValue = (value: number) => Math.max(0, Math.min(1, value));
+  const getPitchIndex = (pitchValue: number) => Math.round(pitchValue * 11);
 
   // Fire trigger: play dry gun + wet sample with selected pitch/chord
   const handleFire = async () => {
@@ -51,7 +51,7 @@ export default function Home() {
 
     // Play both dry and wet sounds
     engine.playGun(selectedGun);
-    engine.playWetGun(selectedGun, selectedPitch, selectedChord);
+    engine.playWetGun(selectedGun, getPitchIndex(knobValues.pitch), selectedChord);
   };
 
   // Wire rainbowlize knob to AudioEngine crossfade
@@ -60,12 +60,6 @@ export default function Home() {
       engine.setCrossfadeAmount(knobValues.rainbowlize);
     }
   }, [engine, knobValues.rainbowlize]);
-
-  // Wire pitch knob to selected pitch (0-1 → 0-11)
-  useEffect(() => {
-    const pitchIndex = Math.round(knobValues.pitch * 11);
-    setSelectedPitch(pitchIndex);
-  }, [knobValues.pitch]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -113,7 +107,6 @@ export default function Home() {
               knobValues={knobValues}
               selectedKnob={selectedKnob}
               onKnobSelect={handleKnobSelect}
-              selectedPitch={selectedPitch}
             />
             <TriggerPanel
               knobValues={knobValues}
