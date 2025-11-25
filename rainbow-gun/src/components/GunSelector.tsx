@@ -5,11 +5,12 @@ import SelectableGridItem from './SelectableGridItem';
 import { useAudioEngine } from '@/hooks/useAudioEngine';
 
 interface GunSelectorProps {
-  selectedGunIds: Set<string>;
+  selectedGunIds: Set<string>; // Temporarily highlighted (just fired)
+  activeGunId: string; // Persistently selected gun
   onFire: (gunId: string) => void;
 }
 
-export default function GunSelector({ selectedGunIds, onFire }: GunSelectorProps) {
+export default function GunSelector({ selectedGunIds, activeGunId, onFire }: GunSelectorProps) {
   const { ready } = useAudioEngine();
 
   return (
@@ -31,6 +32,7 @@ export default function GunSelector({ selectedGunIds, onFire }: GunSelectorProps
             label={gun.name}
             imageUrl={gun.imageUrl}
             isSelected={selectedGunIds.has(gun.id)}
+            isActive={gun.id === activeGunId}
             onClick={onFire}
           />
         ))}
