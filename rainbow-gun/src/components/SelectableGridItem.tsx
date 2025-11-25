@@ -7,7 +7,8 @@ interface SelectableGridItemProps {
   id: string;
   label: string;
   imageUrl: string;
-  isSelected: boolean;
+  isSelected: boolean; // Temporarily highlighted (just fired)
+  isActive?: boolean; // Persistently selected (active gun)
   onClick: (id: string) => void;
   size?: 'sm' | 'md' | 'lg';
 }
@@ -23,6 +24,7 @@ export default function SelectableGridItem({
   label,
   imageUrl,
   isSelected,
+  isActive = false,
   onClick,
   size = 'md',
 }: SelectableGridItemProps) {
@@ -31,10 +33,12 @@ export default function SelectableGridItem({
   return (
     <button
       onClick={() => onClick(id)}
-      className={`flex flex-col items-center gap-2 p-3 rounded border transition-colors cursor-pointer focus:outline-none ${
-        isSelected
-          ? 'border-blue-500 bg-blue-50'
-          : 'border-gray-300 bg-white hover:bg-gray-100'
+      className={`flex flex-col items-center gap-2 p-3 rounded border-2 transition-colors cursor-pointer focus:outline-none ${
+        isActive
+          ? 'border-blue-600 bg-blue-100 font-semibold' // Persistent selection (active gun)
+          : isSelected
+            ? 'border-blue-400 bg-blue-50' // Temporary highlight (just fired)
+            : 'border-gray-300 bg-white hover:bg-gray-100'
       }`}
       title={label}
     >

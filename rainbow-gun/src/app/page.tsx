@@ -6,15 +6,19 @@ import ChordSelector from '@/components/ChordSelector';
 import SubBassPanel from '@/components/SubBassPanel';
 import EffectsPanel from '@/components/EffectsPanel';
 import TriggerPanel from '@/components/TriggerPanel';
+import DebugPanel from '@/components/DebugPanel';
 import { useAudioEngine } from '@/hooks/useAudioEngine';
+import { useMIDI } from '@/hooks/useMIDI';
 import { knobValueToPitchIndex, PITCH_STEP, DEFAULT_PITCH } from '@/data/notes';
 import { guns } from '@/data/guns';
 
 export default function Home() {
   const { engine, initEngine } = useAudioEngine();
+  const { isSupported, midiAccess, midiDevices, error, requestMIDIAccess, onMIDIMessage } = useMIDI();
   const [selectedKnob, setSelectedKnob] = useState<string | null>(null);
   const [selectedChord, setSelectedChord] = useState<'major' | 'minor'>('major');
   const [selectedGunIds, setSelectedGunIds] = useState<Set<string>>(new Set());
+  const [activeGunId, setActiveGunId] = useState<string>('scout'); // Persistent gun selection
   const timeoutRefs = useRef<Record<string, NodeJS.Timeout>>({});
 
   const [knobValues, setKnobValues] = useState({
@@ -47,7 +51,10 @@ export default function Home() {
 
   // Fire trigger: play audio + show visual feedback
   const fireGun = useCallback(async (gunId: string) => {
-    // Show visual feedback: highlight the gun button
+    // Set as active gun (persistent selection)
+    setActiveGunId(gunId);
+
+    // Show temporary visual feedback: highlight the gun button
     setSelectedGunIds(prev => new Set(prev).add(gunId));
 
     // Clear any existing timeout for this gun
@@ -55,7 +62,7 @@ export default function Home() {
       clearTimeout(timeoutRefs.current[gunId]);
     }
 
-    // Auto-deselect after 1 second
+    // Auto-deselect from selectedGunIds after 1 second (but activeGunId persists)
     timeoutRefs.current[gunId] = setTimeout(() => {
       setSelectedGunIds(prev => {
         const next = new Set(prev);
@@ -99,11 +106,12 @@ export default function Home() {
         return;
       }
 
-      // Handle number keys for gun selection/firing
-      const keyNum = parseInt(e.key);
-      if (!isNaN(keyNum) && keyNum >= 1 && keyNum <= guns.length) {
-        const gun = guns[keyNum - 1];
-        fireGun(gun.id);
+      // Handle Q/W/E keys for gun selection/firing
+      // Remapped from 1/2/3 to avoid conflict with the default key on the rainbow gun
+      const gunKeyMap: Record<string, number> = { 'q': 0, 'w': 1, 'e': 2 };
+      const gunIndex = gunKeyMap[e.key.toLowerCase()];
+      if (gunIndex !== undefined && gunIndex < guns.length) {
+        fireGun(guns[gunIndex].id);
       }
     };
 
@@ -111,12 +119,60 @@ export default function Home() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [selectedKnob, fireGun]);
 
+  // Request MIDI access on page load
+  useEffect(() => {
+    requestMIDIAccess();
+  }, [requestMIDIAccess]);
+
   // Cleanup timeouts on unmount
   useEffect(() => {
     return () => {
       Object.values(timeoutRefs.current).forEach(clearTimeout);
     };
   }, []);
+
+  // Subscribe to MIDI messages and log them to console for testing
+  useEffect(() => {
+    const unsubscribe = onMIDIMessage((event) => {
+      const byte0 = event.data[0];
+
+      // Skip system real-time messages (0xF8 = Timing Clock, etc.)
+      if (byte0 >= 0xf8) {
+        return;
+      }
+
+      const status = byte0 & 0xf0;
+      const data1 = event.data[1];
+      const data2 = event.data[2];
+
+      let messageType = '';
+      if (status === 0xb0) {
+        messageType = `CC ${data1} = ${data2}`;
+      } else if (status === 0x90) {
+        messageType = `Note On ${data1} (velocity: ${data2})`;
+      } else if (status === 0x80) {
+        messageType = `Note Off ${data1}`;
+      } else {
+        messageType = `Unknown [${byte0}, ${data1}, ${data2}]`;
+      }
+
+      console.log(`[MIDI] ${event.deviceName}: ${messageType}`);
+    });
+
+    return unsubscribe;
+  }, [onMIDIMessage]);
+
+  // Build debug items from MIDI state
+  const debugItems = [
+    { label: 'MIDI Supported', value: isSupported ? 'Yes' : 'No' },
+    { label: 'MIDI Access', value: midiAccess ? 'Granted' : 'Not Granted' },
+    { label: 'Devices', value: String(midiDevices.length) },
+    ...(midiDevices.length > 0 ? [{
+      label: 'Device Names',
+      value: midiDevices.map(d => d.name).join(', ')
+    }] : []),
+    ...(error ? [{ label: 'MIDI Error', value: error }] : []),
+  ];
 
   return (
     <div className="min-h-screen p-8 bg-gray-50">
@@ -126,7 +182,7 @@ export default function Home() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* LEFT PANEL - Gun Selection & Sub Bass */}
           <div className="space-y-6">
-            <GunSelector selectedGunIds={selectedGunIds} onFire={fireGun} />
+            <GunSelector selectedGunIds={selectedGunIds} activeGunId={activeGunId} onFire={fireGun} />
             <ChordSelector selectedChord={selectedChord} onSelectChord={setSelectedChord} />
             <SubBassPanel
               knobValues={knobValues}
@@ -149,6 +205,9 @@ export default function Home() {
             />
           </div>
         </div>
+
+        {/* Debug Panel */}
+        <DebugPanel items={debugItems} onRequestMIDI={requestMIDIAccess} />
       </div>
     </div>
   );
