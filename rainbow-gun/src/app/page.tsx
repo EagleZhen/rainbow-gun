@@ -81,7 +81,7 @@ export default function Home() {
           {/* LEFT PANEL - Gun Selection & Sub Bass */}
           <div className="space-y-6">
             <GunSelector />
-            <ChordSelector />
+            <ChordSelector selectedChord={selectedChord} onSelectChord={setSelectedChord} />
             <SubBassPanel
               knobValues={knobValues}
               selectedKnob={selectedKnob}
