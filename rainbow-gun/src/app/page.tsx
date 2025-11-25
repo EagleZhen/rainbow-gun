@@ -206,6 +206,17 @@ export default function Home() {
 
       // Show visual feedback by selecting the knob
       setSelectedKnob(knobId);
+
+      // Clear any existing timeout for this knob
+      if (timeoutRefs.current[knobId]) {
+        clearTimeout(timeoutRefs.current[knobId]);
+      }
+
+      // Auto-clear selection after a brief period
+      timeoutRefs.current[knobId] = setTimeout(() => {
+        setSelectedKnob(null);
+        delete timeoutRefs.current[knobId];
+      }, 500);
     });
 
     return unsubscribe;
