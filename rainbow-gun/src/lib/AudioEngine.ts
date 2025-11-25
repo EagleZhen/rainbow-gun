@@ -16,7 +16,6 @@ export class AudioEngine {
   // Wet/dry crossfade nodes
   private dryGain: Tone.Gain;
   private wetGain: Tone.Gain;
-  private crossfadeAmount = 0; // 0 = 100% dry, 1 = 100% wet
 
   constructor() {
     // Create wet/dry gain nodes
@@ -117,7 +116,6 @@ export class AudioEngine {
    * Set wet/dry crossfade amount (0 = dry, 1 = wet)
    */
   setCrossfadeAmount(amount: number): void {
-    this.crossfadeAmount = amount;
     this.dryGain.gain.value = 1 - amount;
     this.wetGain.gain.value = amount;
   }
