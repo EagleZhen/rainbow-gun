@@ -70,11 +70,12 @@ export function useMIDI() {
       if (!attachedDeviceIds.current.has(input.id)) {
         attachedDeviceIds.current.add(input.id);
 
-        input.addEventListener('midimessage', (event: any) => {
+        input.addEventListener('midimessage', (event: Event) => {
+          const midiEvent = event as unknown as { data: Uint8Array; timeStamp: number };
           messageListeners.current.forEach(listener => {
             listener({
-              data: event.data,
-              timestamp: event.timeStamp,
+              data: midiEvent.data,
+              timestamp: midiEvent.timeStamp,
               deviceName,
               deviceId: input.id,
             });
