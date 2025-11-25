@@ -55,6 +55,7 @@ export class AudioEngine {
       player.stop();
       player.dispose();
     });
+    this.gunPlayers = {};
     this.initialized = false;
   }
 
