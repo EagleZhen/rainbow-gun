@@ -56,7 +56,7 @@ export function useMIDI() {
     const devices: MIDIDevice[] = [];
     const inputs = access.inputs.values();
 
-    for (let input of inputs) {
+    for (const input of inputs) {
       const deviceName = input.name || `MIDI Device (${input.id})`;
 
       devices.push({
