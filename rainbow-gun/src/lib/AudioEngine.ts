@@ -91,6 +91,7 @@ export class AudioEngine {
     // Initialize sub bass synthesis chain with defaults
     const subBassDefaults = DEFAULT_KNOB_VALUES;
     const audioDefaults = AUDIO_ENGINE_DEFAULTS.subBass;
+    const adsrDefaults = audioDefaults.adsr;
 
     // Sine oscillator path
     this.sineOsc = new Tone.Oscillator(audioDefaults.frequency, audioDefaults.waveform);
@@ -107,10 +108,10 @@ export class AudioEngine {
 
     // ADSR and output
     this.subEnvelope = new Tone.Envelope({
-      attack: subBassDefaults.attack * 1, // 0-1 knob → 0-1s (fast transient)
-      decay: subBassDefaults.decay * 2, // 0-1 knob → 0-2s (tone shaping)
-      sustain: subBassDefaults.sustain, // 0-1 knob → 0-1 gain (no time scaling)
-      release: subBassDefaults.release * 2, // 0-1 knob → 0-2s (tail length)
+      attack: subBassDefaults.attack * adsrDefaults.attackScale,
+      decay: subBassDefaults.decay * adsrDefaults.decayScale,
+      sustain: subBassDefaults.sustain * adsrDefaults.sustainScale,
+      release: subBassDefaults.release * adsrDefaults.releaseScale,
     });
     this.subGain = new Tone.Gain(audioDefaults.masterGain);
 

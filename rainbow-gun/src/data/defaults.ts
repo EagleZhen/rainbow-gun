@@ -36,5 +36,12 @@ export const AUDIO_ENGINE_DEFAULTS = {
     frequency: 46, // Hz (default frequency for sine oscillator)
     waveform: 'sine' as const,
     masterGain: 0.3, // Overall sub bass output volume
+    // ADSR time scaling factors (knob 0-1 range → seconds)
+    adsr: {
+      attackScale: 1,    // 0-1s (fast transient)
+      decayScale: 2,     // 0-2s (tone shaping)
+      sustainScale: 1,   // 0-1 gain (no time scaling)
+      releaseScale: 2,   // 0-2s (tail length)
+    },
   },
 } as const;
