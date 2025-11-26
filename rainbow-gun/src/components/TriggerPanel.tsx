@@ -19,6 +19,14 @@ export default function TriggerPanel({
           isSelected={selectedKnob === 'fireRate'}
           onSelect={onKnobSelect}
         />
+        <Knob
+          id="gunLevel"
+          label="Gun Level"
+          value={knobValues.gunLevel}
+          subtitle="volume"
+          isSelected={selectedKnob === 'gunLevel'}
+          onSelect={onKnobSelect}
+        />
       </div>
     </div>
   );
