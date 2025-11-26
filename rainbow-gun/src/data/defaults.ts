@@ -20,10 +20,10 @@ export const DEFAULT_KNOB_VALUES = {
   sustain: 0.5,
   release: 0.25,
   // Sub Bass - Tone
-  subLevel: 0.4,
+  subLevel: 0.5,
   subPower: 0.5,
-  subPunch: 0.6,
-  subFuzz: 0.3,
+  subPunch: 1,
+  subFuzz: 0.5,
   // Trigger
   fireRate: 0.5,
 } as const;
@@ -35,7 +35,7 @@ export const AUDIO_ENGINE_DEFAULTS = {
   subBass: {
     frequency: 46, // Hz (default frequency for sine oscillator)
     waveform: 'sine' as const,
-    masterGain: 0.3, // Overall sub bass output volume
+    masterGain: 1, // Overall sub bass output volume
     // ADSR time scaling factors (knob 0-1 range → seconds)
     adsr: {
       attackScale: 1,    // 0-1s (fast transient)
