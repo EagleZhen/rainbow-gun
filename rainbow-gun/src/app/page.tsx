@@ -103,6 +103,27 @@ export default function Home() {
     }
   }, [engine, knobValues.gunLevel]);
 
+  // Wire reverb to AudioEngine
+  useEffect(() => {
+    if (engine) {
+      engine.setReverb(knobValues.reverb);
+    }
+  }, [engine, knobValues.reverb]);
+
+  // Wire master level to AudioEngine
+  useEffect(() => {
+    if (engine) {
+      engine.setMasterLevel(knobValues.master);
+    }
+  }, [engine, knobValues.master]);
+
+  // Wire master power (distortion) to AudioEngine
+  useEffect(() => {
+    if (engine) {
+      engine.setMasterPower(knobValues.power);
+    }
+  }, [engine, knobValues.power]);
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       // Handle arrow keys for knob adjustment (only if a knob is selected)

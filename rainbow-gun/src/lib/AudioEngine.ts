@@ -19,7 +19,7 @@ export interface SubBassParams {
 }
 
 /**
- * AudioEngine: Tone.js engine for dry gun + wet sample crossfading + sub bass synthesis
+ * AudioEngine: Tone.js synthesis engine for guns + sub bass with master reverb
  */
 export class AudioEngine {
   private initialized = false;
@@ -33,34 +33,62 @@ export class AudioEngine {
   private wetSamplePlayers: Record<string, Record<number, Record<string, Tone.Player[]>>> = {};
   private wetSampleIndices: Record<string, Record<number, Record<string, number>>> = {};
 
-  // Wet/dry crossfade nodes (gun channel)
+  /**
+   * Audio Signal Chain:
+   *
+   * GUN CHANNEL:
+   *   dryGun → dryGain ──┐
+   *                      ├→ gunLevel ────────────────────────┐
+   *   wetGun → wetGain ──┘                                   │
+   *                                                          ├→ masterPower → masterReverb → masterLevel → DESTINATION
+   * SUB BASS CHANNEL:                                        │
+   *   sineOsc → subLevel → subPunch ──┐                      │
+   *                                   ├→ subPower → subGain ─┘
+   *   noiseOsc → subFuzz ─────────────┘            (subEnvelope modulates subGain.gain for ADSR)
+   * 
+   */
+
+  // Gun channel: dry/wet crossfade
   private dryGain: Tone.Gain;
   private wetGain: Tone.Gain;
-  private gunLevel: Tone.Gain; // Gun output volume control
+  private gunLevel: Tone.Gain; // Gun volume control
 
-  // TODO: Master effects nodes (not yet implemented)
-  // - Master volume control (dryGain + wetGain master)
-  // - Reverb effect (Tone.Reverb)
-  // - Master distortion/compression (Tone.Distortion or Tone.Compressor)
+  // Master effects
+  private masterPower: Tone.Distortion; // Master distortion effect
+  private masterReverb: Tone.Reverb;
+  private masterLevel: Tone.Gain; // Master output volume
 
-  // Sub bass synthesis nodes
-  // Sine path
+  // Sub bass: sine oscillator path
   private sineOsc: Tone.Oscillator;
-  private subLevel: Tone.Gain; // Sine amplitude control
-  private subPunch: Tone.Gain; // TODO: implement pitch drop effect (currently placeholder gain)
-  // Noise path
-  private noiseOsc: Tone.Oscillator; // White noise source
-  private subFuzz: Tone.Gain; // Noise amplitude control
-  // Mixing and processing
-  private subMixer: Tone.Gain; // Mixes sine + noise
-  private subPower: Tone.Gain; // TODO: implement distortion effect (currently placeholder gain)
-  private subEnvelope: Tone.Envelope; // ADSR envelope
-  private subGain: Tone.Gain; // Master sub bass output
+  private subLevel: Tone.Gain;
+  private subPunch: Tone.Gain; // TODO: pitch drop effect (placeholder)
+
+  // Sub bass: noise oscillator path
+  private noiseOsc: Tone.Oscillator;
+  private subFuzz: Tone.Gain;
+
+  // Sub bass: processing and output
+  private subPower: Tone.Gain; // TODO: distortion effect (placeholder)
+  private subEnvelope: Tone.Envelope; // ADSR amplitude envelope
+  private subGain: Tone.Gain; // ADSR output (modulation target)
 
   constructor() {
+    // Create master level control (final output volume)
+    this.masterLevel = new Tone.Gain(DEFAULT_KNOB_VALUES.master);
+    this.masterLevel.connect(Tone.getDestination());
+
+    // Create master reverb effect
+    this.masterReverb = new Tone.Reverb({ decay: 2.5 });
+    this.masterReverb.wet.value = DEFAULT_KNOB_VALUES.reverb;
+    this.masterReverb.connect(this.masterLevel);
+
+    // Create master distortion effect
+    this.masterPower = new Tone.Distortion(DEFAULT_KNOB_VALUES.power);
+    this.masterPower.connect(this.masterReverb);
+
     // Create gun level control (gun output volume)
     this.gunLevel = new Tone.Gain(DEFAULT_KNOB_VALUES.gunLevel);
-    this.gunLevel.connect(Tone.getDestination());
+    this.gunLevel.connect(this.masterPower);
 
     // Create wet/dry gain nodes
     this.dryGain = new Tone.Gain(1); // Start at full dry
@@ -108,15 +136,12 @@ export class AudioEngine {
     this.subLevel = new Tone.Gain(subBassDefaults.subLevel);
     this.subPunch = new Tone.Gain(1); // TODO: pitch drop effect (placeholder)
 
-    // White noise path
+    // Noise oscillator path
     this.noiseOsc = new Tone.Oscillator(audioDefaults.frequency, 'square');
     this.subFuzz = new Tone.Gain(subBassDefaults.subFuzz);
 
-    // Mixing and final processing
-    this.subMixer = new Tone.Gain(1);
-    this.subPower = new Tone.Gain(subBassDefaults.subPower);
-
-    // ADSR and output
+    // Sub bass processing
+    this.subPower = new Tone.Gain(subBassDefaults.subPower); // TODO: distortion effect (placeholder)
     this.subEnvelope = new Tone.Envelope({
       attack: subBassDefaults.attack * adsrDefaults.attackScale,
       decay: subBassDefaults.decay * adsrDefaults.decayScale,
@@ -125,22 +150,21 @@ export class AudioEngine {
     });
     this.subGain = new Tone.Gain(audioDefaults.masterGain);
 
-    // Wire sub bass chain:
-    // Sine path: sineOsc → subLevel → subPunch ─┐
-    //                                            ├→ subMixer → subPower → subGain → output
-    // Noise path: noiseOsc → subFuzz ───────────┘
-    // Envelope modulates subGain.gain (ADSR amplitude shaping)
+    // Sub bass: sine + noise → processing → ADSR → masterPower
+
+    // Sine: sineOsc → subLevel → subPunch → subPower
     this.sineOsc.connect(this.subLevel);
     this.subLevel.connect(this.subPunch);
-    this.subPunch.connect(this.subMixer);
+    this.subPunch.connect(this.subPower);
 
+    // Noise: noiseOsc → subFuzz → subPower
     this.noiseOsc.connect(this.subFuzz);
-    this.subFuzz.connect(this.subMixer);
+    this.subFuzz.connect(this.subPower);
 
-    this.subMixer.connect(this.subPower);
+    // Output: subPower → subGain (ADSR modulates gain) → masterPower
     this.subPower.connect(this.subGain);
     this.subEnvelope.connect(this.subGain.gain);
-    this.subGain.connect(Tone.getDestination());
+    this.subGain.connect(this.masterPower);
 
     // Start oscillators (always running, gated by envelope)
     this.sineOsc.start();
@@ -246,6 +270,12 @@ export class AudioEngine {
     // Cleanup gain nodes (gun channel)
     this.dryGain.dispose();
     this.wetGain.dispose();
+    this.gunLevel.dispose();
+
+    // Cleanup master effects
+    this.masterPower.dispose();
+    this.masterReverb.dispose();
+    this.masterLevel.dispose();
 
     // Cleanup sub bass synthesis nodes
     this.sineOsc.stop();
@@ -255,7 +285,6 @@ export class AudioEngine {
     this.subLevel.dispose();
     this.subPunch.dispose();
     this.subFuzz.dispose();
-    this.subMixer.dispose();
     this.subPower.dispose();
     this.subEnvelope.dispose();
     this.subGain.dispose();
@@ -316,5 +345,26 @@ export class AudioEngine {
    */
   setGunLevel(level: number): void {
     this.gunLevel.gain.value = level;
+  }
+
+  /**
+   * Set master reverb amount (0-1 controls wet signal)
+   */
+  setReverb(amount: number): void {
+    this.masterReverb.wet.value = amount;
+  }
+
+  /**
+   * Set master output level (final volume control)
+   */
+  setMasterLevel(level: number): void {
+    this.masterLevel.gain.value = level;
+  }
+
+  /**
+   * Set master distortion amount (0-1 controls distortion)
+   */
+  setMasterPower(amount: number): void {
+    this.masterPower.distortion = amount;
   }
 }
