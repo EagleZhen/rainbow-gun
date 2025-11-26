@@ -288,6 +288,11 @@ export class AudioEngine {
    * Update sub bass parameters (batch update with ADSR time scaling)
    */
   setSubParameters(params: SubBassParams): void {
+    if (!this.initialized) {
+      console.warn('AudioEngine not initialized. Call init() first.');
+      return;
+    }
+
     const adsrDefaults = AUDIO_ENGINE_DEFAULTS.subBass.adsr;
 
     this.subEnvelope.attack = params.attack * adsrDefaults.attackScale;
