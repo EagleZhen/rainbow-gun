@@ -62,6 +62,7 @@ export class AudioEngine {
   constructor() {
     // Create master reverb effect
     this.masterReverb = new Tone.Reverb({ decay: 2.5 });
+    this.masterReverb.wet.value = DEFAULT_KNOB_VALUES.reverb;
     this.masterReverb.connect(Tone.getDestination());
 
     // Create gun level control (gun output volume)
