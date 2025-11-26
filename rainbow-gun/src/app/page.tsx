@@ -72,6 +72,22 @@ export default function Home() {
     }
   }, [engine, knobValues.rainbowlize]);
 
+  // Wire sub bass parameters to AudioEngine
+  useEffect(() => {
+    if (engine) {
+      engine.setSubParameters({
+        attack: knobValues.attack,
+        decay: knobValues.decay,
+        sustain: knobValues.sustain,
+        release: knobValues.release,
+        level: knobValues.subLevel,
+        power: knobValues.subPower,
+        punch: knobValues.subPunch,
+        fuzz: knobValues.subFuzz,
+      });
+    }
+  }, [engine, knobValues.attack, knobValues.decay, knobValues.sustain, knobValues.release, knobValues.subLevel, knobValues.subPower, knobValues.subPunch, knobValues.subFuzz]);
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       // Handle arrow keys for knob adjustment (only if a knob is selected)
