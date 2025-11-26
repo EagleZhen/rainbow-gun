@@ -38,9 +38,11 @@ export class AudioEngine {
   private wetGain: Tone.Gain;
   private gunLevel: Tone.Gain; // Gun output volume control
 
+  // Master effects
+  private masterReverb: Tone.Reverb; // Master reverb effect
+
   // TODO: Master effects nodes (not yet implemented)
   // - Master volume control (dryGain + wetGain master)
-  // - Reverb effect (Tone.Reverb)
   // - Master distortion/compression (Tone.Distortion or Tone.Compressor)
 
   // Sub bass synthesis nodes
@@ -58,9 +60,13 @@ export class AudioEngine {
   private subGain: Tone.Gain; // Master sub bass output
 
   constructor() {
+    // Create master reverb effect
+    this.masterReverb = new Tone.Reverb({ decay: 2.5 });
+    this.masterReverb.connect(Tone.getDestination());
+
     // Create gun level control (gun output volume)
     this.gunLevel = new Tone.Gain(DEFAULT_KNOB_VALUES.gunLevel);
-    this.gunLevel.connect(Tone.getDestination());
+    this.gunLevel.connect(this.masterReverb);
 
     // Create wet/dry gain nodes
     this.dryGain = new Tone.Gain(1); // Start at full dry
