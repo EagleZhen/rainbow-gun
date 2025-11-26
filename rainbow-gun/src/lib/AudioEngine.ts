@@ -40,7 +40,7 @@ export class AudioEngine {
    *   dryGun → dryGain ──┐
    *                      ├→ gunLevel ────────────────────────┐
    *   wetGun → wetGain ──┘                                   │
-   *                                                          ├→ masterReverb → masterLevel → DESTINATION
+   *                                                          ├→ masterPower → masterReverb → masterLevel → DESTINATION
    * SUB BASS CHANNEL:                                        │
    *   sineOsc → subLevel → subPunch ──┐                      │
    *                                   ├→ subPower → subGain ─┘
