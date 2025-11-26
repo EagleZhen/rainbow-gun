@@ -150,7 +150,8 @@ export class AudioEngine {
     });
     this.subGain = new Tone.Gain(audioDefaults.masterGain);
 
-    // Wire sub bass: sine + noise → processing → ADSR → reverb
+    // Sub bass: sine + noise → processing → ADSR → masterPower
+
     // Sine: sineOsc → subLevel → subPunch → subPower
     this.sineOsc.connect(this.subLevel);
     this.subLevel.connect(this.subPunch);
