@@ -117,8 +117,9 @@ export class AudioEngine {
 
     // Wire sub bass chain:
     // Sine path: sineOsc → subLevel → subPunch ─┐
-    //                                            ├→ subMixer → subPower → subEnvelope → subGain → output
+    //                                            ├→ subMixer → subPower → subGain → output
     // Noise path: noiseOsc → subFuzz ───────────┘
+    // Envelope modulates subGain.gain (ADSR amplitude shaping)
     this.sineOsc.connect(this.subLevel);
     this.subLevel.connect(this.subPunch);
     this.subPunch.connect(this.subMixer);
@@ -127,8 +128,8 @@ export class AudioEngine {
     this.subFuzz.connect(this.subMixer);
 
     this.subMixer.connect(this.subPower);
-    this.subPower.connect(this.subEnvelope);
-    this.subEnvelope.connect(this.subGain);
+    this.subPower.connect(this.subGain);
+    this.subEnvelope.connect(this.subGain.gain);
     this.subGain.connect(Tone.getDestination());
 
     // Start oscillators (always running, gated by envelope)
