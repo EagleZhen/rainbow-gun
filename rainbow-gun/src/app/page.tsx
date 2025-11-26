@@ -24,12 +24,14 @@ export default function Home() {
   const timeoutRefs = useRef<Record<string, NodeJS.Timeout>>({});
 
   const [knobValues, setKnobValues] = useState(DEFAULT_KNOB_VALUES);
+  const dragStateRef = useRef<{ knobId: string; startY: number; startValue: number } | null>(null);
 
   const handleKnobSelect = (knobId: string) => {
     setSelectedKnob(prev => prev === knobId ? null : knobId);
   };
 
   const KNOB_ADJUSTMENT_STEP = 0.02; // 2% adjustment per keypress
+  const MOUSE_DRAG_SENSITIVITY = 0.005; // Value change per pixel dragged
   const clampValue = (value: number) => Math.max(0, Math.min(1, value));
 
   // Fire trigger: play audio + show visual feedback
