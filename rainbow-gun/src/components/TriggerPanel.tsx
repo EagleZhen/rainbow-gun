@@ -10,7 +10,7 @@ export default function TriggerPanel({
     <div className="border border-gray-300 rounded p-6 bg-white">
       <div className="text-xs font-semibold mb-3">TRIGGER</div>
       <div className="flex items-center gap-6">
-        <div className="w-36 h-36 border border-gray-300 rounded shrink-0" />
+        {/* <div className="w-36 h-36 border border-gray-300 rounded shrink-0" /> */}
         <Knob
           id="fireRate"
           label="Fire Rate"
