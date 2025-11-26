@@ -36,6 +36,7 @@ export class AudioEngine {
   // Wet/dry crossfade nodes (gun channel)
   private dryGain: Tone.Gain;
   private wetGain: Tone.Gain;
+  private gunLevel: Tone.Gain; // Gun output volume control
 
   // TODO: Master effects nodes (not yet implemented)
   // - Master volume control (dryGain + wetGain master)
@@ -57,11 +58,15 @@ export class AudioEngine {
   private subGain: Tone.Gain; // Master sub bass output
 
   constructor() {
+    // Create gun level control (gun output volume)
+    this.gunLevel = new Tone.Gain(DEFAULT_KNOB_VALUES.gunLevel);
+    this.gunLevel.connect(Tone.getDestination());
+
     // Create wet/dry gain nodes
     this.dryGain = new Tone.Gain(1); // Start at full dry
     this.wetGain = new Tone.Gain(0); // Start at zero wet
-    this.dryGain.connect(Tone.getDestination());
-    this.wetGain.connect(Tone.getDestination());
+    this.dryGain.connect(this.gunLevel);
+    this.wetGain.connect(this.gunLevel);
 
     // Load dry gun sounds (create a pool of players for polyphony)
     guns.forEach(gun => {

@@ -26,6 +26,8 @@ export const DEFAULT_KNOB_VALUES = {
   subFuzz: 0.5,
   // Trigger
   fireRate: 0.5,
+  // Gun Output
+  gunLevel: 0.8,
 } as const;
 
 /**
