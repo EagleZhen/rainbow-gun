@@ -8,8 +8,8 @@ import { DEFAULT_PITCH } from './notes';
 export const DEFAULT_KNOB_VALUES = {
   // Master Effects
   master: 0.8,
-  reverb: 0.3,
-  power: 0.6,
+  reverb: 0,
+  power: 0.1,
   // Tone Control
   rainbowlize: 0.5,
   pitch: DEFAULT_PITCH,
