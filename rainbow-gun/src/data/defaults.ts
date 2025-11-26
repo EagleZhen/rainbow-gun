@@ -5,6 +5,8 @@
 
 import { DEFAULT_PITCH } from './notes';
 
+export const DEFAULT_CHORD = 'minor' as const;
+
 export const DEFAULT_KNOB_VALUES = {
   // Master Effects
   master: 0.8,

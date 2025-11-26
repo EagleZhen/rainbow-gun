@@ -12,13 +12,13 @@ import { useMIDI } from '@/hooks/useMIDI';
 import { knobValueToPitchIndex, PITCH_STEP, DEFAULT_PITCH } from '@/data/notes';
 import { guns } from '@/data/guns';
 import { getDeviceMapping, ccValueToKnobValue } from '@/data/midiMappings';
-import { DEFAULT_KNOB_VALUES } from '@/data/defaults';
+import { DEFAULT_KNOB_VALUES, DEFAULT_CHORD } from '@/data/defaults';
 
 export default function Home() {
   const { engine, initEngine } = useAudioEngine();
   const { isSupported, midiAccess, midiDevices, error, requestMIDIAccess, onMIDIMessage } = useMIDI();
   const [selectedKnob, setSelectedKnob] = useState<string | null>(null);
-  const [selectedChord, setSelectedChord] = useState<'major' | 'minor'>('major');
+  const [selectedChord, setSelectedChord] = useState<'major' | 'minor'>(DEFAULT_CHORD);
   const [selectedGunIds, setSelectedGunIds] = useState<Set<string>>(new Set());
   const [activeGunId, setActiveGunId] = useState<string>('scout'); // Persistent gun selection
   const timeoutRefs = useRef<Record<string, NodeJS.Timeout>>({});
@@ -150,6 +150,18 @@ export default function Home() {
           ...prev,
           pitch: knobValue
         }));
+        e.preventDefault();
+        return;
+      }
+
+      // Handle chord selection with [ and ] keys
+      if (e.key === '[') {
+        setSelectedChord('major');
+        e.preventDefault();
+        return;
+      }
+      if (e.key === ']') {
+        setSelectedChord('minor');
         e.preventDefault();
         return;
       }
