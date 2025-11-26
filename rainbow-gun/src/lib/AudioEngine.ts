@@ -243,7 +243,9 @@ export class AudioEngine {
     this.wetGain.dispose();
 
     // Cleanup sub bass synthesis nodes
+    this.sineOsc.stop();
     this.sineOsc.dispose();
+    this.noiseOsc.stop();
     this.noiseOsc.dispose();
     this.subLevel.dispose();
     this.subPunch.dispose();
