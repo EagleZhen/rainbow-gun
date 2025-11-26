@@ -264,4 +264,21 @@ export class AudioEngine {
     }
     this.subEnvelope.triggerAttack();
   }
+
+  /**
+   * Update sub bass parameters (batch update with ADSR time scaling)
+   */
+  setSubParameters(params: SubBassParams): void {
+    const adsrDefaults = AUDIO_ENGINE_DEFAULTS.subBass.adsr;
+
+    this.subEnvelope.attack = params.attack * adsrDefaults.attackScale;
+    this.subEnvelope.decay = params.decay * adsrDefaults.decayScale;
+    this.subEnvelope.sustain = params.sustain * adsrDefaults.sustainScale;
+    this.subEnvelope.release = params.release * adsrDefaults.releaseScale;
+
+    this.subLevel.gain.value = params.level;
+    this.subPower.gain.value = params.power;
+    this.subPunch.gain.value = params.punch;
+    this.subFuzz.gain.value = params.fuzz;
+  }
 }
