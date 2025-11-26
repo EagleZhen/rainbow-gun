@@ -252,4 +252,15 @@ export class AudioEngine {
   isInitialized(): boolean {
     return this.initialized;
   }
+
+  /**
+   * Trigger sub bass envelope (attack/decay/sustain/release)
+   */
+  fireSubBass(): void {
+    if (!this.initialized) {
+      console.warn('AudioEngine not initialized. Call init() first.');
+      return;
+    }
+    this.subEnvelope.triggerAttack();
+  }
 }
