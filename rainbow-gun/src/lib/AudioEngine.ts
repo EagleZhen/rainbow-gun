@@ -231,9 +231,20 @@ export class AudioEngine {
     });
     this.wetSamplePlayers = {};
 
-    // Cleanup gain nodes
+    // Cleanup gain nodes (gun channel)
     this.dryGain.dispose();
     this.wetGain.dispose();
+
+    // Cleanup sub bass synthesis nodes
+    this.sineOsc.dispose();
+    this.noiseOsc.dispose();
+    this.subLevel.dispose();
+    this.subPunch.dispose();
+    this.subFuzz.dispose();
+    this.subMixer.dispose();
+    this.subPower.dispose();
+    this.subEnvelope.dispose();
+    this.subGain.dispose();
 
     this.initialized = false;
   }
