@@ -55,6 +55,7 @@ export class AudioEngine {
 
   // Master effects
   private masterReverb: Tone.Reverb;
+  private masterLevel: Tone.Gain; // Master output volume
 
   // Sub bass: sine oscillator path
   private sineOsc: Tone.Oscillator;
@@ -71,10 +72,14 @@ export class AudioEngine {
   private subGain: Tone.Gain; // ADSR output (modulation target)
 
   constructor() {
+    // Create master level control (final output volume)
+    this.masterLevel = new Tone.Gain(DEFAULT_KNOB_VALUES.master);
+    this.masterLevel.connect(Tone.getDestination());
+
     // Create master reverb effect
     this.masterReverb = new Tone.Reverb({ decay: 2.5 });
     this.masterReverb.wet.value = DEFAULT_KNOB_VALUES.reverb;
-    this.masterReverb.connect(Tone.getDestination());
+    this.masterReverb.connect(this.masterLevel);
 
     // Create gun level control (gun output volume)
     this.gunLevel = new Tone.Gain(DEFAULT_KNOB_VALUES.gunLevel);
@@ -335,5 +340,12 @@ export class AudioEngine {
    */
   setReverb(amount: number): void {
     this.masterReverb.wet.value = amount;
+  }
+
+  /**
+   * Set master output level (final volume control)
+   */
+  setMasterLevel(level: number): void {
+    this.masterLevel.gain.value = level;
   }
 }

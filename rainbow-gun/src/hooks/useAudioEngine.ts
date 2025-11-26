@@ -14,6 +14,7 @@ interface IAudioEngine {
   setSubParameters(params: SubBassParams): void;
   setGunLevel(level: number): void;
   setReverb(amount: number): void;
+  setMasterLevel(level: number): void;
   dispose(): void;
 }
 

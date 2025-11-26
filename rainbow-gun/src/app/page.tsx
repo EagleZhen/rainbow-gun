@@ -110,6 +110,13 @@ export default function Home() {
     }
   }, [engine, knobValues.reverb]);
 
+  // Wire master level to AudioEngine
+  useEffect(() => {
+    if (engine) {
+      engine.setMasterLevel(knobValues.master);
+    }
+  }, [engine, knobValues.master]);
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       // Handle arrow keys for knob adjustment (only if a knob is selected)
