@@ -1,9 +1,25 @@
 import * as Tone from 'tone';
 import { guns, getWetSamplePath } from '@/data/guns';
+import { AUDIO_ENGINE_DEFAULTS, DEFAULT_KNOB_VALUES } from '@/data/defaults';
 import { createPlayerPool, getNextPlayerFromPool, disposePlayerPool } from './player-pool';
 
 /**
- * AudioEngine: Tone.js engine for dry gun + wet sample crossfading
+ * Sub bass parameters interface for batch updates
+ * Ordered to match knobValues state: attack, decay, sustain, release, level, power, punch, fuzz
+ */
+export interface SubBassParams {
+  attack: number;
+  decay: number;
+  sustain: number;
+  release: number;
+  level: number;
+  power: number;
+  punch: number;
+  fuzz: number;
+}
+
+/**
+ * AudioEngine: Tone.js engine for dry gun + wet sample crossfading + sub bass synthesis
  */
 export class AudioEngine {
   private initialized = false;
@@ -17,9 +33,28 @@ export class AudioEngine {
   private wetSamplePlayers: Record<string, Record<number, Record<string, Tone.Player[]>>> = {};
   private wetSampleIndices: Record<string, Record<number, Record<string, number>>> = {};
 
-  // Wet/dry crossfade nodes
+  // Wet/dry crossfade nodes (gun channel)
   private dryGain: Tone.Gain;
   private wetGain: Tone.Gain;
+
+  // TODO: Master effects nodes (not yet implemented)
+  // - Master volume control (dryGain + wetGain master)
+  // - Reverb effect (Tone.Reverb)
+  // - Master distortion/compression (Tone.Distortion or Tone.Compressor)
+
+  // Sub bass synthesis nodes
+  // Sine path
+  private sineOsc: Tone.Oscillator;
+  private subLevel: Tone.Gain; // Sine amplitude control
+  private subPunch: Tone.Gain; // TODO: implement pitch drop effect (currently placeholder gain)
+  // Noise path
+  private noiseOsc: Tone.Oscillator; // White noise source
+  private subFuzz: Tone.Gain; // Noise amplitude control
+  // Mixing and processing
+  private subMixer: Tone.Gain; // Mixes sine + noise
+  private subPower: Tone.Gain; // TODO: implement distortion effect (currently placeholder gain)
+  private subEnvelope: Tone.Envelope; // ADSR envelope
+  private subGain: Tone.Gain; // Master sub bass output
 
   constructor() {
     // Create wet/dry gain nodes
@@ -57,6 +92,54 @@ export class AudioEngine {
         this.wetSampleIndices[gun.id][pitchIndex].minor = 0;
       }
     });
+
+    // Initialize sub bass synthesis chain with defaults
+    const subBassDefaults = DEFAULT_KNOB_VALUES;
+    const audioDefaults = AUDIO_ENGINE_DEFAULTS.subBass;
+    const adsrDefaults = audioDefaults.adsr;
+
+    // Sine oscillator path
+    this.sineOsc = new Tone.Oscillator(audioDefaults.frequency, audioDefaults.waveform);
+    this.subLevel = new Tone.Gain(subBassDefaults.subLevel);
+    this.subPunch = new Tone.Gain(1); // TODO: pitch drop effect (placeholder)
+
+    // White noise path
+    this.noiseOsc = new Tone.Oscillator(audioDefaults.frequency, 'square');
+    this.subFuzz = new Tone.Gain(subBassDefaults.subFuzz);
+
+    // Mixing and final processing
+    this.subMixer = new Tone.Gain(1);
+    this.subPower = new Tone.Gain(subBassDefaults.subPower);
+
+    // ADSR and output
+    this.subEnvelope = new Tone.Envelope({
+      attack: subBassDefaults.attack * adsrDefaults.attackScale,
+      decay: subBassDefaults.decay * adsrDefaults.decayScale,
+      sustain: subBassDefaults.sustain * adsrDefaults.sustainScale,
+      release: subBassDefaults.release * adsrDefaults.releaseScale,
+    });
+    this.subGain = new Tone.Gain(audioDefaults.masterGain);
+
+    // Wire sub bass chain:
+    // Sine path: sineOsc → subLevel → subPunch ─┐
+    //                                            ├→ subMixer → subPower → subGain → output
+    // Noise path: noiseOsc → subFuzz ───────────┘
+    // Envelope modulates subGain.gain (ADSR amplitude shaping)
+    this.sineOsc.connect(this.subLevel);
+    this.subLevel.connect(this.subPunch);
+    this.subPunch.connect(this.subMixer);
+
+    this.noiseOsc.connect(this.subFuzz);
+    this.subFuzz.connect(this.subMixer);
+
+    this.subMixer.connect(this.subPower);
+    this.subPower.connect(this.subGain);
+    this.subEnvelope.connect(this.subGain.gain);
+    this.subGain.connect(Tone.getDestination());
+
+    // Start oscillators (always running, gated by envelope)
+    this.sineOsc.start();
+    this.noiseOsc.start();
   }
 
   /**
@@ -155,14 +238,71 @@ export class AudioEngine {
     });
     this.wetSamplePlayers = {};
 
-    // Cleanup gain nodes
+    // Cleanup gain nodes (gun channel)
     this.dryGain.dispose();
     this.wetGain.dispose();
+
+    // Cleanup sub bass synthesis nodes
+    this.sineOsc.stop();
+    this.sineOsc.dispose();
+    this.noiseOsc.stop();
+    this.noiseOsc.dispose();
+    this.subLevel.dispose();
+    this.subPunch.dispose();
+    this.subFuzz.dispose();
+    this.subMixer.dispose();
+    this.subPower.dispose();
+    this.subEnvelope.dispose();
+    this.subGain.dispose();
 
     this.initialized = false;
   }
 
   isInitialized(): boolean {
     return this.initialized;
+  }
+
+  /**
+   * Trigger sub bass envelope (attack/decay/sustain/release)
+   */
+  fireSubBass(): void {
+    if (!this.initialized) {
+      console.warn('AudioEngine not initialized. Call init() first.');
+      return;
+    }
+    this.subEnvelope.triggerAttack();
+  }
+
+  /**
+   * Release sub bass envelope (enters release phase)
+   */
+  releaseSubBass(): void {
+    if (!this.initialized) {
+      console.warn('AudioEngine not initialized. Call init() first.');
+      return;
+    }
+    this.subEnvelope.triggerRelease();
+  }
+
+  /**
+   * Update sub bass parameters (batch update with ADSR time scaling)
+   */
+  setSubParameters(params: SubBassParams): void {
+    if (!this.initialized) {
+      console.warn('AudioEngine not initialized. Call init() first.');
+      return;
+    }
+
+    const adsrDefaults = AUDIO_ENGINE_DEFAULTS.subBass.adsr;
+
+    this.subEnvelope.attack = params.attack * adsrDefaults.attackScale;
+    this.subEnvelope.decay = params.decay * adsrDefaults.decayScale;
+    this.subEnvelope.sustain = params.sustain * adsrDefaults.sustainScale;
+    this.subEnvelope.release = params.release * adsrDefaults.releaseScale;
+
+    this.subLevel.gain.value = params.level;
+    this.subPower.gain.value = params.power;
+    this.subPunch.gain.value = params.punch;
+    this.subFuzz.gain.value = params.fuzz;
   }
 }

@@ -1,6 +1,7 @@
 'use client';
 
 import { useRef, useEffect, useState } from 'react';
+import { SubBassParams } from '@/lib/AudioEngine';
 
 interface IAudioEngine {
   isInitialized(): boolean;
@@ -8,6 +9,9 @@ interface IAudioEngine {
   playGun(id: string): void;
   playWetGun(id: string, pitchIndex: number, chordType: 'major' | 'minor'): void;
   setCrossfadeAmount(amount: number): void;
+  fireSubBass(): void;
+  releaseSubBass(): void;
+  setSubParameters(params: SubBassParams): void;
   dispose(): void;
 }
 
