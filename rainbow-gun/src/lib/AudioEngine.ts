@@ -54,6 +54,7 @@ export class AudioEngine {
   private gunLevel: Tone.Gain; // Gun volume control
 
   // Master effects
+  private masterPower: Tone.Distortion; // Master distortion effect
   private masterReverb: Tone.Reverb;
   private masterLevel: Tone.Gain; // Master output volume
 
@@ -81,9 +82,13 @@ export class AudioEngine {
     this.masterReverb.wet.value = DEFAULT_KNOB_VALUES.reverb;
     this.masterReverb.connect(this.masterLevel);
 
+    // Create master distortion effect
+    this.masterPower = new Tone.Distortion(DEFAULT_KNOB_VALUES.power);
+    this.masterPower.connect(this.masterReverb);
+
     // Create gun level control (gun output volume)
     this.gunLevel = new Tone.Gain(DEFAULT_KNOB_VALUES.gunLevel);
-    this.gunLevel.connect(this.masterReverb);
+    this.gunLevel.connect(this.masterPower);
 
     // Create wet/dry gain nodes
     this.dryGain = new Tone.Gain(1); // Start at full dry
@@ -155,10 +160,10 @@ export class AudioEngine {
     this.noiseOsc.connect(this.subFuzz);
     this.subFuzz.connect(this.subPower);
 
-    // Output: subPower → subGain (ADSR modulates gain) → masterReverb
+    // Output: subPower → subGain (ADSR modulates gain) → masterPower
     this.subPower.connect(this.subGain);
     this.subEnvelope.connect(this.subGain.gain);
-    this.subGain.connect(this.masterReverb);
+    this.subGain.connect(this.masterPower);
 
     // Start oscillators (always running, gated by envelope)
     this.sineOsc.start();
@@ -264,6 +269,12 @@ export class AudioEngine {
     // Cleanup gain nodes (gun channel)
     this.dryGain.dispose();
     this.wetGain.dispose();
+    this.gunLevel.dispose();
+
+    // Cleanup master effects
+    this.masterPower.dispose();
+    this.masterReverb.dispose();
+    this.masterLevel.dispose();
 
     // Cleanup sub bass synthesis nodes
     this.sineOsc.stop();
@@ -347,5 +358,12 @@ export class AudioEngine {
    */
   setMasterLevel(level: number): void {
     this.masterLevel.gain.value = level;
+  }
+
+  /**
+   * Set master distortion amount (0-1 controls distortion)
+   */
+  setMasterPower(amount: number): void {
+    this.masterPower.distortion = amount;
   }
 }

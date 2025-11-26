@@ -15,6 +15,7 @@ interface IAudioEngine {
   setGunLevel(level: number): void;
   setReverb(amount: number): void;
   setMasterLevel(level: number): void;
+  setMasterPower(amount: number): void;
   dispose(): void;
 }
 

@@ -117,6 +117,13 @@ export default function Home() {
     }
   }, [engine, knobValues.master]);
 
+  // Wire master power (distortion) to AudioEngine
+  useEffect(() => {
+    if (engine) {
+      engine.setMasterPower(knobValues.power);
+    }
+  }, [engine, knobValues.power]);
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       // Handle arrow keys for knob adjustment (only if a knob is selected)
