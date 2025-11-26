@@ -310,4 +310,11 @@ export class AudioEngine {
     this.subPunch.gain.value = params.punch;
     this.subFuzz.gain.value = params.fuzz;
   }
+
+  /**
+   * Set gun output level (master volume for gun sounds)
+   */
+  setGunLevel(level: number): void {
+    this.gunLevel.gain.value = level;
+  }
 }

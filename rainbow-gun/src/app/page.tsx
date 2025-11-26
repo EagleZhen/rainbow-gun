@@ -96,6 +96,13 @@ export default function Home() {
     }
   }, [engine, knobValues.attack, knobValues.decay, knobValues.sustain, knobValues.release, knobValues.subLevel, knobValues.subPower, knobValues.subPunch, knobValues.subFuzz]);
 
+  // Wire gun level to AudioEngine
+  useEffect(() => {
+    if (engine) {
+      engine.setGunLevel(knobValues.gunLevel);
+    }
+  }, [engine, knobValues.gunLevel]);
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       // Handle arrow keys for knob adjustment (only if a knob is selected)
