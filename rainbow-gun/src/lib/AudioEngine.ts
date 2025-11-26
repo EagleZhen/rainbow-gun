@@ -32,9 +32,17 @@ export class AudioEngine {
   private wetSamplePlayers: Record<string, Record<number, Record<string, Tone.Player[]>>> = {};
   private wetSampleIndices: Record<string, Record<number, Record<string, number>>> = {};
 
-  // Wet/dry crossfade nodes
+  // Wet/dry crossfade nodes (gun channel)
   private dryGain: Tone.Gain;
   private wetGain: Tone.Gain;
+
+  // Sub bass synthesis nodes
+  private sineOsc: Tone.Oscillator;
+  private subLevelGain: Tone.Gain;
+  private subPowerGain: Tone.Gain; // TODO: distortion
+  private subFuzzGain: Tone.Gain; // TODO: white noise
+  private subEnvelope: Tone.Envelope;
+  private subGain: Tone.Gain;
 
   constructor() {
     // Create wet/dry gain nodes
