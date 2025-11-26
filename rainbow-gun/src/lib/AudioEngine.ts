@@ -3,7 +3,22 @@ import { guns, getWetSamplePath } from '@/data/guns';
 import { createPlayerPool, getNextPlayerFromPool, disposePlayerPool } from './player-pool';
 
 /**
- * AudioEngine: Tone.js engine for dry gun + wet sample crossfading
+ * Sub bass parameters interface for batch updates
+ * Ordered to match knobValues state: attack, decay, sustain, release, level, power, punch, fuzz
+ */
+export interface SubBassParams {
+  attack?: number;
+  decay?: number;
+  sustain?: number;
+  release?: number;
+  level?: number;
+  power?: number;
+  punch?: number;
+  fuzz?: number;
+}
+
+/**
+ * AudioEngine: Tone.js engine for dry gun + wet sample crossfading + sub bass synthesis
  */
 export class AudioEngine {
   private initialized = false;
