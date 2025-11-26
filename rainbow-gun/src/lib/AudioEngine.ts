@@ -8,14 +8,14 @@ import { createPlayerPool, getNextPlayerFromPool, disposePlayerPool } from './pl
  * Ordered to match knobValues state: attack, decay, sustain, release, level, power, punch, fuzz
  */
 export interface SubBassParams {
-  attack?: number;
-  decay?: number;
-  sustain?: number;
-  release?: number;
-  level?: number;
-  power?: number;
-  punch?: number;
-  fuzz?: number;
+  attack: number;
+  decay: number;
+  sustain: number;
+  release: number;
+  level: number;
+  power: number;
+  punch: number;
+  fuzz: number;
 }
 
 /**
