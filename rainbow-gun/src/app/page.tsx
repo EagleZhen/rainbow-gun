@@ -34,7 +34,7 @@ export default function Home() {
     reverb: 0.3,
     rainbowlize: 0.5,
     power: 0.6,
-    oct: 0.5,
+    octave: 0.5,
     attack: 0.05,
     decay: 0.52,
     sustain: 0.5,

@@ -62,10 +62,10 @@ export default function EffectsPanel({
             </div>
           </div>
           <Knob
-            id="oct"
-            label="Oct"
-            value={knobValues.oct}
-            isSelected={selectedKnob === 'oct'}
+            id="octave"
+            label="Octave"
+            value={knobValues.octave}
+            isSelected={selectedKnob === 'octave'}
             onSelect={onKnobSelect}
           />
         </div>
