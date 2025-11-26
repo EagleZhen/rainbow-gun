@@ -1,5 +1,6 @@
 import * as Tone from 'tone';
 import { guns, getWetSamplePath } from '@/data/guns';
+import { AUDIO_ENGINE_DEFAULTS, DEFAULT_KNOB_VALUES } from '@/data/defaults';
 import { createPlayerPool, getNextPlayerFromPool, disposePlayerPool } from './player-pool';
 
 /**
@@ -86,6 +87,52 @@ export class AudioEngine {
         this.wetSampleIndices[gun.id][pitchIndex].minor = 0;
       }
     });
+
+    // Initialize sub bass synthesis chain with defaults
+    const subBassDefaults = DEFAULT_KNOB_VALUES;
+    const audioDefaults = AUDIO_ENGINE_DEFAULTS.subBass;
+
+    // Sine oscillator path
+    this.sineOsc = new Tone.Oscillator(audioDefaults.frequency, audioDefaults.waveform);
+    this.subLevel = new Tone.Gain(subBassDefaults.subLevel);
+    this.subPunch = new Tone.Gain(1); // TODO: pitch drop effect (placeholder)
+
+    // White noise path
+    this.noiseOsc = new Tone.Oscillator(audioDefaults.frequency, 'square');
+    this.subFuzz = new Tone.Gain(subBassDefaults.subFuzz);
+
+    // Mixing and final processing
+    this.subMixer = new Tone.Gain(1);
+    this.subPower = new Tone.Gain(subBassDefaults.subPower);
+
+    // ADSR and output
+    this.subEnvelope = new Tone.Envelope({
+      attack: subBassDefaults.attack * 1, // 0-1 knob → 0-1s (fast transient)
+      decay: subBassDefaults.decay * 2, // 0-1 knob → 0-2s (tone shaping)
+      sustain: subBassDefaults.sustain, // 0-1 knob → 0-1 gain (no time scaling)
+      release: subBassDefaults.release * 2, // 0-1 knob → 0-2s (tail length)
+    });
+    this.subGain = new Tone.Gain(audioDefaults.masterGain);
+
+    // Wire sub bass chain:
+    // Sine path: sineOsc → subLevel → subPunch ─┐
+    //                                            ├→ subMixer → subPower → subEnvelope → subGain → output
+    // Noise path: noiseOsc → subFuzz ───────────┘
+    this.sineOsc.connect(this.subLevel);
+    this.subLevel.connect(this.subPunch);
+    this.subPunch.connect(this.subMixer);
+
+    this.noiseOsc.connect(this.subFuzz);
+    this.subFuzz.connect(this.subMixer);
+
+    this.subMixer.connect(this.subPower);
+    this.subPower.connect(this.subEnvelope);
+    this.subEnvelope.connect(this.subGain);
+    this.subGain.connect(Tone.getDestination());
+
+    // Start oscillators (always running, gated by envelope)
+    this.sineOsc.start();
+    this.noiseOsc.start();
   }
 
   /**
