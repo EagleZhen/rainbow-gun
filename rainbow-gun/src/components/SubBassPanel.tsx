@@ -10,7 +10,7 @@ export default function SubBassPanel({
     <div className="border border-gray-300 rounded p-4 bg-white">
       <div className="text-xs font-semibold mb-3">SUB BASS</div>
 
-      <div className="mb-3">
+      {/* <div className="mb-3">
         <div className="flex items-center justify-center gap-2 mb-2">
           <button>←</button>
           <div className="px-4 py-1">Sine</div>
@@ -20,7 +20,7 @@ export default function SubBassPanel({
           <div className="h-20 border border-gray-300 rounded" />
           <div className="h-20 border border-gray-300 rounded" />
         </div>
-      </div>
+      </div> */}
 
       <div className="grid grid-cols-4 gap-3 pt-2">
         <Knob
