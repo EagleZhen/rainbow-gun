@@ -33,32 +33,27 @@ export class AudioEngine {
   private wetSamplePlayers: Record<string, Record<number, Record<string, Tone.Player[]>>> = {};
   private wetSampleIndices: Record<string, Record<number, Record<string, number>>> = {};
 
-  // Wet/dry crossfade nodes (gun channel)
+  // Gun channel: dry/wet crossfade
   private dryGain: Tone.Gain;
   private wetGain: Tone.Gain;
+  private gunLevel: Tone.Gain; // Gun volume control
 
-  // Master signal chain
-  private masterMixer: Tone.Gain; // Mixes gun outputs and sub bass
-  private gunLevel: Tone.Gain; // Gun output volume control
-  private masterReverb: Tone.Reverb; // Master reverb effect
+  // Master effects
+  private masterReverb: Tone.Reverb;
 
-  // TODO: Master effects nodes (not yet implemented)
-  // - Master volume control (dryGain + wetGain master)
-  // - Master distortion/compression (Tone.Distortion or Tone.Compressor)
-
-  // Sub bass synthesis nodes
-  // Sine path
+  // Sub bass: sine oscillator path
   private sineOsc: Tone.Oscillator;
-  private subLevel: Tone.Gain; // Sine amplitude control
-  private subPunch: Tone.Gain; // TODO: implement pitch drop effect (currently placeholder gain)
-  // Noise path
-  private noiseOsc: Tone.Oscillator; // White noise source
-  private subFuzz: Tone.Gain; // Noise amplitude control
-  // Mixing and processing
-  private subMixer: Tone.Gain; // Mixes sine + noise
-  private subPower: Tone.Gain; // TODO: implement distortion effect (currently placeholder gain)
-  private subEnvelope: Tone.Envelope; // ADSR envelope
-  private subGain: Tone.Gain; // Master sub bass output
+  private subLevel: Tone.Gain;
+  private subPunch: Tone.Gain; // TODO: pitch drop effect (placeholder)
+
+  // Sub bass: noise oscillator path
+  private noiseOsc: Tone.Oscillator;
+  private subFuzz: Tone.Gain;
+
+  // Sub bass: processing and output
+  private subPower: Tone.Gain; // TODO: distortion effect (placeholder)
+  private subEnvelope: Tone.Envelope; // ADSR amplitude envelope
+  private subGain: Tone.Gain; // ADSR output (modulation target)
 
   constructor() {
     // Create master reverb effect
