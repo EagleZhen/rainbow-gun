@@ -12,6 +12,7 @@ import { useMIDI } from '@/hooks/useMIDI';
 import { knobValueToPitchIndex, PITCH_STEP, DEFAULT_PITCH } from '@/data/notes';
 import { guns } from '@/data/guns';
 import { getDeviceMapping, ccValueToKnobValue } from '@/data/midiMappings';
+import { DEFAULT_KNOB_VALUES } from '@/data/defaults';
 
 export default function Home() {
   const { engine, initEngine } = useAudioEngine();
@@ -22,28 +23,7 @@ export default function Home() {
   const [activeGunId, setActiveGunId] = useState<string>('scout'); // Persistent gun selection
   const timeoutRefs = useRef<Record<string, NodeJS.Timeout>>({});
 
-  const [knobValues, setKnobValues] = useState({
-    // Master Effects
-    master: 0.8,
-    reverb: 0.3,
-    power: 0.6,
-    // Tone Control
-    rainbowlize: 0.5,
-    pitch: DEFAULT_PITCH,
-    octave: 0.5,
-    // Sub Bass - ADSR
-    attack: 0.05,
-    decay: 0.52,
-    sustain: 0.5,
-    release: 0.25,
-    // Sub Bass - Tone
-    subLevel: 0.4,
-    subPower: 0.5,
-    subPunch: 0.6,
-    subFuzz: 0.3,
-    // Trigger
-    fireRate: 0.5,
-  });
+  const [knobValues, setKnobValues] = useState(DEFAULT_KNOB_VALUES);
 
   const handleKnobSelect = (knobId: string) => {
     setSelectedKnob(prev => prev === knobId ? null : knobId);
