@@ -37,12 +37,18 @@ export class AudioEngine {
   private wetGain: Tone.Gain;
 
   // Sub bass synthesis nodes
+  // Sine path
   private sineOsc: Tone.Oscillator;
-  private subLevelGain: Tone.Gain;
-  private subPowerGain: Tone.Gain; // TODO: distortion
-  private subFuzzGain: Tone.Gain; // TODO: white noise
-  private subEnvelope: Tone.Envelope;
-  private subGain: Tone.Gain;
+  private subLevel: Tone.Gain; // Sine amplitude control
+  private subPunch: Tone.Gain; // TODO: pitch drop effect
+  // Noise path
+  private noiseOsc: Tone.Oscillator; // White noise source
+  private subFuzz: Tone.Gain; // Noise amplitude control
+  // Mixing and processing
+  private subMixer: Tone.Gain; // Mixes sine + noise
+  private subPower: Tone.Gain; // TODO: distortion effect
+  private subEnvelope: Tone.Envelope; // ADSR envelope
+  private subGain: Tone.Gain; // Master sub bass output
 
   constructor() {
     // Create wet/dry gain nodes
