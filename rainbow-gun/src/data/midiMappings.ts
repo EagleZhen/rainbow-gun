@@ -6,8 +6,39 @@
 export const DEVICE_CC_MAPPINGS: Record<string, Record<string, number>> = {
   // FL Key MIDI controller
   'FLkey Mini MIDI Out': {
-    pitch: 21,
-    rainbowlize: 22
+    // Master Effects
+    master: 21,
+    reverb: 22,
+    power: 23,
+    // Tone Control
+    rainbowlize: 24,
+    pitch: 25,
+    octave: 26,
+  },
+
+  // Rainbow Gun physical controller (CC 2-17 for 16 knobs)
+  '4AC0CC15': {
+    // Master Effects
+    master: 2,
+    reverb: 3,
+    power: 4,
+    // Tone Control
+    rainbowlize: 5,
+    pitch: 6,
+    octave: 7,
+    // Sub Bass - ADSR
+    attack: 8,
+    decay: 9,
+    sustain: 10,
+    release: 11,
+    // Sub Bass - Tone
+    subLevel: 12,
+    subPower: 13,
+    subPunch: 14,
+    subFuzz: 15,
+    // Trigger
+    fireRate: 16,
+    // 16th knob (CC 17) unmapped for now
   },
 };
 

@@ -8,8 +8,9 @@ export default function EffectsPanel({
   onKnobSelect
 }: PanelProps) {
   return (
-    <div className="border border-gray-300 rounded p-6 bg-white space-y-6">
-      <div className="grid grid-cols-3 gap-6 justify-items-center">
+    <div className="border border-gray-300 rounded p-6 bg-white">
+      <div className="text-xs font-semibold mb-3">MASTER EFFECTS</div>
+      <div className="grid grid-cols-3 gap-6 justify-items-center mb-6">
         <Knob
           id="master"
           label="Master"
@@ -18,36 +19,11 @@ export default function EffectsPanel({
           isSelected={selectedKnob === 'master'}
           onSelect={onKnobSelect}
         />
-        <div className="flex flex-col items-center gap-2">
-          <Knob
-            id="pitch"
-            label="Pitch"
-            value={knobValues.pitch}
-            subtitle="root note"
-            isSelected={selectedKnob === 'pitch'}
-            onSelect={onKnobSelect}
-          />
-          <div className="text-xs font-semibold text-gray-600 uppercase">
-            {pitchIndexToNote(knobValueToPitchIndex(knobValues.pitch))}
-          </div>
-        </div>
         <Knob
           id="reverb"
           label="Reverb"
           value={knobValues.reverb}
           isSelected={selectedKnob === 'reverb'}
-          onSelect={onKnobSelect}
-        />
-      </div>
-
-      <div className="grid grid-cols-3 gap-6 justify-items-center">
-        <Knob
-          id="rainbowlize"
-          label="Rainbowlize"
-          value={knobValues.rainbowlize}
-          subtitle="wet/dry"
-          rainbow
-          isSelected={selectedKnob === 'rainbowlize'}
           onSelect={onKnobSelect}
         />
         <Knob
@@ -58,48 +34,41 @@ export default function EffectsPanel({
           isSelected={selectedKnob === 'power'}
           onSelect={onKnobSelect}
         />
-        <Knob
-          id="oct"
-          label="Oct"
-          value={knobValues.oct}
-          isSelected={selectedKnob === 'oct'}
-          onSelect={onKnobSelect}
-        />
       </div>
 
-      <div className="grid grid-cols-4 gap-4 justify-items-center">
-        <Knob
-          id="subLevel"
-          label="Sub Level"
-          value={knobValues.subLevel}
-          subtitle="volume"
-          isSelected={selectedKnob === 'subLevel'}
-          onSelect={onKnobSelect}
-        />
-        <Knob
-          id="subPower"
-          label="Sub Power"
-          value={knobValues.subPower}
-          subtitle="distortion"
-          isSelected={selectedKnob === 'subPower'}
-          onSelect={onKnobSelect}
-        />
-        <Knob
-          id="subPunch"
-          label="Sub Punch"
-          value={knobValues.subPunch}
-          subtitle="pitch drop"
-          isSelected={selectedKnob === 'subPunch'}
-          onSelect={onKnobSelect}
-        />
-        <Knob
-          id="subFuzz"
-          label="Sub Fuzz"
-          value={knobValues.subFuzz}
-          subtitle="white noise"
-          isSelected={selectedKnob === 'subFuzz'}
-          onSelect={onKnobSelect}
-        />
+      <div className="border-t border-gray-300 pt-6">
+        <div className="text-xs font-semibold mb-3">TONE CONTROL</div>
+        <div className="grid grid-cols-3 gap-6 justify-items-center">
+          <Knob
+            id="rainbowlize"
+            label="Rainbowlize"
+            value={knobValues.rainbowlize}
+            subtitle="wet/dry"
+            rainbow
+            isSelected={selectedKnob === 'rainbowlize'}
+            onSelect={onKnobSelect}
+          />
+          <div className="flex flex-col items-center gap-2">
+            <Knob
+              id="pitch"
+              label="Pitch"
+              value={knobValues.pitch}
+              subtitle="root note"
+              isSelected={selectedKnob === 'pitch'}
+              onSelect={onKnobSelect}
+            />
+            <div className="text-xs font-semibold text-gray-600 uppercase">
+              {pitchIndexToNote(knobValueToPitchIndex(knobValues.pitch))}
+            </div>
+          </div>
+          <Knob
+            id="octave"
+            label="Octave"
+            value={knobValues.octave}
+            isSelected={selectedKnob === 'octave'}
+            onSelect={onKnobSelect}
+          />
+        </div>
       </div>
     </div>
   );

@@ -22,7 +22,7 @@ export default function SubBassPanel({
         </div>
       </div>
 
-      <div className="grid grid-cols-4 gap-3 pt-2 border-gray-300">
+      <div className="grid grid-cols-4 gap-3 pt-2">
         <Knob
           id="attack"
           label="Attack"
@@ -49,6 +49,41 @@ export default function SubBassPanel({
           label="Release"
           value={knobValues.release}
           isSelected={selectedKnob === 'release'}
+          onSelect={onKnobSelect}
+        />
+      </div>
+
+      <div className="grid grid-cols-4 gap-3 pt-2">
+        <Knob
+          id="subLevel"
+          label="Sub Level"
+          value={knobValues.subLevel}
+          subtitle="volume"
+          isSelected={selectedKnob === 'subLevel'}
+          onSelect={onKnobSelect}
+        />
+        <Knob
+          id="subPower"
+          label="Sub Power"
+          value={knobValues.subPower}
+          subtitle="distortion"
+          isSelected={selectedKnob === 'subPower'}
+          onSelect={onKnobSelect}
+        />
+        <Knob
+          id="subPunch"
+          label="Sub Punch"
+          value={knobValues.subPunch}
+          subtitle="pitch drop"
+          isSelected={selectedKnob === 'subPunch'}
+          onSelect={onKnobSelect}
+        />
+        <Knob
+          id="subFuzz"
+          label="Sub Fuzz"
+          value={knobValues.subFuzz}
+          subtitle="white noise"
+          isSelected={selectedKnob === 'subFuzz'}
           onSelect={onKnobSelect}
         />
       </div>

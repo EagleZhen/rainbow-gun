@@ -23,22 +23,24 @@ export default function Home() {
   const timeoutRefs = useRef<Record<string, NodeJS.Timeout>>({});
 
   const [knobValues, setKnobValues] = useState({
-    // Sub Bass
-    subLevel: 0.4,
-    subPower: 0.5,
-    subPunch: 0.6,
-    subFuzz: 0.3,
-    // Effects
+    // Master Effects
     master: 0.8,
-    pitch: DEFAULT_PITCH,
     reverb: 0.3,
-    rainbowlize: 0.5,
     power: 0.6,
-    oct: 0.5,
+    // Tone Control
+    rainbowlize: 0.5,
+    pitch: DEFAULT_PITCH,
+    octave: 0.5,
+    // Sub Bass - ADSR
     attack: 0.05,
     decay: 0.52,
     sustain: 0.5,
     release: 0.25,
+    // Sub Bass - Tone
+    subLevel: 0.4,
+    subPower: 0.5,
+    subPunch: 0.6,
+    subFuzz: 0.3,
     // Trigger
     fireRate: 0.5,
   });
@@ -107,8 +109,8 @@ export default function Home() {
         return;
       }
 
-      // Handle number key 1 (default key on the rainbow gun) to fire the currently active gun
-      if (e.key === '1') {
+      // Handle number keys 1 & 2 (rainbow gun trigger keys) to fire the currently active gun
+      if (e.key === '1' || e.key === '2') {
         fireGun(activeGunId);
         return;
       }
