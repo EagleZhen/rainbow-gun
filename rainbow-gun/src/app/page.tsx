@@ -137,6 +137,45 @@ export default function Home() {
     requestMIDIAccess();
   }, [requestMIDIAccess]);
 
+  // Mouse drag support for knobs
+  useEffect(() => {
+    const handleMouseDown = (e: MouseEvent) => {
+      if (!selectedKnob) return;
+      dragStateRef.current = {
+        knobId: selectedKnob,
+        startY: e.clientY,
+        startValue: knobValues[selectedKnob as keyof typeof knobValues] as number
+      };
+      e.preventDefault();
+    };
+
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!dragStateRef.current) return;
+      const deltaY = dragStateRef.current.startY - e.clientY; // Negative = up (increase value)
+      const valueDelta = deltaY * MOUSE_DRAG_SENSITIVITY;
+      const newValue = clampValue(dragStateRef.current.startValue + valueDelta);
+
+      setKnobValues(prev => ({
+        ...prev,
+        [dragStateRef.current!.knobId]: newValue
+      }));
+    };
+
+    const handleMouseUp = () => {
+      dragStateRef.current = null;
+    };
+
+    window.addEventListener('mousedown', handleMouseDown);
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mouseup', handleMouseUp);
+
+    return () => {
+      window.removeEventListener('mousedown', handleMouseDown);
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [selectedKnob, knobValues]);
+
   // Cleanup timeouts on unmount
   useEffect(() => {
     return () => {
