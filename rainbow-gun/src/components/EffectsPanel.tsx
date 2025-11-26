@@ -8,14 +8,43 @@ export default function EffectsPanel({
   onKnobSelect
 }: PanelProps) {
   return (
-    <div className="border border-gray-300 rounded p-6 bg-white space-y-6">
-      <div className="grid grid-cols-3 gap-6 justify-items-center">
+    <div className="border border-gray-300 rounded p-6 bg-white">
+      <div className="text-xs font-semibold mb-3">MASTER EFFECTS</div>
+      <div className="grid grid-cols-3 gap-6 justify-items-center mb-6">
         <Knob
           id="master"
           label="Master"
           value={knobValues.master}
           subtitle="volume"
           isSelected={selectedKnob === 'master'}
+          onSelect={onKnobSelect}
+        />
+        <Knob
+          id="reverb"
+          label="Reverb"
+          value={knobValues.reverb}
+          isSelected={selectedKnob === 'reverb'}
+          onSelect={onKnobSelect}
+        />
+        <Knob
+          id="power"
+          label="Power"
+          value={knobValues.power}
+          subtitle="distortion"
+          isSelected={selectedKnob === 'power'}
+          onSelect={onKnobSelect}
+        />
+      </div>
+
+      <div className="text-xs font-semibold mb-3">TONE CONTROL</div>
+      <div className="grid grid-cols-3 gap-6 justify-items-center">
+        <Knob
+          id="rainbowlize"
+          label="Rainbowlize"
+          value={knobValues.rainbowlize}
+          subtitle="wet/dry"
+          rainbow
+          isSelected={selectedKnob === 'rainbowlize'}
           onSelect={onKnobSelect}
         />
         <div className="flex flex-col items-center gap-2">
@@ -31,33 +60,6 @@ export default function EffectsPanel({
             {pitchIndexToNote(knobValueToPitchIndex(knobValues.pitch))}
           </div>
         </div>
-        <Knob
-          id="reverb"
-          label="Reverb"
-          value={knobValues.reverb}
-          isSelected={selectedKnob === 'reverb'}
-          onSelect={onKnobSelect}
-        />
-      </div>
-
-      <div className="grid grid-cols-3 gap-6 justify-items-center">
-        <Knob
-          id="rainbowlize"
-          label="Rainbowlize"
-          value={knobValues.rainbowlize}
-          subtitle="wet/dry"
-          rainbow
-          isSelected={selectedKnob === 'rainbowlize'}
-          onSelect={onKnobSelect}
-        />
-        <Knob
-          id="power"
-          label="Power"
-          value={knobValues.power}
-          subtitle="distortion"
-          isSelected={selectedKnob === 'power'}
-          onSelect={onKnobSelect}
-        />
         <Knob
           id="oct"
           label="Oct"
