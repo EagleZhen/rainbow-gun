@@ -5,13 +5,15 @@
 
 import { DEFAULT_PITCH } from './notes';
 
+export const DEFAULT_CHORD = 'minor' as const;
+
 export const DEFAULT_KNOB_VALUES = {
   // Master Effects
   master: 0.8,
   reverb: 0,
-  power: 0.1,
+  power: 0,
   // Tone Control
-  rainbowlize: 0.5,
+  rainbowlize: 0,
   pitch: DEFAULT_PITCH,
   octave: 0.5,
   // Sub Bass - ADSR

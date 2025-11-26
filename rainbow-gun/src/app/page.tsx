@@ -12,13 +12,13 @@ import { useMIDI } from '@/hooks/useMIDI';
 import { knobValueToPitchIndex, PITCH_STEP, DEFAULT_PITCH } from '@/data/notes';
 import { guns } from '@/data/guns';
 import { getDeviceMapping, ccValueToKnobValue } from '@/data/midiMappings';
-import { DEFAULT_KNOB_VALUES } from '@/data/defaults';
+import { DEFAULT_KNOB_VALUES, DEFAULT_CHORD } from '@/data/defaults';
 
 export default function Home() {
   const { engine, initEngine } = useAudioEngine();
   const { isSupported, midiAccess, midiDevices, error, requestMIDIAccess, onMIDIMessage } = useMIDI();
   const [selectedKnob, setSelectedKnob] = useState<string | null>(null);
-  const [selectedChord, setSelectedChord] = useState<'major' | 'minor'>('major');
+  const [selectedChord, setSelectedChord] = useState<'major' | 'minor'>(DEFAULT_CHORD);
   const [selectedGunIds, setSelectedGunIds] = useState<Set<string>>(new Set());
   const [activeGunId, setActiveGunId] = useState<string>('scout'); // Persistent gun selection
   const timeoutRefs = useRef<Record<string, NodeJS.Timeout>>({});
@@ -125,7 +125,47 @@ export default function Home() {
   }, [engine, knobValues.power]);
 
   useEffect(() => {
+    // FL Studio piano keyboard layout: white keys (Z X C V B N M) and black keys (S D G H J)
+    const PIANO_KEY_MAP: Record<string, number> = {
+      'z': 0,  // C
+      's': 1,  // C#
+      'x': 2,  // D
+      'd': 3,  // D#
+      'c': 4,  // E
+      'v': 5,  // F
+      'g': 6,  // F#
+      'b': 7,  // G
+      'h': 8,  // G#
+      'n': 9,  // A
+      'j': 10, // A#
+      'm': 11, // B
+    };
+
     const handleKeyDown = (e: KeyboardEvent) => {
+      // Handle piano keyboard (FL Studio layout) - sets pitch knob
+      const pitchIndex = PIANO_KEY_MAP[e.key.toLowerCase()];
+      if (pitchIndex !== undefined) {
+        const knobValue = pitchIndex / 11; // Convert pitch index to knob value
+        setKnobValues(prev => ({
+          ...prev,
+          pitch: knobValue
+        }));
+        e.preventDefault();
+        return;
+      }
+
+      // Handle chord selection with [ and ] keys
+      if (e.key === '[') {
+        setSelectedChord('major');
+        e.preventDefault();
+        return;
+      }
+      if (e.key === ']') {
+        setSelectedChord('minor');
+        e.preventDefault();
+        return;
+      }
+
       // Handle arrow keys for knob adjustment (only if a knob is selected)
       if (selectedKnob && (e.key === 'ArrowUp' || e.key === 'ArrowDown')) {
         const step = selectedKnob === 'pitch' ? PITCH_STEP : KNOB_ADJUSTMENT_STEP;

@@ -29,16 +29,15 @@ export const DEVICE_CC_MAPPINGS: Record<string, Record<string, number>> = {
     // Sub Bass - ADSR
     attack: 8,
     decay: 9,
-    sustain: 10,
-    release: 11,
+    sustain: 0,
+    release: 1,
     // Sub Bass - Tone
     subLevel: 12,
     subPower: 13,
     subPunch: 14,
-    subFuzz: 15,
-    // Trigger
-    fireRate: 16,
-    // 16th knob (CC 17) unmapped for now
+    subFuzz: 10,
+    // Gun Output
+    gunLevel: 11
   },
 };
 
