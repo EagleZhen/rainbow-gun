@@ -125,7 +125,35 @@ export default function Home() {
   }, [engine, knobValues.power]);
 
   useEffect(() => {
+    // FL Studio piano keyboard layout: white keys (Z X C V B N M) and black keys (S D G H J)
+    const PIANO_KEY_MAP: Record<string, number> = {
+      'z': 0,  // C
+      's': 1,  // C#
+      'x': 2,  // D
+      'd': 3,  // D#
+      'c': 4,  // E
+      'v': 5,  // F
+      'g': 6,  // F#
+      'b': 7,  // G
+      'h': 8,  // G#
+      'n': 9,  // A
+      'j': 10, // A#
+      'm': 11, // B
+    };
+
     const handleKeyDown = (e: KeyboardEvent) => {
+      // Handle piano keyboard (FL Studio layout) - sets pitch knob
+      const pitchIndex = PIANO_KEY_MAP[e.key.toLowerCase()];
+      if (pitchIndex !== undefined) {
+        const knobValue = pitchIndex / 11; // Convert pitch index to knob value
+        setKnobValues(prev => ({
+          ...prev,
+          pitch: knobValue
+        }));
+        e.preventDefault();
+        return;
+      }
+
       // Handle arrow keys for knob adjustment (only if a knob is selected)
       if (selectedKnob && (e.key === 'ArrowUp' || e.key === 'ArrowDown')) {
         const step = selectedKnob === 'pitch' ? PITCH_STEP : KNOB_ADJUSTMENT_STEP;
