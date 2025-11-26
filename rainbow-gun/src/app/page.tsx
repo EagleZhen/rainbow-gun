@@ -103,6 +103,13 @@ export default function Home() {
     }
   }, [engine, knobValues.gunLevel]);
 
+  // Wire reverb to AudioEngine
+  useEffect(() => {
+    if (engine) {
+      engine.setReverb(knobValues.reverb);
+    }
+  }, [engine, knobValues.reverb]);
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       // Handle arrow keys for knob adjustment (only if a knob is selected)

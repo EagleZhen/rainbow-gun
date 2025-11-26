@@ -36,9 +36,10 @@ export class AudioEngine {
   // Wet/dry crossfade nodes (gun channel)
   private dryGain: Tone.Gain;
   private wetGain: Tone.Gain;
-  private gunLevel: Tone.Gain; // Gun output volume control
 
-  // Master effects
+  // Master signal chain
+  private masterMixer: Tone.Gain; // Mixes gun outputs and sub bass
+  private gunLevel: Tone.Gain; // Gun output volume control
   private masterReverb: Tone.Reverb; // Master reverb effect
 
   // TODO: Master effects nodes (not yet implemented)
@@ -323,5 +324,12 @@ export class AudioEngine {
    */
   setGunLevel(level: number): void {
     this.gunLevel.gain.value = level;
+  }
+
+  /**
+   * Set master reverb amount (0-1 controls wet signal)
+   */
+  setReverb(amount: number): void {
+    this.masterReverb.wet.value = amount;
   }
 }
