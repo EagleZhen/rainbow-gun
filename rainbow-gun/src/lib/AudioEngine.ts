@@ -111,15 +111,12 @@ export class AudioEngine {
     this.subLevel = new Tone.Gain(subBassDefaults.subLevel);
     this.subPunch = new Tone.Gain(1); // TODO: pitch drop effect (placeholder)
 
-    // White noise path
+    // Noise oscillator path
     this.noiseOsc = new Tone.Oscillator(audioDefaults.frequency, 'square');
     this.subFuzz = new Tone.Gain(subBassDefaults.subFuzz);
 
-    // Mixing and final processing
-    this.subMixer = new Tone.Gain(1);
-    this.subPower = new Tone.Gain(subBassDefaults.subPower);
-
-    // ADSR and output
+    // Sub bass processing
+    this.subPower = new Tone.Gain(subBassDefaults.subPower); // TODO: distortion effect (placeholder)
     this.subEnvelope = new Tone.Envelope({
       attack: subBassDefaults.attack * adsrDefaults.attackScale,
       decay: subBassDefaults.decay * adsrDefaults.decayScale,
@@ -128,22 +125,20 @@ export class AudioEngine {
     });
     this.subGain = new Tone.Gain(audioDefaults.masterGain);
 
-    // Wire sub bass chain:
-    // Sine path: sineOsc → subLevel → subPunch ─┐
-    //                                            ├→ subMixer → subPower → subGain → output
-    // Noise path: noiseOsc → subFuzz ───────────┘
-    // Envelope modulates subGain.gain (ADSR amplitude shaping)
+    // Wire sub bass: sine + noise → processing → ADSR → reverb
+    // Sine: sineOsc → subLevel → subPunch → subPower
     this.sineOsc.connect(this.subLevel);
     this.subLevel.connect(this.subPunch);
-    this.subPunch.connect(this.subMixer);
+    this.subPunch.connect(this.subPower);
 
+    // Noise: noiseOsc → subFuzz → subPower
     this.noiseOsc.connect(this.subFuzz);
-    this.subFuzz.connect(this.subMixer);
+    this.subFuzz.connect(this.subPower);
 
-    this.subMixer.connect(this.subPower);
+    // Output: subPower → subGain (ADSR modulates gain) → masterReverb
     this.subPower.connect(this.subGain);
     this.subEnvelope.connect(this.subGain.gain);
-    this.subGain.connect(Tone.getDestination());
+    this.subGain.connect(this.masterReverb);
 
     // Start oscillators (always running, gated by envelope)
     this.sineOsc.start();
@@ -258,7 +253,6 @@ export class AudioEngine {
     this.subLevel.dispose();
     this.subPunch.dispose();
     this.subFuzz.dispose();
-    this.subMixer.dispose();
     this.subPower.dispose();
     this.subEnvelope.dispose();
     this.subGain.dispose();
