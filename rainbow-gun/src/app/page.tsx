@@ -109,8 +109,8 @@ export default function Home() {
         return;
       }
 
-      // Handle number key 1 (default key on the rainbow gun) to fire the currently active gun
-      if (e.key === '1') {
+      // Handle number keys 1 & 2 (rainbow gun trigger keys) to fire the currently active gun
+      if (e.key === '1' || e.key === '2') {
         fireGun(activeGunId);
         return;
       }
