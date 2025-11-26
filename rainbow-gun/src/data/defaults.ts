@@ -1,0 +1,40 @@
+/**
+ * Default values for all app parameters
+ * Central source of truth for initial state across components and audio engine
+ */
+
+import { DEFAULT_PITCH } from './notes';
+
+export const DEFAULT_KNOB_VALUES = {
+  // Master Effects
+  master: 0.8,
+  reverb: 0.3,
+  power: 0.6,
+  // Tone Control
+  rainbowlize: 0.5,
+  pitch: DEFAULT_PITCH,
+  octave: 0.5,
+  // Sub Bass - ADSR
+  attack: 0.05,
+  decay: 0.52,
+  sustain: 0.5,
+  release: 0.25,
+  // Sub Bass - Tone
+  subLevel: 0.4,
+  subPower: 0.5,
+  subPunch: 0.6,
+  subFuzz: 0.3,
+  // Trigger
+  fireRate: 0.5,
+} as const;
+
+/**
+ * Audio synthesis engine defaults
+ */
+export const AUDIO_ENGINE_DEFAULTS = {
+  subBass: {
+    frequency: 46, // Hz (default frequency for sine oscillator)
+    waveform: 'sine' as const,
+    masterGain: 0.3, // Overall sub bass output volume
+  },
+} as const;
