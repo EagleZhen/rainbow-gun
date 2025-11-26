@@ -267,6 +267,17 @@ export class AudioEngine {
   }
 
   /**
+   * Release sub bass envelope (enters release phase)
+   */
+  releaseSubBass(): void {
+    if (!this.initialized) {
+      console.warn('AudioEngine not initialized. Call init() first.');
+      return;
+    }
+    this.subEnvelope.triggerRelease();
+  }
+
+  /**
    * Update sub bass parameters (batch update with ADSR time scaling)
    */
   setSubParameters(params: SubBassParams): void {

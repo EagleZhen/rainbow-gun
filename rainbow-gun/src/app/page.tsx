@@ -63,6 +63,12 @@ export default function Home() {
     // Play both dry and wet sounds with the fired gun
     engine.playGun(gunId);
     engine.playWetGun(gunId, knobValueToPitchIndex(knobValues.pitch), selectedChord);
+    engine.fireSubBass();
+
+    // Release sub bass after 500ms
+    setTimeout(() => {
+      engine.releaseSubBass();
+    }, 200);
   }, [engine, initEngine, knobValues.pitch, selectedChord]);
 
   // Wire rainbowlize knob to AudioEngine crossfade
