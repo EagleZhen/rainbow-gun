@@ -20,10 +20,10 @@ export const DEFAULT_KNOB_VALUES = {
   sustain: 0.5,
   release: 0.25,
   // Sub Bass - Tone
-  subLevel: 0.5,
+  subLevel: 0.3,
   subPower: 0.5,
   subPunch: 1,
-  subFuzz: 0.5,
+  subFuzz: 0.3,
   // Trigger
   fireRate: 0.5,
   // Gun Output
