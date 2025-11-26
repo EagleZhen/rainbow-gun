@@ -65,7 +65,7 @@ export default function Home() {
     engine.playWetGun(gunId, knobValueToPitchIndex(knobValues.pitch), selectedChord);
     engine.fireSubBass();
 
-    // Release sub bass after 500ms
+    // Release sub bass after 200ms
     setTimeout(() => {
       engine.releaseSubBass();
     }, 200);
