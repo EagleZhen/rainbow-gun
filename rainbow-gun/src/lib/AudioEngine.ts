@@ -19,7 +19,7 @@ export interface SubBassParams {
 }
 
 /**
- * AudioEngine: Tone.js engine for dry gun + wet sample crossfading + sub bass synthesis
+ * AudioEngine: Tone.js synthesis engine for guns + sub bass with master reverb
  */
 export class AudioEngine {
   private initialized = false;
@@ -32,6 +32,21 @@ export class AudioEngine {
   // Wet samples: gun ID → pitch index → chord type → player pool
   private wetSamplePlayers: Record<string, Record<number, Record<string, Tone.Player[]>>> = {};
   private wetSampleIndices: Record<string, Record<number, Record<string, number>>> = {};
+
+  /**
+   * Audio Signal Chain:
+   *
+   * GUN CHANNEL:
+   *   dryGun → dryGain ──┐
+   *                      ├→ gunLevel ────────────────────────┐
+   *   wetGun → wetGain ──┘                                   │
+   *                                                          ├→ masterReverb → masterLevel → DESTINATION
+   * SUB BASS CHANNEL:                                        │
+   *   sineOsc → subLevel → subPunch ──┐                      │
+   *                                   ├→ subPower → subGain ─┘
+   *   noiseOsc → subFuzz ─────────────┘            (subEnvelope modulates subGain.gain for ADSR)
+   * 
+   */
 
   // Gun channel: dry/wet crossfade
   private dryGain: Tone.Gain;
