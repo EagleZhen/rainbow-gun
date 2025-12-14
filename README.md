@@ -7,11 +7,11 @@ An interactive web-based musical instrument that transforms gunshot samples into
 ## Prerequisites
 
 - Node.js (v18 or higher)
-- npm or yarn
+- npm
 
 ## Setup
 
-1. Clone the repository and navigate to the project directory:
+1. Navigate to the sub-directory `/rainbow-gun` that contains the web-application:
 ```bash
 cd rainbow-gun
 ```
