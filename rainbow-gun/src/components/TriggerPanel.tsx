@@ -18,6 +18,7 @@ export default function TriggerPanel({
           subtitle="Single ← → Burst"
           isSelected={selectedKnob === 'fireRate'}
           onSelect={onKnobSelect}
+          disabled
         />
         <Knob
           id="gunLevel"
