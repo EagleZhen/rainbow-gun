@@ -242,7 +242,7 @@ export default function Home() {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseup', handleMouseUp);
     };
-  }, [selectedKnob, knobValues]);
+  }, [selectedKnob]);
 
   // Cleanup timeouts on unmount
   useEffect(() => {
