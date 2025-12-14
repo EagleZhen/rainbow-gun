@@ -16,7 +16,7 @@ export const DEVICE_CC_MAPPINGS: Record<string, Record<string, number>> = {
     octave: 26,
   },
 
-  // Rainbow Gun physical controller (CC 2-17 for 16 knobs)
+  // Rainbow Gun physical controller (CC 0-14 for 15 knobs, not in sequential order)
   '4AC0CC15': {
     // Master Effects
     master: 2,
