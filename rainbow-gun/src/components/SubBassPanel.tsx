@@ -73,6 +73,7 @@ export default function SubBassPanel({
           value={knobValues.subPunch}
           subtitle="pitch drop"
           isSelected={selectedKnob === 'subPunch'}
+          disabled
         />
         <Knob
           id="subFuzz"
