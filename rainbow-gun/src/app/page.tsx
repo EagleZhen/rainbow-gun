@@ -218,14 +218,15 @@ export default function Home() {
     };
 
     const handleMouseMove = (e: MouseEvent) => {
-      if (!dragStateRef.current) return;
-      const deltaY = dragStateRef.current.startY - e.clientY; // Negative = up (increase value)
+      const dragState = dragStateRef.current;
+      if (!dragState) return;
+      const deltaY = dragState.startY - e.clientY; // Negative = up (increase value)
       const valueDelta = deltaY * MOUSE_DRAG_SENSITIVITY;
-      const newValue = clampValue(dragStateRef.current.startValue + valueDelta);
+      const newValue = clampValue(dragState.startValue + valueDelta);
 
       setKnobValues(prev => ({
         ...prev,
-        [dragStateRef.current!.knobId]: newValue
+        [dragState.knobId]: newValue
       }));
     };
 
