@@ -3,7 +3,6 @@ interface KnobProps {
   label: string;
   value: number;
   isSelected?: boolean;
-  onSelect?: (id: string) => void;
   subtitle?: string;
   rainbow?: boolean;
   disabled?: boolean;
@@ -16,7 +15,6 @@ export default function Knob({
   label,
   value,
   isSelected = false,
-  onSelect,
   subtitle,
   rainbow = false,
   disabled = false
@@ -27,9 +25,8 @@ export default function Knob({
   return (
     <div
       className={`flex flex-col items-center gap-1 ${
-        disabled ? 'cursor-not-allowed opacity-40' : 'cursor-pointer'
+        disabled ? 'cursor-not-allowed opacity-40' : 'cursor-grab active:cursor-grabbing'
       }`}
-      onClick={() => !disabled && onSelect?.(id)}
       data-knob-id={disabled ? undefined : id}
     >
       {/* Knob circle */}

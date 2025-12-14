@@ -3,8 +3,7 @@ import type { PanelProps } from '@/types/panel';
 
 export default function TriggerPanel({
   knobValues,
-  selectedKnob,
-  onKnobSelect
+  selectedKnob
 }: PanelProps) {
   return (
     <div className="border border-gray-300 rounded p-6 bg-white">
@@ -17,7 +16,6 @@ export default function TriggerPanel({
           value={knobValues.fireRate}
           subtitle="Single ← → Burst"
           isSelected={selectedKnob === 'fireRate'}
-          onSelect={onKnobSelect}
           disabled
         />
         <Knob
@@ -26,7 +24,6 @@ export default function TriggerPanel({
           value={knobValues.gunLevel}
           subtitle="volume"
           isSelected={selectedKnob === 'gunLevel'}
-          onSelect={onKnobSelect}
         />
       </div>
     </div>

@@ -4,8 +4,7 @@ import { pitchIndexToNote, knobValueToPitchIndex } from '@/data/notes';
 
 export default function EffectsPanel({
   knobValues,
-  selectedKnob,
-  onKnobSelect
+  selectedKnob
 }: PanelProps) {
   return (
     <div className="border border-gray-300 rounded p-6 bg-white">
@@ -17,14 +16,12 @@ export default function EffectsPanel({
           value={knobValues.master}
           subtitle="volume"
           isSelected={selectedKnob === 'master'}
-          onSelect={onKnobSelect}
         />
         <Knob
           id="reverb"
           label="Reverb"
           value={knobValues.reverb}
           isSelected={selectedKnob === 'reverb'}
-          onSelect={onKnobSelect}
         />
         <Knob
           id="power"
@@ -32,7 +29,6 @@ export default function EffectsPanel({
           value={knobValues.power}
           subtitle="distortion"
           isSelected={selectedKnob === 'power'}
-          onSelect={onKnobSelect}
         />
       </div>
 
@@ -46,7 +42,6 @@ export default function EffectsPanel({
             subtitle="wet/dry"
             rainbow
             isSelected={selectedKnob === 'rainbowlize'}
-            onSelect={onKnobSelect}
           />
           <div className="flex flex-col items-center gap-2">
             <Knob
@@ -55,7 +50,6 @@ export default function EffectsPanel({
               value={knobValues.pitch}
               subtitle="root note"
               isSelected={selectedKnob === 'pitch'}
-              onSelect={onKnobSelect}
             />
             <div className="text-xs font-semibold text-gray-600 uppercase">
               {pitchIndexToNote(knobValueToPitchIndex(knobValues.pitch))}
@@ -66,7 +60,6 @@ export default function EffectsPanel({
             label="Octave"
             value={knobValues.octave}
             isSelected={selectedKnob === 'octave'}
-            onSelect={onKnobSelect}
             disabled
           />
         </div>
