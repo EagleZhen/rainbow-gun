@@ -9,7 +9,7 @@ import TriggerPanel from '@/components/TriggerPanel';
 import DebugPanel from '@/components/DebugPanel';
 import { useAudioEngine } from '@/hooks/useAudioEngine';
 import { useMIDI } from '@/hooks/useMIDI';
-import { knobValueToPitchIndex, PITCH_STEP, DEFAULT_PITCH } from '@/data/notes';
+import { knobValueToPitchIndex } from '@/data/notes';
 import { guns } from '@/data/guns';
 import { getDeviceMapping, ccValueToKnobValue } from '@/data/midiMappings';
 import { DEFAULT_KNOB_VALUES, DEFAULT_CHORD } from '@/data/defaults';
@@ -30,7 +30,6 @@ export default function Home() {
     setSelectedKnob(prev => prev === knobId ? null : knobId);
   };
 
-  const KNOB_ADJUSTMENT_STEP = 0.02; // 2% adjustment per keypress
   const MOUSE_DRAG_SENSITIVITY = 0.005; // Value change per pixel dragged
   const clampValue = (value: number) => Math.max(0, Math.min(1, value));
 
