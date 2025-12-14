@@ -9,7 +9,7 @@ import TriggerPanel from '@/components/TriggerPanel';
 import DebugPanel from '@/components/DebugPanel';
 import { useAudioEngine } from '@/hooks/useAudioEngine';
 import { useMIDI } from '@/hooks/useMIDI';
-import { knobValueToPitchIndex, PITCH_STEP, DEFAULT_PITCH } from '@/data/notes';
+import { knobValueToPitchIndex } from '@/data/notes';
 import { guns } from '@/data/guns';
 import { getDeviceMapping, ccValueToKnobValue } from '@/data/midiMappings';
 import { DEFAULT_KNOB_VALUES, DEFAULT_CHORD } from '@/data/defaults';
@@ -24,15 +24,16 @@ export default function Home() {
   const timeoutRefs = useRef<Record<string, NodeJS.Timeout>>({});
 
   const [knobValues, setKnobValues] = useState(DEFAULT_KNOB_VALUES);
+  const knobValuesRef = useRef(knobValues);
   const dragStateRef = useRef<{ knobId: string; startY: number; startValue: number } | null>(null);
 
-  const handleKnobSelect = (knobId: string) => {
-    setSelectedKnob(prev => prev === knobId ? null : knobId);
-  };
-
-  const KNOB_ADJUSTMENT_STEP = 0.02; // 2% adjustment per keypress
   const MOUSE_DRAG_SENSITIVITY = 0.005; // Value change per pixel dragged
   const clampValue = (value: number) => Math.max(0, Math.min(1, value));
+
+  // Keep knobValuesRef in sync with knobValues for mouse drag
+  useEffect(() => {
+    knobValuesRef.current = knobValues;
+  }, [knobValues]);
 
   // Fire trigger: play audio + show visual feedback
   const fireGun = useCallback(async (gunId: string) => {
@@ -166,21 +167,6 @@ export default function Home() {
         return;
       }
 
-      // Handle arrow keys for knob adjustment (only if a knob is selected)
-      if (selectedKnob && (e.key === 'ArrowUp' || e.key === 'ArrowDown')) {
-        const step = selectedKnob === 'pitch' ? PITCH_STEP : KNOB_ADJUSTMENT_STEP;
-        const delta = e.key === 'ArrowUp' ? step : -step;
-        e.preventDefault();
-        setKnobValues(prev => {
-          const currentValue = prev[selectedKnob as keyof typeof prev];
-          return {
-            ...prev,
-            [selectedKnob]: clampValue(currentValue + delta)
-          };
-        });
-        return;
-      }
-
       // Handle number keys 1 & 2 (rainbow gun trigger keys) to fire the currently active gun
       if (e.key === '1' || e.key === '2') {
         fireGun(activeGunId);
@@ -198,7 +184,7 @@ export default function Home() {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [selectedKnob, fireGun, activeGunId]);
+  }, [fireGun, activeGunId]);
 
   // Request MIDI access on page load
   useEffect(() => {
@@ -208,29 +194,56 @@ export default function Home() {
   // Mouse drag support for knobs
   useEffect(() => {
     const handleMouseDown = (e: MouseEvent) => {
-      if (!selectedKnob) return;
+      // Find the knob element by looking for data-knob-id attribute
+      let target = e.target as HTMLElement;
+      let knobId: string | null = null;
+
+      // Walk up the DOM tree to find the element with data-knob-id
+      while (target && target !== document.body) {
+        knobId = target.getAttribute('data-knob-id');
+        if (knobId) break;
+        target = target.parentElement as HTMLElement;
+      }
+
+      if (!knobId) return;
+
+      // Show selection during drag
+      setSelectedKnob(knobId);
+
+      // Set grabbing cursor globally during drag
+      document.body.style.cursor = 'grabbing';
+
       dragStateRef.current = {
-        knobId: selectedKnob,
+        knobId,
         startY: e.clientY,
-        startValue: knobValues[selectedKnob as keyof typeof knobValues] as number
+        startValue: knobValuesRef.current[knobId as keyof typeof knobValuesRef.current] as number
       };
       e.preventDefault();
     };
 
     const handleMouseMove = (e: MouseEvent) => {
-      if (!dragStateRef.current) return;
-      const deltaY = dragStateRef.current.startY - e.clientY; // Negative = up (increase value)
+      const dragState = dragStateRef.current;
+      if (!dragState) return;
+      const deltaY = dragState.startY - e.clientY; // Negative = up (increase value)
       const valueDelta = deltaY * MOUSE_DRAG_SENSITIVITY;
-      const newValue = clampValue(dragStateRef.current.startValue + valueDelta);
+      const newValue = clampValue(dragState.startValue + valueDelta);
 
       setKnobValues(prev => ({
         ...prev,
-        [dragStateRef.current!.knobId]: newValue
+        [dragState.knobId]: newValue
       }));
     };
 
     const handleMouseUp = () => {
+      // Only process if we were actually dragging
+      if (!dragStateRef.current) return;
+
+      // Reset cursor
+      document.body.style.cursor = '';
+
       dragStateRef.current = null;
+      // Clear selection when drag ends
+      setSelectedKnob(null);
     };
 
     window.addEventListener('mousedown', handleMouseDown);
@@ -242,7 +255,7 @@ export default function Home() {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseup', handleMouseUp);
     };
-  }, [selectedKnob, knobValues]);
+  }, []);
 
   // Cleanup timeouts on unmount
   useEffect(() => {
@@ -360,7 +373,6 @@ export default function Home() {
             <SubBassPanel
               knobValues={knobValues}
               selectedKnob={selectedKnob}
-              onKnobSelect={handleKnobSelect}
             />
           </div>
 
@@ -369,12 +381,10 @@ export default function Home() {
             <EffectsPanel
               knobValues={knobValues}
               selectedKnob={selectedKnob}
-              onKnobSelect={handleKnobSelect}
             />
             <TriggerPanel
               knobValues={knobValues}
               selectedKnob={selectedKnob}
-              onKnobSelect={handleKnobSelect}
             />
           </div>
         </div>

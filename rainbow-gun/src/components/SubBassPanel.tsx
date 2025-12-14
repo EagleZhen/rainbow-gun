@@ -3,8 +3,7 @@ import type { PanelProps } from '@/types/panel';
 
 export default function SubBassPanel({
   knobValues,
-  selectedKnob,
-  onKnobSelect
+  selectedKnob
 }: PanelProps) {
   return (
     <div className="border border-gray-300 rounded p-4 bg-white">
@@ -28,28 +27,28 @@ export default function SubBassPanel({
           label="Attack"
           value={knobValues.attack}
           isSelected={selectedKnob === 'attack'}
-          onSelect={onKnobSelect}
+          disabled
         />
         <Knob
           id="decay"
           label="Decay"
           value={knobValues.decay}
           isSelected={selectedKnob === 'decay'}
-          onSelect={onKnobSelect}
+          disabled
         />
         <Knob
           id="sustain"
           label="Sustain"
           value={knobValues.sustain}
           isSelected={selectedKnob === 'sustain'}
-          onSelect={onKnobSelect}
+          disabled
         />
         <Knob
           id="release"
           label="Release"
           value={knobValues.release}
           isSelected={selectedKnob === 'release'}
-          onSelect={onKnobSelect}
+          disabled
         />
       </div>
 
@@ -60,7 +59,6 @@ export default function SubBassPanel({
           value={knobValues.subLevel}
           subtitle="volume"
           isSelected={selectedKnob === 'subLevel'}
-          onSelect={onKnobSelect}
         />
         <Knob
           id="subPower"
@@ -68,7 +66,6 @@ export default function SubBassPanel({
           value={knobValues.subPower}
           subtitle="distortion"
           isSelected={selectedKnob === 'subPower'}
-          onSelect={onKnobSelect}
         />
         <Knob
           id="subPunch"
@@ -76,7 +73,6 @@ export default function SubBassPanel({
           value={knobValues.subPunch}
           subtitle="pitch drop"
           isSelected={selectedKnob === 'subPunch'}
-          onSelect={onKnobSelect}
         />
         <Knob
           id="subFuzz"
@@ -84,7 +80,6 @@ export default function SubBassPanel({
           value={knobValues.subFuzz}
           subtitle="white noise"
           isSelected={selectedKnob === 'subFuzz'}
-          onSelect={onKnobSelect}
         />
       </div>
     </div>
