@@ -210,6 +210,9 @@ export default function Home() {
       // Show selection during drag
       setSelectedKnob(knobId);
 
+      // Set grabbing cursor globally during drag
+      document.body.style.cursor = 'grabbing';
+
       dragStateRef.current = {
         knobId,
         startY: e.clientY,
@@ -232,6 +235,9 @@ export default function Home() {
     };
 
     const handleMouseUp = () => {
+      // Reset cursor
+      document.body.style.cursor = '';
+
       dragStateRef.current = null;
       // Clear selection when drag ends
       setSelectedKnob(null);
