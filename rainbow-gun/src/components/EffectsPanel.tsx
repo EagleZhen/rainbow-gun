@@ -67,6 +67,7 @@ export default function EffectsPanel({
             value={knobValues.octave}
             isSelected={selectedKnob === 'octave'}
             onSelect={onKnobSelect}
+            disabled
           />
         </div>
       </div>
