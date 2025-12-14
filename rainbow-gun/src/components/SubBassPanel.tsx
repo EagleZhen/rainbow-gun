@@ -29,6 +29,7 @@ export default function SubBassPanel({
           value={knobValues.attack}
           isSelected={selectedKnob === 'attack'}
           onSelect={onKnobSelect}
+          disabled
         />
         <Knob
           id="decay"
@@ -36,6 +37,7 @@ export default function SubBassPanel({
           value={knobValues.decay}
           isSelected={selectedKnob === 'decay'}
           onSelect={onKnobSelect}
+          disabled
         />
         <Knob
           id="sustain"
@@ -43,6 +45,7 @@ export default function SubBassPanel({
           value={knobValues.sustain}
           isSelected={selectedKnob === 'sustain'}
           onSelect={onKnobSelect}
+          disabled
         />
         <Knob
           id="release"
@@ -50,6 +53,7 @@ export default function SubBassPanel({
           value={knobValues.release}
           isSelected={selectedKnob === 'release'}
           onSelect={onKnobSelect}
+          disabled
         />
       </div>
 
