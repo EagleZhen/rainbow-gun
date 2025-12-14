@@ -166,21 +166,6 @@ export default function Home() {
         return;
       }
 
-      // Handle arrow keys for knob adjustment (only if a knob is selected)
-      if (selectedKnob && (e.key === 'ArrowUp' || e.key === 'ArrowDown')) {
-        const step = selectedKnob === 'pitch' ? PITCH_STEP : KNOB_ADJUSTMENT_STEP;
-        const delta = e.key === 'ArrowUp' ? step : -step;
-        e.preventDefault();
-        setKnobValues(prev => {
-          const currentValue = prev[selectedKnob as keyof typeof prev];
-          return {
-            ...prev,
-            [selectedKnob]: clampValue(currentValue + delta)
-          };
-        });
-        return;
-      }
-
       // Handle number keys 1 & 2 (rainbow gun trigger keys) to fire the currently active gun
       if (e.key === '1' || e.key === '2') {
         fireGun(activeGunId);
