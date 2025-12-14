@@ -235,6 +235,9 @@ export default function Home() {
     };
 
     const handleMouseUp = () => {
+      // Only process if we were actually dragging
+      if (!dragStateRef.current) return;
+
       // Reset cursor
       document.body.style.cursor = '';
 
