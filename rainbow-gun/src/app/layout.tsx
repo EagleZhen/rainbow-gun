@@ -13,8 +13,21 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Rainbow Gun",
-  description: "AIST2010 Group Project - Rainbow Gun",
+  title: "Rainbow Gun - Interactive Web Synthesizer",
+  description: "A fun experimental web-based music synthesizer with 15 knobs, MIDI control, and gun sound synthesis. Play chromatic scales, switch chords, and control sub-bass with an interactive browser instrument.",
+  keywords: ["web synthesizer", "web audio", "MIDI controller", "Tone.js", "interactive music", "browser instrument", "audio synthesis", "computer music"],
+  authors: [{ name: "Rainbow Gun Team" }],
+  openGraph: {
+    title: "Rainbow Gun - Interactive Web Synthesizer",
+    description: "A fun experimental web-based music synthesizer with MIDI control and gun sound synthesis",
+    type: "website",
+    url: "https://rainbow-gun.pages.dev",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Rainbow Gun - Interactive Web Synthesizer",
+    description: "A fun experimental web-based music synthesizer with MIDI control and gun sound synthesis",
+  },
   icons: {
     icon: [
       { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
