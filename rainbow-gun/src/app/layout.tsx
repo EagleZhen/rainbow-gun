@@ -22,11 +22,20 @@ export const metadata: Metadata = {
     description: "A fun experimental web-based music synthesizer with MIDI control and gun sound synthesis",
     type: "website",
     url: "https://rainbow-gun.pages.dev",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Rainbow Gun synthesizer interface with 15 knobs and gun selector",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Rainbow Gun - Interactive Web Synthesizer",
     description: "A fun experimental web-based music synthesizer with MIDI control and gun sound synthesis",
+    images: ["/og-image.png"],
   },
   icons: {
     icon: [
