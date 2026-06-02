@@ -1,3 +1,5 @@
+import Keycap from './Keycap';
+
 interface ChordSelectorProps {
   selectedChord: 'major' | 'minor';
   onSelectChord: (chord: 'major' | 'minor') => void;
@@ -8,7 +10,12 @@ export default function ChordSelector({ selectedChord, onSelectChord }: ChordSel
     <div className="border border-gray-300 rounded p-4 bg-white">
       <div className="mb-3 flex flex-wrap items-baseline gap-x-2 gap-y-1">
         <div className="text-xs font-semibold">CHORD SELECTOR</div>
-        <div className="text-xs text-gray-500">Use [ and ] to switch</div>
+        <div className="flex flex-wrap items-center gap-1 text-xs text-gray-500">
+          <span>Use</span>
+          <Keycap>[</Keycap>
+          <Keycap>]</Keycap>
+          <span>to switch</span>
+        </div>
       </div>
       <div className="flex gap-2">
         <button

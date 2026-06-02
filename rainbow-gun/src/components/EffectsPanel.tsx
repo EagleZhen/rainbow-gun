@@ -1,4 +1,5 @@
 import Knob from './Knob';
+import Keycap from './Keycap';
 import type { PanelProps } from '@/types/panel';
 import { pitchIndexToNote, knobValueToPitchIndex } from '@/data/notes';
 
@@ -35,7 +36,23 @@ export default function EffectsPanel({
       <div className="border-t border-gray-300 pt-6">
         <div className="mb-3 flex flex-wrap items-baseline gap-x-2 gap-y-1">
           <div className="text-xs font-semibold">TONE CONTROL</div>
-          <div className="text-xs text-gray-500">Z/X/C/V/B/N/M white notes · S/D/G/H/J black notes</div>
+          <div className="flex flex-wrap items-center gap-1 text-xs text-gray-500">
+            <Keycap>Z</Keycap>
+            <Keycap>X</Keycap>
+            <Keycap>C</Keycap>
+            <Keycap>V</Keycap>
+            <Keycap>B</Keycap>
+            <Keycap>N</Keycap>
+            <Keycap>M</Keycap>
+            <span>white notes</span>
+            <span className="mx-1">·</span>
+            <Keycap>S</Keycap>
+            <Keycap>D</Keycap>
+            <Keycap>G</Keycap>
+            <Keycap>H</Keycap>
+            <Keycap>J</Keycap>
+            <span>black notes</span>
+          </div>
         </div>
         <div className="grid grid-cols-3 gap-6 justify-items-center">
           <Knob
