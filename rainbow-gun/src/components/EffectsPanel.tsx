@@ -34,9 +34,9 @@ export default function EffectsPanel({
       </div>
 
       <div className="border-t border-gray-300 pt-6">
-        <div className="mb-3 flex flex-wrap items-baseline gap-x-2 gap-y-1">
-          <div className="text-xs font-semibold">TONE CONTROL</div>
-          <div className="flex flex-wrap items-center gap-1 text-xs text-gray-500">
+        <div className="mb-3 flex flex-wrap items-center gap-x-2 gap-y-1">
+          <div className="flex min-h-4 items-center text-xs font-semibold leading-none">TONE CONTROL</div>
+          <div className="flex min-h-4 flex-wrap items-center gap-1 text-xs leading-none text-gray-500">
             <Keycap>Z</Keycap>
             <Keycap>X</Keycap>
             <Keycap>C</Keycap>

@@ -17,9 +17,9 @@ export default function GunSelector({ selectedGunIds, activeGunId, onFire }: Gun
   return (
     <div className="border border-gray-300 rounded p-4 bg-white">
       <div className="flex items-start justify-between gap-3 mb-3">
-        <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
-          <div className="text-xs font-semibold">GUN SELECTOR</div>
-          <div className="flex flex-wrap items-center gap-1 text-xs text-gray-500">
+        <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+          <div className="flex min-h-4 items-center text-xs font-semibold leading-none">GUN SELECTOR</div>
+          <div className="flex min-h-4 flex-wrap items-center gap-1 text-xs leading-none text-gray-500">
             <Keycap>Q</Keycap>
             <Keycap>W</Keycap>
             <Keycap>E</Keycap>
