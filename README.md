@@ -6,8 +6,7 @@ An interactive web-based musical instrument that transforms gunshot samples into
 
 ## Prerequisites
 
-- Node.js (v18 or higher)
-- npm
+- Node.js (v20.9.0 or higher), which typically includes npm
 
 ## Setup
 
