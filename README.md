@@ -4,6 +4,8 @@ An interactive web-based musical instrument that transforms gunshot samples into
 
 **Try it live:** [https://rainbow-gun.pages.dev/](https://rainbow-gun.pages.dev/)
 
+![Screenshot](./rainbow-gun/public/og-image.png)
+
 ## Prerequisites
 
 - Node.js (v20.9.0 or higher), which typically includes npm
