@@ -3,6 +3,7 @@
 An interactive web-based musical instrument that transforms gunshot samples into playable melodies with real-time effects processing.
 
 **Try it live:** [https://rainbow-gun.pages.dev/](https://rainbow-gun.pages.dev/)
+**Watch the demo video:** [YouTube](https://youtu.be/jqQePmCB2a0&t=241s)
 
 ![Screenshot](./rainbow-gun/public/og-image.png)
 
