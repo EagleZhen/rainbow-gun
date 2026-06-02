@@ -1,3 +1,5 @@
+import Keycap from './Keycap';
+
 interface ChordSelectorProps {
   selectedChord: 'major' | 'minor';
   onSelectChord: (chord: 'major' | 'minor') => void;
@@ -6,7 +8,15 @@ interface ChordSelectorProps {
 export default function ChordSelector({ selectedChord, onSelectChord }: ChordSelectorProps) {
   return (
     <div className="border border-gray-300 rounded p-4 bg-white">
-      <div className="text-xs font-semibold mb-3">CHORD SELECTOR</div>
+      <div className="mb-3 flex flex-wrap items-center gap-x-2 gap-y-1">
+        <div className="flex min-h-4 items-center text-xs font-semibold leading-none">CHORD SELECTOR</div>
+        <div className="flex min-h-4 flex-wrap items-center gap-1 text-xs leading-none text-gray-500">
+          <span>Use</span>
+          <Keycap>[</Keycap>
+          <Keycap>]</Keycap>
+          <span>to switch</span>
+        </div>
+      </div>
       <div className="flex gap-2">
         <button
           className={`px-3 py-1 border rounded text-sm cursor-pointer ${selectedChord === 'major' ? 'border-blue-500 bg-blue-50' : 'border-gray-300'}`}

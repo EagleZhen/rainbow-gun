@@ -1,4 +1,5 @@
 import Knob from './Knob';
+import Keycap from './Keycap';
 import type { PanelProps } from '@/types/panel';
 import { pitchIndexToNote, knobValueToPitchIndex } from '@/data/notes';
 
@@ -33,7 +34,26 @@ export default function EffectsPanel({
       </div>
 
       <div className="border-t border-gray-300 pt-6">
-        <div className="text-xs font-semibold mb-3">TONE CONTROL</div>
+        <div className="mb-3 flex flex-wrap items-center gap-x-2 gap-y-1">
+          <div className="flex min-h-4 items-center text-xs font-semibold leading-none">TONE CONTROL</div>
+          <div className="flex min-h-4 flex-wrap items-center gap-1 text-xs leading-none text-gray-500">
+            <Keycap>Z</Keycap>
+            <Keycap>X</Keycap>
+            <Keycap>C</Keycap>
+            <Keycap>V</Keycap>
+            <Keycap>B</Keycap>
+            <Keycap>N</Keycap>
+            <Keycap>M</Keycap>
+            <span>white notes</span>
+            <span className="mx-1">·</span>
+            <Keycap>S</Keycap>
+            <Keycap>D</Keycap>
+            <Keycap>G</Keycap>
+            <Keycap>H</Keycap>
+            <Keycap>J</Keycap>
+            <span>black notes</span>
+          </div>
+        </div>
         <div className="grid grid-cols-3 gap-6 justify-items-center">
           <Knob
             id="rainbowlize"
