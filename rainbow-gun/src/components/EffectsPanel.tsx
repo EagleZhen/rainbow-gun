@@ -33,7 +33,10 @@ export default function EffectsPanel({
       </div>
 
       <div className="border-t border-gray-300 pt-6">
-        <div className="text-xs font-semibold mb-3">TONE CONTROL</div>
+        <div className="mb-3 flex flex-wrap items-baseline gap-x-2 gap-y-1">
+          <div className="text-xs font-semibold">TONE CONTROL</div>
+          <div className="text-xs text-gray-500">Z/X/C/V/B/N/M white notes · S/D/G/H/J black notes</div>
+        </div>
         <div className="grid grid-cols-3 gap-6 justify-items-center">
           <Knob
             id="rainbowlize"

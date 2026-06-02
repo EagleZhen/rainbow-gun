@@ -15,8 +15,11 @@ export default function GunSelector({ selectedGunIds, activeGunId, onFire }: Gun
 
   return (
     <div className="border border-gray-300 rounded p-4 bg-white">
-      <div className="flex items-center justify-between mb-3">
-        <div className="text-xs font-semibold">GUN SELECTOR</div>
+      <div className="flex items-start justify-between gap-3 mb-3">
+        <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
+          <div className="text-xs font-semibold">GUN SELECTOR</div>
+          <div className="text-xs text-gray-500">Q/W/E fire guns · 1/2 fire active gun</div>
+        </div>
         <div className="flex items-center gap-1.5 text-xs text-gray-500">
           <div className={`w-2 h-2 rounded-full transition-colors ${ready ? 'bg-green-600' : 'bg-gray-400'}`}></div>
           <span className="text-gray-600">{ready ? 'Ready' : 'Loading'}</span>
